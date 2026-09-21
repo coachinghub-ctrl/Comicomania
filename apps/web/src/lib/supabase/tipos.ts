@@ -521,6 +521,47 @@ export type Database = {
         }
         Relationships: []
       }
+      settings: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          scope_id: string | null
+          scope_type: Database["public"]["Enums"]["scope_type"]
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          scope_id?: string | null
+          scope_type?: Database["public"]["Enums"]["scope_type"]
+          updated_at?: string
+          updated_by?: string | null
+          value: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          scope_id?: string | null
+          scope_type?: Database["public"]["Enums"]["scope_type"]
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "settings_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_level_assignments: {
         Row: {
           granted_at: string
@@ -787,6 +828,7 @@ export type Database = {
           valor: number
         }[]
       }
+      path_de_usuario: { Args: { p_user_id: string }; Returns: string }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       uuid_generate_v7: { Args: never; Returns: string }

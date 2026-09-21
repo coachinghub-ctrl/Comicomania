@@ -31,7 +31,8 @@ export async function actualizarSesion(request: NextRequest) {
   const sesion = data?.claims;
 
   const ruta = request.nextUrl.pathname;
-  if (!sesion && ruta.startsWith("/mi")) {
+  const privada = ruta.startsWith("/mi") || ruta.startsWith("/admin");
+  if (!sesion && privada) {
     const destino = request.nextUrl.clone();
     destino.pathname = "/entrar";
     destino.searchParams.set("volver", ruta);

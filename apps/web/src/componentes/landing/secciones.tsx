@@ -1210,12 +1210,36 @@ export function Manifiesto() {
 /* ---------------------------------------------------------------- CIERRE */
 export function Cierre() {
   return (
-    <section className="spotlight border-t border-stage-600">
+    <section className="relative isolate overflow-hidden border-t border-stage-600">
+      {/* Texto centrado otra vez, así que velo parejo y no lateral. El centro
+          de la foto es oscuro (p95 0,038) pero las luces de la izquierda
+          llegan a 0,482: 72% uniforme más 35% radial en el medio deja el
+          crema en 15:1 donde está el texto. El gradiente spotlight se quita:
+          con la foto detrás sobraba. */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/hero/cierre.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div aria-hidden className="absolute inset-0 bg-black/72" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(ellipse_65%_60%_at_50%_50%,rgba(0,0,0,0.35),rgba(0,0,0,0)_78%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(to_bottom,#000000,rgba(0,0,0,0))]"
+        />
+      </div>
+
       <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:py-32">
         <h2 className="font-display text-4xl leading-[0.95] text-balance text-paper uppercase sm:text-6xl">
           {CIERRE.titulo}
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-pretty text-muted">
+        <p className="mx-auto mt-6 max-w-xl text-lg text-pretty text-paper">
           {CIERRE.texto}
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">

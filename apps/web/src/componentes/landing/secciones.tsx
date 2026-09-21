@@ -12,6 +12,7 @@ import {
   NAVEGACION,
   PERFILES,
   PROPOSITO,
+  TALENT,
   VERTICALES,
 } from "@/contenido/landing";
 import { ICONOS } from "./iconos";
@@ -366,6 +367,123 @@ export function Perfiles() {
   );
 }
 
+/* ---------------------------------------------------------------- TALENT */
+export function Talent() {
+  return (
+    <section
+      id="talent"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      {/* El 45% izquierdo de esta foto da 11,7:1 al crema sin velo alguno;
+          el 45% que se le pone lo lleva a 14:1 y deja el escenario entero. */}
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/talent.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.30)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.70)_38%,rgba(0,0,0,0.25)_66%,rgba(0,0,0,0.10)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="aparece lg:max-w-[52%]">
+          <div className="mb-5 flex items-center gap-4">
+            <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+              {TALENT.marca}
+            </span>
+            <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
+          </div>
+
+          <h2 className="font-display text-4xl leading-[0.92] text-balance text-paper uppercase sm:text-5xl lg:text-6xl">
+            {TALENT.titulo[0]}{" "}
+            <br />
+            <span className="text-red-500">{TALENT.titulo[1]}</span>{" "}
+            {TALENT.titulo[2]}
+          </h2>
+
+          <p className="mt-7 text-lg text-pretty text-paper">{TALENT.entrada}</p>
+          <p className="mt-4 max-w-xl text-pretty text-muted">{TALENT.texto}</p>
+          <p className="font-display mt-7 text-xl text-gold-400 uppercase sm:text-2xl">
+            {TALENT.remate}
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink
+              href={TALENT.ctaPrincipal.href as Route}
+              tamano="lg"
+              className="group w-full sm:w-auto"
+            >
+              {TALENT.ctaPrincipal.texto}
+              <span
+                className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+                aria-hidden
+              >
+                →
+              </span>
+            </ButtonLink>
+            <ButtonLink
+              href={TALENT.ctaSecundario.href as Route}
+              variante="secundaria"
+              tamano="lg"
+              className="w-full sm:w-auto"
+            >
+              {TALENT.ctaSecundario.texto}
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
+
+      {/* Tira del recorrido. En móvil se desliza en horizontal: seis pasos
+          apilados serían media pantalla de scroll muerto. */}
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000/95 backdrop-blur-sm">
+        <ol className="mx-auto flex max-w-6xl snap-x snap-mandatory gap-0 overflow-x-auto px-5 py-6 lg:grid lg:grid-cols-6 lg:overflow-visible">
+          {TALENT.pasos.map((paso, i) => {
+            const Icono = ICONOS[paso.icono];
+            return (
+              <li
+                key={paso.verbo}
+                className="flex min-w-[15rem] shrink-0 snap-start items-start gap-3 pr-6 lg:min-w-0 lg:pr-3"
+              >
+                <span className="font-display text-lg text-red-500 tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    {Icono && <Icono className="size-5 shrink-0 text-paper" />}
+                    <h3 className="font-display text-sm text-paper uppercase">
+                      {paso.verbo}
+                    </h3>
+                  </div>
+                  <p className="mt-1 text-xs leading-relaxed text-muted">
+                    {paso.texto}
+                  </p>
+                </div>
+                {i < TALENT.pasos.length - 1 && (
+                  <span
+                    className="hidden self-center text-stage-600 lg:block"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------------------------------------ VERTICALES */
 export function Verticales() {
   return (
@@ -385,32 +503,16 @@ export function Verticales() {
               </ButtonLink>
             </div>
 
-            {v.id === "talent" ? (
-              <ol className="flex flex-col gap-2">
-                {v.pasos.map((paso, n) => (
-                  <li
-                    key={paso}
-                    className="flex items-center gap-4 rounded-md border border-stage-600 bg-stage-800 px-5 py-4"
-                  >
-                    <span className="font-display text-red-500">
-                      {String(n + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-paper-pure">{paso}</span>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <ul className="flex flex-wrap gap-2 self-center">
-                {v.pasos.map((paso) => (
-                  <li
-                    key={paso}
-                    className="rounded-full border border-stage-600 bg-stage-800 px-4 py-2 text-sm text-paper-pure"
-                  >
-                    {paso}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul className="flex flex-wrap gap-2 self-center">
+              {v.pasos.map((paso) => (
+                <li
+                  key={paso}
+                  className="rounded-full border border-stage-600 bg-stage-800 px-4 py-2 text-sm text-paper-pure"
+                >
+                  {paso}
+                </li>
+              ))}
+            </ul>
           </div>
         </Seccion>
       ))}

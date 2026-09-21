@@ -112,7 +112,55 @@ export function IconoConecta(props: Props) {
   );
 }
 
+
+/** Sube tu video: la cámara. */
+export function IconoVideo(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="2.5" y="6" width="13" height="12" rx="2.5" />
+      <path d="M15.5 10.5l5-2.8v8.6l-5-2.8z" />
+    </Base>
+  );
+}
+
+/** Participa: el grupo. */
+export function IconoGrupo(props: Props) {
+  return (
+    <Base {...props}>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M2.5 19.5c.6-3.2 3.3-5 6.5-5s5.9 1.8 6.5 5" />
+      <path d="M16.2 5.4a3.2 3.2 0 010 5.2" />
+      <path d="M17.8 14.9c2 .6 3.3 2.2 3.7 4.6" />
+    </Base>
+  );
+}
+
+/** Avanza: la estrella de la siguiente etapa. */
+export function IconoEstrella(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z" />
+    </Base>
+  );
+}
+
+/** Hazte visible: el despegue. */
+export function IconoCohete(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 2.5c3 2 4.8 5.3 4.8 9.2 0 1.6-.3 3.1-.9 4.5H8.1a11.6 11.6 0 01-.9-4.5c0-3.9 1.8-7.2 4.8-9.2z" />
+      <circle cx="12" cy="10" r="2" />
+      <path d="M8.1 16.2L5.5 19l3-.4M15.9 16.2L18.5 19l-3-.4" />
+      <path d="M10.5 20.5c.5.9 2.5.9 3 0" />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Video: IconoVideo,
+  Grupo: IconoGrupo,
+  Estrella: IconoEstrella,
+  Cohete: IconoCohete,
   Descubre: IconoDescubre,
   Mira: IconoMira,
   Vota: IconoVota,

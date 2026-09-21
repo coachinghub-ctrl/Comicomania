@@ -9,6 +9,7 @@ import {
   Movimiento,
   Perfiles,
   Proposito,
+  Talent,
   Verticales,
 } from "@/componentes/landing/secciones";
 import { Numeros } from "@/componentes/landing/numeros";
@@ -22,6 +23,7 @@ export default function Home() {
         <Journey />
         <Proposito />
         <Perfiles />
+        <Talent />
         <Verticales />
         <Marcas />
         <Expansion />

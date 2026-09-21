@@ -148,17 +148,27 @@ export const PERFILES = [
   },
 ] as const;
 
+
+export const TALENT = {
+  marca: "COMICOMANÍA Talent",
+  titulo: ["¿Tienes lo que hace falta para", "hacer reír", "al mundo?"],
+  entrada: "Tu talento merece algo más que un video perdido en las redes.",
+  texto:
+    "COMICOMANÍA TALENT es el escenario donde nuevos humoristas pueden mostrar lo que hacen, conectar con una audiencia, competir y convertir su talento en oportunidades reales.",
+  remate: "De tu ciudad para el mundo.",
+  ctaPrincipal: { texto: "Sube tu video", href: "/entrar" },
+  ctaSecundario: { texto: "Ver talentos", href: "/entrar" },
+  pasos: [
+    { icono: "Video", verbo: "Sube tu video", texto: "Muestra tu talento al mundo." },
+    { icono: "Grupo", verbo: "Participa", texto: "Sé parte de la competencia." },
+    { icono: "Crece", verbo: "Consigue votos", texto: "Haz crecer tu audiencia." },
+    { icono: "Estrella", verbo: "Avanza", texto: "Supera nuevas etapas." },
+    { icono: "Cohete", verbo: "Hazte visible", texto: "Conecta con oportunidades." },
+    { icono: "Conecta", verbo: "Crece", texto: "Lleva tu talento más lejos." },
+  ],
+} as const;
+
 export const VERTICALES = [
-  {
-    id: "talent",
-    marca: "COMICOMANÍA Talent",
-    titulo: "El próximo gran talento puede estar aquí.",
-    texto:
-      "Creamos espacios para descubrir nuevos humoristas desde diferentes ciudades y países.",
-    pasos: ["Sube tu video", "Participa", "Consigue votos", "Avanza", "Hazte visible", "Crece"],
-    remate: "El talento local puede convertirse en talento global.",
-    cta: { texto: "Participa", href: "/entrar" },
-  },
   {
     id: "academy",
     marca: "COMICOMANÍA Academy",

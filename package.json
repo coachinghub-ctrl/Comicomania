@@ -5,6 +5,13 @@
   "scripts": {
     "dev": "pnpm --filter @comicomania/web dev",
     "build": "pnpm --filter @comicomania/web build",
-    "typecheck": "pnpm -r exec tsc --noEmit"
+    "typecheck": "pnpm -r exec tsc --noEmit",
+    "db:validar": "node scripts/validar-sql.mjs",
+    "db:push": "supabase db push",
+    "db:tipos": "supabase gen types typescript --linked > apps/web/src/lib/supabase/tipos.ts"
+  },
+  "devDependencies": {
+    "libpg-query": "^18.1.5",
+    "supabase": "^2.117.0"
   }
 }

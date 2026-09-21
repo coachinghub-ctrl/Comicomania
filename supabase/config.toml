@@ -1,16 +1,14 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # OJO CON `supabase config push`.
 #
-# Este archivo NO refleja el proyecto remoto. Un `config diff` del 21/09/2026
-# mostró que empujarlo tal cual apagaría cosas que en remoto están encendidas:
-#   auth.email.enable_confirmations   remoto true  → local false
-#   auth.mfa.totp.enroll_enabled      remoto true  → local false
-#   auth.mfa.totp.verify_enabled      remoto true  → local false
-#   auth.email.otp_length             remoto 8     → local 6
-#   auth.sms.twilio.enabled           remoto true  → local false
+# `push` solo toca las propiedades que este archivo DECLARA; lo que no
+# declara lo deja intacto. Por eso las que venían de la plantilla de
+# `supabase init` y NO queremos gobernar desde aquí están comentadas con
+# "NO DECLARADO": si las dejáramos, un push apagaría cosas que en remoto
+# están encendidas (confirmación de correo, TOTP, Twilio, storage.analytics).
 #
-# Antes de cualquier push: correr `supabase config diff` y alinear a mano.
-# Las URLs de abajo son las correctas y están puestas en el panel.
+# Lo único que este archivo gobierna de auth son las URLs de abajo.
+# Antes de cualquier push: correr `supabase config diff` y leerlo.
 # ─────────────────────────────────────────────────────────────────────────────
 
 # For detailed configuration reference documentation, visit:
@@ -63,9 +61,9 @@ port = 54329
 # Configure one of the supported pooler modes: `transaction`, `session`.
 pool_mode = "transaction"
 # How many server connections to allow per user/database pair.
-default_pool_size = 20
+# NO DECLARADO (lo remoto manda): default_pool_size = 20
 # Maximum number of client connections allowed.
-max_client_conn = 100
+# NO DECLARADO (lo remoto manda): max_client_conn = 100
 
 # [db.vault]
 # secret_key = "env(SECRET_VALUE)"
@@ -149,10 +147,10 @@ enabled = true
 # Store analytical data in S3 for running ETL jobs over Iceberg Catalog
 # This feature is only available on the hosted platform.
 [storage.analytics]
-enabled = false
-max_namespaces = 5
-max_tables = 10
-max_catalogs = 2
+# NO DECLARADO (lo remoto manda): enabled = false
+# NO DECLARADO (lo remoto manda): max_namespaces = 5
+# NO DECLARADO (lo remoto manda): max_tables = 10
+# NO DECLARADO (lo remoto manda): max_catalogs = 2
 
 # Analytics Buckets is available to Supabase Pro plan.
 # [storage.analytics.buckets.my-warehouse]
@@ -199,7 +197,7 @@ enable_manual_linking = false
 minimum_password_length = 6
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
-password_requirements = ""
+# NO DECLARADO (lo remoto manda): password_requirements = ""
 
 # Configure passkey sign-ins.
 # [auth.passkey]
@@ -240,13 +238,13 @@ enable_signup = true
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
-enable_confirmations = false
+# NO DECLARADO (lo remoto manda): enable_confirmations = false
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
-max_frequency = "1s"
+# NO DECLARADO (lo remoto manda): max_frequency = "1s"
 # Number of characters used in the email OTP.
-otp_length = 6
+# NO DECLARADO (lo remoto manda): otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
 otp_expiry = 3600
 
@@ -304,11 +302,11 @@ max_frequency = "5s"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
+# NO DECLARADO (lo remoto manda): enabled = false
+# NO DECLARADO (lo remoto manda): account_sid = ""
+# NO DECLARADO (lo remoto manda): message_service_sid = ""
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
-auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
+# NO DECLARADO (lo remoto manda): auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 
 # Multi-factor-authentication is available to Supabase Pro plan.
 [auth.mfa]
@@ -317,8 +315,8 @@ max_enrolled_factors = 10
 
 # Control MFA via App Authenticator (TOTP)
 [auth.mfa.totp]
-enroll_enabled = false
-verify_enabled = false
+# NO DECLARADO (lo remoto manda): enroll_enabled = false
+# NO DECLARADO (lo remoto manda): verify_enabled = false
 
 # Configure MFA via Phone Messaging
 [auth.mfa.phone]

@@ -22,9 +22,13 @@ export async function enviarEnlace(
   }
 
   const cabeceras = await headers();
-  const origen =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    `https://${cabeceras.get("host") ?? "localhost:3100"}`;
+  const host = cabeceras.get("host") ?? "localhost:3100";
+  // En local el host no lleva TLS: con https el enlace caería fuera de la
+  // lista blanca de Supabase y el correo llegaría roto.
+  const esquema = host.startsWith("localhost") || host.startsWith("127.0.0.1")
+    ? "http"
+    : "https";
+  const origen = process.env.NEXT_PUBLIC_SITE_URL ?? `${esquema}://${host}`;
 
   const supabase = await crearClienteServidor();
   const { error } = await supabase.auth.signInWithOtp({

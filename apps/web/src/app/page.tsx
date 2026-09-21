@@ -5,6 +5,7 @@ import {
   Expansion,
   Hero,
   Journey,
+  Live,
   Manifiesto,
   Marcas,
   Movimiento,
@@ -12,7 +13,6 @@ import {
   Proposito,
   Shop,
   Talent,
-  Verticales,
 } from "@/componentes/landing/secciones";
 import { Numeros } from "@/componentes/landing/numeros";
 
@@ -27,7 +27,7 @@ export default function Home() {
         <Perfiles />
         <Talent />
         <Academy />
-        <Verticales />
+        <Live />
         <Shop />
         <Marcas />
         <Expansion />

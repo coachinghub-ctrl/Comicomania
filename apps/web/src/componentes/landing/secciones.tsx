@@ -7,6 +7,7 @@ import {
   EXPANSION,
   HERO,
   JOURNEY,
+  LIVE,
   MANIFIESTO,
   MARCAS,
   MOVIMIENTO,
@@ -15,7 +16,6 @@ import {
   PROPOSITO,
   SHOP,
   TALENT,
-  VERTICALES,
 } from "@/contenido/landing";
 import { ICONOS } from "./iconos";
 import { Antetitulo, Marquesina, Seccion, Titulo } from "./piezas";
@@ -731,39 +731,130 @@ export function Shop() {
   );
 }
 
-/* ------------------------------------------------------------ VERTICALES */
-export function Verticales() {
+/* ------------------------------------------------------------------ LIVE */
+export function Live() {
   return (
-    <>
-      {VERTICALES.map((v, i) => (
-        <Seccion key={v.id} id={v.id} fondo={i % 2 === 0 ? "elevado" : "base"}>
-          <div className="aparece grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
-            <div>
-              <Antetitulo>{v.marca}</Antetitulo>
-              <Titulo>{v.titulo}</Titulo>
-              <p className="mt-6 text-lg text-pretty text-muted">{v.texto}</p>
-              {v.remate && (
-                <p className="mt-6 text-lg text-balance text-paper">{v.remate}</p>
-              )}
-              <ButtonLink href={v.cta.href as Route} tamano="lg" className="mt-8">
-                {v.cta.texto}
-              </ButtonLink>
+    <section
+      id="live"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/live.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.40)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.80)_36%,rgba(0,0,0,0.28)_62%,rgba(0,0,0,0.05)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+          <div className="aparece lg:max-w-[52%]">
+            <div className="mb-5 flex items-center gap-4">
+              <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+                {LIVE.marca}
+              </span>
+              <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
             </div>
 
-            <ul className="flex flex-wrap gap-2 self-center">
-              {v.pasos.map((paso) => (
-                <li
-                  key={paso}
-                  className="rounded-full border border-stage-600 bg-stage-800 px-4 py-2 text-sm text-paper-pure"
+            <h2 className="font-display text-4xl leading-[0.92] text-balance text-paper uppercase sm:text-5xl">
+              {LIVE.titulo[0]}{" "}
+              <br />
+              <span className="text-red-500">{LIVE.titulo[1]}</span>
+            </h2>
+
+            <p className="mt-7 text-lg text-pretty text-paper">{LIVE.entrada}</p>
+            <p className="mt-4 max-w-xl text-pretty text-muted">{LIVE.texto}</p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink
+                href={LIVE.ctaPrincipal.href as Route}
+                tamano="lg"
+                className="group w-full sm:w-auto"
+              >
+                {LIVE.ctaPrincipal.texto}
+                <span
+                  className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+                  aria-hidden
                 >
-                  {paso}
-                </li>
-              ))}
-            </ul>
+                  →
+                </span>
+              </ButtonLink>
+              <ButtonLink
+                href={LIVE.ctaSecundario.href as Route}
+                variante="secundaria"
+                tamano="lg"
+                className="w-full border-red-500/50 sm:w-auto"
+              >
+                {LIVE.ctaSecundario.texto}
+              </ButtonLink>
+            </div>
           </div>
-        </Seccion>
-      ))}
-    </>
+
+          {/* Aviso del próximo evento. Sin fecha inventada y sin venta:
+              todavía no hay entradas, así que invita a avisar. */}
+          <aside className="aparece w-full max-w-xs rounded-lg border border-red-500/50 bg-stage-1000/85 p-5 backdrop-blur-sm">
+            <p className="text-[0.7rem] tracking-[0.2em] text-muted uppercase">
+              {LIVE.aviso.etiqueta}
+            </p>
+            <p className="font-display mt-2 text-2xl text-paper uppercase">
+              {LIVE.aviso.ciudad}
+              <span className="ml-2 text-red-500">· {LIVE.aviso.estado}</span>
+            </p>
+            <ButtonLink
+              href={LIVE.aviso.cta.href as Route}
+              tamano="sm"
+              className="mt-4 w-full"
+            >
+              {LIVE.aviso.cta.texto}
+            </ButtonLink>
+          </aside>
+        </div>
+      </div>
+
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000">
+        <div className="mx-auto max-w-6xl px-5 py-12">
+          <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {LIVE.familias.map((familia, i) => {
+              const Icono = ICONOS[familia.icono];
+              return (
+                <li
+                  key={familia.nombre}
+                  className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {Icono && <Icono className="size-6 text-paper" />}
+                  </div>
+                  <h3 className="font-display mt-3 text-base text-paper uppercase">
+                    {familia.nombre}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {familia.texto}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+
+          <p className="font-display mt-12 border-t border-stage-600 pt-8 text-center text-sm tracking-[0.2em] uppercase sm:text-base">
+            <span className="text-paper">{LIVE.firma.antes}</span>{" "}
+            <span className="text-red-500">{LIVE.firma.despues}</span>
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

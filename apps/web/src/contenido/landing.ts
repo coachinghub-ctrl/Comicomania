@@ -258,27 +258,54 @@ export const SHOP = {
   firma: { lemas: ["Ríete.", "Conecta.", "Pertenece."], cierre: "Llévalo contigo." },
 } as const;
 
-export const VERTICALES = [
-  {
-    id: "live",
-    marca: "COMICOMANÍA Live",
-    titulo: "Del mundo digital al escenario.",
-    texto: "Conectamos la experiencia digital con experiencias presenciales.",
-    pasos: [
-      "Shows",
-      "Festivales",
-      "Open mics",
-      "Competencias",
-      "Giras",
-      "Experiencias",
-      "Encuentros",
-      "Grabaciones",
-      "Activaciones de marca",
-    ],
-    remate: null,
-    cta: { texto: "Descubre los eventos", href: "/entrar" },
+
+export const LIVE = {
+  marca: "COMICOMANÍA Live",
+  titulo: ["De la pantalla al escenario.", "De tu ciudad al mundo."],
+  entrada: "El humor se vive mejor cuando lo compartimos.",
+  texto:
+    "COMICOMANÍA LIVE convierte la comunidad digital en experiencias reales donde humoristas, audiencias, ciudades y marcas se encuentran cara a cara.",
+  ctaPrincipal: { texto: "Descubre los eventos", href: "/entrar" },
+  ctaSecundario: { texto: "Quiero participar", href: "/entrar" },
+  /* El aviso del próximo evento. Sin fecha y sin venta: todavía no hay
+     entradas, así que el botón apunta a avisar, no a comprar. Cuando el
+     Contest Engine y Ticketing existan (Fase E y J), esto sale de la base. */
+  aviso: {
+    etiqueta: "Próximo COMICOMANÍA Live",
+    ciudad: "Miami",
+    estado: "Próximamente",
+    cta: { texto: "Avísame", href: "/entrar" },
   },
-] as const;
+  familias: [
+    {
+      icono: "Participa",
+      nombre: "Shows & festivals",
+      texto: "Grandes escenarios, festivales y experiencias en vivo.",
+    },
+    {
+      icono: "Grupo",
+      nombre: "Open mics & competencias",
+      texto:
+        "El escenario donde nuevos talentos tienen la oportunidad de demostrar lo que pueden hacer.",
+    },
+    {
+      icono: "Ubicacion",
+      nombre: "Tours & cities",
+      texto:
+        "COMICOMANÍA viajando y conectando comunidades en diferentes ciudades y países.",
+    },
+    {
+      icono: "Estrella",
+      nombre: "Brand experiences",
+      texto:
+        "Activaciones, grabaciones y experiencias donde las marcas forman parte del entretenimiento.",
+    },
+  ],
+  firma: {
+    antes: "La comunidad nace digital.",
+    despues: "La experiencia se vive en persona.",
+  },
+} as const;
 
 export const MARCAS = {
   eyebrow: "Para marcas",

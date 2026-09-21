@@ -221,7 +221,19 @@ export function IconoPago(props: Props) {
   );
 }
 
+
+/** Tours & cities: el punto en el mapa. */
+export function IconoUbicacion(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 21.5s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" />
+      <circle cx="12" cy="10.2" r="2.6" />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Ubicacion: IconoUbicacion,
   Percha: IconoPercha,
   Regalo: IconoRegalo,
   Envio: IconoEnvio,

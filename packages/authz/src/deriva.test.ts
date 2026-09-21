@@ -61,4 +61,33 @@ describe("el SQL y el TypeScript dicen lo mismo", () => {
     expect(acceso).toContain("audit_logs_sin_update");
     expect(acceso).toContain("audit_logs_sin_delete");
   });
+
+  /* El guard del servidor lee denied_permissions desde `roles`. Si RLS no deja
+     leer esa fila, `denegados` llega vacío y la prohibición se evapora: el
+     fallo no rompe nada, amplía permisos en silencio. Solo el catálogo
+     completo exige ACCESS_CONTROL.VIEW; el propio rol debe verse siempre. */
+  it("cualquiera puede leer el rol de sus propios grants", () => {
+    const denegaciones = readFileSync(
+      "supabase/migrations/20260921203000_denegaciones_visibles.sql",
+      "utf8",
+    );
+    expect(denegaciones).toContain("roles_de_mis_grants");
+    expect(denegaciones).toMatch(/create policy .+ on public\.roles\s+for select/);
+    // La comprobación va en una función SECURITY DEFINER: si se hiciera con un
+    // subselect directo, la política de roles dispararía la de access_grants.
+    expect(denegaciones).toContain("security definer");
+  });
+
+  it("los roles con denegaciones son los que el producto promete", () => {
+    for (const [rol, prohibido] of [
+      ["SUPER_ADMIN_TECH", "ORDERS.REFUND"],
+      ["CITY_MANAGER", "ACCESS_CONTROL.MANAGE"],
+      ["SUPPORT_AGENT", "USERS.DELETE"],
+      ["AUDITOR", "CRM.EXPORT"],
+    ] as const) {
+      const inicio = seed.indexOf(`('${rol}'`);
+      expect(inicio, `falta el rol ${rol} en el seed`).toBeGreaterThan(-1);
+      expect(seed.slice(inicio, inicio + 1400)).toContain(prohibido);
+    }
+  });
 });

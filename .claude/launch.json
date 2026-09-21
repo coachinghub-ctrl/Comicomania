@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "comicomania-web",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /Users/servio/Projects/comicomania/apps/web && pnpm dev"],
+      "port": 3100
+    }
+  ]
+}

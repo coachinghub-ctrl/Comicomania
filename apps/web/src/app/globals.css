@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "@comicomania/ui/tokens.css";
+
+/* Los componentes del design system viven fuera de esta app. */
+@source "../../../../packages/ui/src";

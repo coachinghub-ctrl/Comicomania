@@ -1,0 +1,76 @@
+/* COMICOMANIA STAGE — tokens de marca.
+   Valores muestreados del logo oficial (brand/comicomania-logo.webp).
+   Ver docs/11-design-system-wireframes.md */
+@theme {
+  /* Fondos — negro de teatro, cálido como el contorno del logo */
+  --color-stage-1000: #000000;
+  --color-stage-900:  #080506;
+  --color-stage-800:  #12090A;
+  --color-stage-700:  #1E1112;
+  --color-stage-600:  #2E1A1B;
+
+  /* Rojo — la cinta. red-600 es RELLENO, red-500 es acento. */
+  --color-red-700: #620700;
+  --color-red-600: #B00501;
+  --color-red-500: #EB1701;
+  --color-red-400: #FF4B33;
+  --color-red-300: #FF6E5A;
+
+  /* Blancos — el crema del lettering */
+  --color-paper:      #F3F1D4;
+  --color-paper-pure: #FFFFFF;
+  --color-muted:      #B9AFA6;
+  --color-muted-dim:  #8A8078;
+
+  /* Acentos del logo — máscaras y lágrimas */
+  --color-gold-400: #FFD502;
+  --color-gold-500: #FFAD03;
+  --color-gold-700: #F08304;
+  --color-tear-400: #04C5E4;
+  --color-tear-500: #00ACD1;
+  --color-tear-700: #0E5C73;
+
+  /* Semánticos */
+  --color-success: #22C55E;
+  --color-warning: #FFD502;
+  --color-danger:  #FF4B33;
+  --color-info:    #00ACD1;
+
+  /* Tipografía */
+  --font-display: var(--font-archivo), "Arial Black", system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Movimiento — rápido y con intención */
+  --ease-stage: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root { color-scheme: dark; }
+  body {
+    background: var(--color-stage-1000);
+    color: var(--color-paper-pure);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--color-red-600); color: var(--color-paper); }
+  :focus-visible {
+    outline: 2px solid var(--color-red-400);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Firma visual: el spotlight. Una sola vez por pantalla. */
+@utility spotlight {
+  background-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    color-mix(in oklab, var(--color-red-500) 28%, transparent),
+    transparent 70%
+  );
+}

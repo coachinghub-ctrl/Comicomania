@@ -135,6 +135,10 @@ export function Movimiento() {
           aria-hidden
           className="absolute inset-0 bg-[linear-gradient(to_top,#080506_3%,rgba(8,5,6,0.30)_70%)] lg:bg-[linear-gradient(to_right,rgba(8,5,6,0.93)_0%,rgba(8,5,6,0.84)_36%,rgba(8,5,6,0.40)_60%,rgba(8,5,6,0.12)_100%)]"
         />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#080506,rgba(8,5,6,0))] lg:block"
+          />
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-32">
@@ -229,6 +233,10 @@ export function Proposito() {
             aria-hidden
             className="absolute inset-0 bg-[linear-gradient(to_top,#080506_3%,rgba(8,5,6,0.25)_72%)] lg:bg-[linear-gradient(to_right,rgba(8,5,6,0.80)_0%,rgba(8,5,6,0.55)_40%,rgba(8,5,6,0.10)_70%,rgba(8,5,6,0)_100%)]"
           />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#080506,rgba(8,5,6,0))] lg:block"
+          />
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-32">
@@ -243,7 +251,7 @@ export function Proposito() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-5 pb-20 sm:pb-28">
+      <div className="mx-auto max-w-6xl px-5 pt-14 pb-20 sm:pt-20 sm:pb-28">
         <ul className="aparece grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2 [&>li:last-child]:sm:col-span-2">
           {PROPOSITO.principios.map((principio) => (
             <li
@@ -266,18 +274,46 @@ export function Proposito() {
           </strong>
         </p>
 
-        <div className="aparece mt-16 border-t border-stage-600 pt-12">
-          <p className="font-display text-2xl text-balance text-paper uppercase sm:text-3xl">
-            {PROPOSITO.puentes.entrada}
-          </p>
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-            {PROPOSITO.puentes.verbos.map((v) => (
-              <li key={v} className="text-lg text-muted">
-                {v}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-xl text-gold-400">{PROPOSITO.puentes.cierre}</p>
+      </div>
+
+      {/* "Puede unir. Puede sanar..." sobre la foto de las generaciones
+          conectadas por una misma línea: la imagen dice lo mismo que el
+          texto. El 40% izquierdo es negro puro (p95 0,0013), así que aquí
+          no hace falta velo — crema 18:1, oro 14:1 tal cual. */}
+      <div className="relative isolate overflow-hidden border-t border-stage-600">
+        <div className="relative aspect-[16/9] w-full sm:aspect-[5/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+          <Image
+            src="/hero/generaciones.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[linear-gradient(to_top,#080506_2%,rgba(8,5,6,0.20)_70%)] lg:bg-[linear-gradient(to_right,rgba(8,5,6,0.75)_0%,rgba(8,5,6,0.45)_38%,rgba(8,5,6,0)_66%)]"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#080506,rgba(8,5,6,0))] lg:block"
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-14 sm:py-20 lg:py-28">
+          <div className="aparece lg:max-w-[46%]">
+            <p className="font-display text-2xl text-balance text-paper uppercase sm:text-3xl">
+              {PROPOSITO.puentes.entrada}
+            </p>
+            <ul className="mt-6 space-y-1.5">
+              {PROPOSITO.puentes.verbos.map((v) => (
+                <li key={v} className="flex items-center gap-3 text-lg text-muted">
+                  <span className="h-px w-5 shrink-0 bg-gold-400/60" aria-hidden />
+                  {v}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-7 text-xl text-gold-400">{PROPOSITO.puentes.cierre}</p>
+          </div>
         </div>
       </div>
     </section>

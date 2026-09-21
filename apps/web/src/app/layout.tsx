@@ -17,11 +17,17 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "COMICOMANÍA — La comunidad de la comedia",
+    default: "COMICOMANÍA — El movimiento global del humor",
     template: "%s · COMICOMANÍA",
   },
   description:
-    "La comunidad de la comedia. Concursos, humoristas, eventos y academia.",
+    "El humor nos mueve. El movimiento global donde el humor conecta talento, audiencia, marcas y oportunidades. Concursos, humoristas, eventos, academia y comunidad.",
+  keywords: [
+    "humor", "comedia", "humoristas", "comediantes", "stand-up",
+    "concursos de comedia", "videos de humor", "eventos de comedia",
+    "cursos de comedia", "nuevos talentos", "entretenimiento",
+    "humor latino", "comedia latina",
+  ],
   openGraph: {
     type: "website",
     siteName: "COMICOMANÍA",

@@ -1,0 +1,295 @@
+/* Todo el texto de la landing, separado del JSX.
+   La copia cambia seguido; el maquetado no. Ver el Prompt Maestro del sitio. */
+
+export const HERO = {
+  eyebrow: "El movimiento global del humor",
+  titulo: ["El humor", "nos mueve"],
+  subtitulo:
+    "El movimiento global donde el humor conecta talento, audiencia, marcas y oportunidades.",
+  texto:
+    "Una plataforma de entretenimiento donde humoristas, creadores, espectadores, estudiantes, marcas y negocios se conectan alrededor de una misma pasión: hacer reír.",
+  verbos: ["Descubre", "Participa", "Aprende", "Comparte", "Conecta", "Crece"],
+  ctaPrincipal: { texto: "Únete al movimiento", href: "/entrar" },
+  ctaSecundario: { texto: "Descubre COMICOMANÍA", href: "#movimiento" },
+};
+
+export const MOVIMIENTO = {
+  titulo: ["No es solo humor.", "Es un movimiento."],
+  parrafos: [
+    "COMICOMANÍA nace para transformar la manera en que descubrimos, vivimos y compartimos el humor.",
+    "Creamos un ecosistema donde nuevos talentos pueden darse a conocer, los humoristas pueden crecer, las audiencias pueden participar y las marcas pueden conectar con una comunidad activa a través del entretenimiento.",
+  ],
+  remate: "Aquí el espectador deja de ser solamente espectador.",
+  verbos: [
+    "Descubre",
+    "Vota",
+    "Comparte",
+    "Participa",
+    "Aprende",
+    "Compite",
+    "Conecta",
+    "Crece",
+  ],
+};
+
+export const JOURNEY = {
+  titulo: "Todo comienza con una risa",
+  pasos: [
+    { verbo: "Descubre", texto: "Encuentra nuevos humoristas, creadores y contenido." },
+    { verbo: "Mira", texto: "Disfruta videos, shows, competencias y experiencias." },
+    { verbo: "Vota", texto: "Participa en concursos y ayuda a impulsar nuevos talentos." },
+    { verbo: "Comparte", texto: "Haz que el humor viaje de persona a persona." },
+    { verbo: "Aprende", texto: "Accede a cursos, talleres y experiencias de formación." },
+    { verbo: "Participa", texto: "Forma parte de competencias, eventos y actividades." },
+    { verbo: "Crece", texto: "Construye audiencia, presencia y oportunidades." },
+    { verbo: "Conecta", texto: "Forma parte de una comunidad que cruza ciudades, países y culturas." },
+  ],
+};
+
+export const PROPOSITO = {
+  eyebrow: "Lo que defendemos",
+  titulo: "Humor con propósito",
+  entrada:
+    "Queremos contribuir a rescatar el humor que hace reír sin destruir, sin humillar y sin recurrir constantemente a palabras ofensivas. Creemos en un humor creativo, inteligente, auténtico y capaz de conectar generaciones.",
+  demostracion: "Queremos demostrar que se puede:",
+  principios: [
+    "Hacer reír con buenas palabras.",
+    "Ser irreverente sin perder creatividad.",
+    "Divertir sin destruir.",
+    "Crear sin necesidad de ofender.",
+    "Hacer del humor una herramienta de conexión.",
+  ],
+  giro: { antes: "No buscamos censurar la creatividad.", despues: "Buscamos elevarla." },
+  puentes: {
+    entrada: "El humor también puede tener propósito.",
+    verbos: [
+      "Puede unir.",
+      "Puede sanar.",
+      "Puede enseñar.",
+      "Puede hacernos pensar.",
+      "Puede abrir conversaciones.",
+      "Puede descubrir talento.",
+      "Puede crear oportunidades.",
+    ],
+    cierre: "Y, sobre todo: puede hacernos reír.",
+  },
+};
+
+export const PERFILES = [
+  {
+    id: "humorista",
+    titulo: "Soy humorista",
+    promesa: "Tu escenario ahora puede estar en cualquier lugar.",
+    items: [
+      "Crea tu perfil",
+      "Sube contenido",
+      "Participa en competencias",
+      "Construye audiencia",
+      "Conecta con marcas",
+      "Encuentra oportunidades",
+    ],
+    remate: "Lleva tu talento más lejos.",
+    cta: { texto: "Quiero participar", href: "/entrar" },
+    destacado: true,
+  },
+  {
+    id: "espectador",
+    titulo: "Soy espectador",
+    promesa: "Aquí no solamente vienes a mirar.",
+    items: [
+      "Descubre nuevos talentos",
+      "Mira contenido",
+      "Vota por tus favoritos",
+      "Comparte y participa",
+      "Asiste a eventos",
+      "Forma parte de la comunidad",
+    ],
+    remate: null,
+    cta: { texto: "Quiero explorar", href: "/entrar" },
+    destacado: false,
+  },
+  {
+    id: "estudiante",
+    titulo: "Soy estudiante",
+    promesa: "El humor también se aprende, se practica y se desarrolla.",
+    items: ["Cursos", "Talleres", "Recursos", "Referentes", "Experiencias"],
+    remate: "Diseñado para ayudarte a desarrollar tu talento.",
+    cta: { texto: "Quiero aprender", href: "/entrar" },
+    destacado: false,
+  },
+  {
+    id: "marca",
+    titulo: "Soy una marca o negocio",
+    promesa: "Conecta tu marca con una comunidad que quiere entretenerse.",
+    items: [
+      "Patrocinio",
+      "Publicidad",
+      "Activaciones",
+      "Branded content",
+      "Eventos y concursos",
+      "Creadores y experiencias",
+    ],
+    remate: null,
+    cta: { texto: "Quiero conectar mi marca", href: "/entrar" },
+    destacado: false,
+  },
+  {
+    id: "operador",
+    titulo: "Soy operador",
+    promesa: "Desarrolla COMICOMANÍA en tu territorio.",
+    items: [
+      "Administra una ciudad o un país",
+      "Alcance definido por la administración general",
+      "Talento, eventos y comunidad local",
+    ],
+    remate: "Los operadores autorizados administran territorios específicos.",
+    cta: { texto: "Quiero conocer más", href: "/entrar" },
+    destacado: false,
+  },
+] as const;
+
+export const VERTICALES = [
+  {
+    id: "talent",
+    marca: "COMICOMANÍA Talent",
+    titulo: "El próximo gran talento puede estar aquí.",
+    texto:
+      "Creamos espacios para descubrir nuevos humoristas desde diferentes ciudades y países.",
+    pasos: ["Sube tu video", "Participa", "Consigue votos", "Avanza", "Hazte visible", "Crece"],
+    remate: "El talento local puede convertirse en talento global.",
+    cta: { texto: "Participa", href: "/entrar" },
+  },
+  {
+    id: "academy",
+    marca: "COMICOMANÍA Academy",
+    titulo: "Aprende el arte y el negocio del humor.",
+    texto:
+      "Una plataforma educativa para quienes quieran desarrollar profesionalmente su talento.",
+    pasos: [
+      "Stand-up comedy",
+      "Storytelling",
+      "Creación de personajes",
+      "Escritura humorística",
+      "Improvisación",
+      "Contenido para redes",
+      "Comunicación",
+      "Marca personal",
+      "Monetización",
+      "Producción",
+      "Construcción de audiencia",
+      "Negocio del entretenimiento",
+      "IA aplicada a contenido",
+    ],
+    remate: "No solo enseñamos a hacer reír. Ayudamos a transformar talento en una carrera.",
+    cta: { texto: "Explora la Academy", href: "/entrar" },
+  },
+  {
+    id: "live",
+    marca: "COMICOMANÍA Live",
+    titulo: "Del mundo digital al escenario.",
+    texto: "Conectamos la experiencia digital con experiencias presenciales.",
+    pasos: [
+      "Shows",
+      "Festivales",
+      "Open mics",
+      "Competencias",
+      "Giras",
+      "Experiencias",
+      "Encuentros",
+      "Grabaciones",
+      "Activaciones de marca",
+    ],
+    remate: null,
+    cta: { texto: "Descubre los eventos", href: "/entrar" },
+  },
+  {
+    id: "shop",
+    marca: "COMICOMANÍA Shop",
+    titulo: "Lleva el movimiento contigo.",
+    texto: "La tienda oficial del ecosistema.",
+    pasos: [
+      "T-shirts",
+      "Gorras",
+      "Accesorios",
+      "Coleccionables",
+      "Productos de humoristas",
+      "Colaboraciones",
+      "Ediciones especiales",
+      "Merch de eventos",
+    ],
+    remate: null,
+    cta: { texto: "Visita la tienda", href: "/entrar" },
+  },
+] as const;
+
+export const MARCAS = {
+  eyebrow: "Para marcas",
+  titulo: "Donde el entretenimiento se convierte en conexión.",
+  texto:
+    "COMICOMANÍA permite que las marcas conecten con audiencias a través del entretenimiento.",
+  categorias: [
+    { nombre: "Patrocinios", texto: "Competencias, categorías, eventos y experiencias patrocinadas." },
+    { nombre: "Branded content", texto: "Contenido desarrollado junto a humoristas y creadores." },
+    { nombre: "Activaciones", texto: "Experiencias digitales y presenciales." },
+    { nombre: "Media", texto: "Publicidad dentro del ecosistema." },
+    { nombre: "Talent", texto: "Colaboraciones entre marcas y creadores." },
+    { nombre: "Promociones", texto: "Premios, productos, concursos y experiencias." },
+    {
+      nombre: "Data & insights",
+      texto:
+        "Información agregada sobre comportamiento, participación y tendencias de la comunidad, respetando las políticas de privacidad aplicables.",
+    },
+  ],
+  cta: { texto: "Quiero conectar mi marca", href: "/entrar" },
+};
+
+export const EXPANSION = {
+  titulo: ["Una plataforma.", "Muchas ciudades.", "Un solo movimiento."],
+  texto:
+    "COMICOMANÍA crece mediante operadores autorizados que desarrollan comunidades específicas. Todo permanece conectado dentro del ecosistema global.",
+  escalera: ["Ciudad", "País", "Región", "Mundo"],
+  desarrolla: [
+    "Talento local",
+    "Eventos",
+    "Competencias",
+    "Alianzas",
+    "Patrocinantes",
+    "Contenido",
+    "Comunidad",
+    "Experiencias",
+  ],
+};
+
+export const MANIFIESTO = {
+  titulo: "Creemos en el poder de hacer reír.",
+  creencias: [
+    "Creemos que detrás de cada gran humorista hubo un día en el que nadie conocía su nombre.",
+    "Creemos que el talento puede aparecer en cualquier barrio, ciudad o país.",
+    "Creemos que no necesitas destruir a alguien para hacer reír.",
+    "Creemos en la creatividad. En las buenas palabras. En las historias. En los personajes. En la capacidad de encontrar humor incluso en las cosas más simples de la vida.",
+    "Creemos que una audiencia puede cambiar una carrera. Que una oportunidad puede cambiar una vida. Que una risa puede cruzar fronteras.",
+    "Y creemos que el humor puede volver a convertirse en un espacio que podamos compartir entre generaciones.",
+  ],
+  cierre:
+    "Por eso creamos un lugar donde el talento pueda ser descubierto, donde las personas puedan participar y donde el humor pueda convertirse en una oportunidad.",
+  lemas: ["Humor con propósito.", "Humor que conecta.", "Humor que nos mueve."],
+  firma: ["Esto es COMICOMANÍA.", "Y apenas estamos comenzando."],
+};
+
+export const CIERRE = {
+  titulo: "¿Listo para ser parte del movimiento?",
+  texto:
+    "No importa si haces reír, quieres reír, quieres aprender, quieres descubrir talento o quieres conectar tu marca con nuevas audiencias. Hay un lugar para ti en COMICOMANÍA.",
+  ctaPrincipal: { texto: "Únete a COMICOMANÍA", href: "/entrar" },
+  ctaSecundario: { texto: "Crear mi cuenta", href: "/entrar" },
+};
+
+export const NAVEGACION = [
+  { texto: "Descubre", href: "#movimiento" },
+  { texto: "Talent", href: "#talent" },
+  { texto: "Academy", href: "#academy" },
+  { texto: "Live", href: "#live" },
+  { texto: "Shop", href: "#shop" },
+  { texto: "Para marcas", href: "#marcas" },
+  { texto: "Nosotros", href: "#manifiesto" },
+];

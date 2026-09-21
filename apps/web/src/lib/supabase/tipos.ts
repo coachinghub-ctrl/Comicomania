@@ -780,6 +780,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      metricas_publicas: {
+        Args: never
+        Returns: {
+          clave: string
+          valor: number
+        }[]
+      }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       uuid_generate_v7: { Args: never; Returns: string }

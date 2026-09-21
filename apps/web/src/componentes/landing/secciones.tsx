@@ -208,47 +208,79 @@ export function Journey() {
 /* ------------------------------------------------------------- PROPÓSITO */
 export function Proposito() {
   return (
-    <Seccion id="proposito" fondo="elevado">
-      <div className="aparece max-w-3xl">
-        <Antetitulo>{PROPOSITO.eyebrow}</Antetitulo>
-        <Titulo>{PROPOSITO.titulo}</Titulo>
-        <p className="mt-6 text-lg text-pretty text-muted">{PROPOSITO.entrada}</p>
-        <p className="mt-6 text-paper">{PROPOSITO.demostracion}</p>
+    <section
+      id="proposito"
+      className="scroll-mt-20 border-t border-stage-600 bg-stage-900"
+    >
+      {/* La mitad izquierda de esta foto es negro casi puro (p95 0,007):
+          el texto llega a 16:1 sin velo. Por eso el degradado es suave —
+          80% a la izquierda y transparente a la derecha — y el foco sobre
+          el banco y el micrófono se conserva entero. */}
+      <div className="relative isolate overflow-hidden">
+        <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+          <Image
+            src="/hero/proposito.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[linear-gradient(to_top,#080506_3%,rgba(8,5,6,0.25)_72%)] lg:bg-[linear-gradient(to_right,rgba(8,5,6,0.80)_0%,rgba(8,5,6,0.55)_40%,rgba(8,5,6,0.10)_70%,rgba(8,5,6,0)_100%)]"
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-32">
+          <div className="aparece lg:max-w-[50%]">
+            <Antetitulo>{PROPOSITO.eyebrow}</Antetitulo>
+            <Titulo>{PROPOSITO.titulo}</Titulo>
+            <p className="mt-6 text-lg text-pretty text-muted">
+              {PROPOSITO.entrada}
+            </p>
+            <p className="mt-6 text-paper">{PROPOSITO.demostracion}</p>
+          </div>
+        </div>
       </div>
 
-      <ul className="aparece mt-8 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2 [&>li:last-child]:sm:col-span-2">
-        {PROPOSITO.principios.map((principio) => (
-          <li
-            key={principio}
-            className="flex items-center gap-4 bg-stage-800 px-5 py-6"
-          >
-            <span className="size-2 shrink-0 rounded-full bg-red-500" aria-hidden />
-            <span className="text-lg text-paper-pure">{principio}</span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="aparece mt-10 text-xl text-balance text-paper sm:text-2xl">
-        {PROPOSITO.giro.antes}{" "}
-        <strong className="font-display text-gold-400 uppercase">
-          {PROPOSITO.giro.despues}
-        </strong>
-      </p>
-
-      <div className="aparece mt-16 border-t border-stage-600 pt-12">
-        <p className="font-display text-2xl text-balance text-paper uppercase sm:text-3xl">
-          {PROPOSITO.puentes.entrada}
-        </p>
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-          {PROPOSITO.puentes.verbos.map((v) => (
-            <li key={v} className="text-lg text-muted">
-              {v}
+      <div className="mx-auto max-w-6xl px-5 pb-20 sm:pb-28">
+        <ul className="aparece grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2 [&>li:last-child]:sm:col-span-2">
+          {PROPOSITO.principios.map((principio) => (
+            <li
+              key={principio}
+              className="flex items-center gap-4 bg-stage-800 px-5 py-6"
+            >
+              <span
+                className="size-2 shrink-0 rounded-full bg-red-500"
+                aria-hidden
+              />
+              <span className="text-lg text-paper-pure">{principio}</span>
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-xl text-gold-400">{PROPOSITO.puentes.cierre}</p>
+
+        <p className="aparece mt-10 text-xl text-balance text-paper sm:text-2xl">
+          {PROPOSITO.giro.antes}{" "}
+          <strong className="font-display text-gold-400 uppercase">
+            {PROPOSITO.giro.despues}
+          </strong>
+        </p>
+
+        <div className="aparece mt-16 border-t border-stage-600 pt-12">
+          <p className="font-display text-2xl text-balance text-paper uppercase sm:text-3xl">
+            {PROPOSITO.puentes.entrada}
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+            {PROPOSITO.puentes.verbos.map((v) => (
+              <li key={v} className="text-lg text-muted">
+                {v}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-xl text-gold-400">{PROPOSITO.puentes.cierre}</p>
+        </div>
       </div>
-    </Seccion>
+    </section>
   );
 }
 

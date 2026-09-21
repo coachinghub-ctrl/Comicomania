@@ -559,11 +559,11 @@ export function Academy() {
                   key={pilar.verbo}
                   className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                  <div className="flex items-center gap-4">
+                    <span className="font-display text-3xl text-red-500 tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {Icono && <Icono className="size-6 text-paper" />}
+                    {Icono && <Icono className="size-9 text-paper sm:size-10" />}
                     <h3 className="font-display text-lg text-paper uppercase">
                       {pilar.verbo}
                     </h3>
@@ -695,11 +695,11 @@ export function Shop() {
                   key={familia.nombre}
                   className="aparece sm:border-l sm:border-stage-600 sm:pl-6 sm:first:border-l-0 sm:first:pl-0"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                  <div className="flex items-center gap-4">
+                    <span className="font-display text-3xl text-red-500 tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {Icono && <Icono className="size-6 text-paper" />}
+                    {Icono && <Icono className="size-9 text-paper sm:size-10" />}
                     <h3 className="font-display text-base text-paper uppercase">
                       {familia.nombre}
                     </h3>
@@ -831,11 +831,11 @@ export function Live() {
                   key={familia.nombre}
                   className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                  <div className="flex items-center gap-4">
+                    <span className="font-display text-3xl text-red-500 tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {Icono && <Icono className="size-6 text-paper" />}
+                    {Icono && <Icono className="size-9 text-paper sm:size-10" />}
                   </div>
                   <h3 className="font-display mt-3 text-base text-paper uppercase">
                     {familia.nombre}
@@ -942,11 +942,11 @@ export function Marcas() {
                   key={bloque.nombre}
                   className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                  <div className="flex items-center gap-4">
+                    <span className="font-display text-3xl text-red-500 tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {Icono && <Icono className="size-6 text-paper" />}
+                    {Icono && <Icono className="size-9 text-paper sm:size-10" />}
                   </div>
                   <h3 className="font-display mt-3 text-base text-paper uppercase">
                     {bloque.nombre}

@@ -36,3 +36,12 @@ export const pasos = [
       "Un jurado con rúbrica pública y el voto del público, con una regla clara: un voto verificado por persona.",
   },
 ];
+
+/* Los cinco principios de HUMOR CON PROPÓSITO, tal como los define la marca. */
+export const principios = [
+  "Hacer reír con buenas palabras.",
+  "Ser irreverente sin perder creatividad.",
+  "Divertir sin destruir.",
+  "Crear sin necesidad de ofender.",
+  "Hacer del humor una herramienta de conexión.",
+];

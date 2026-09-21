@@ -147,7 +147,7 @@ export function Movimiento() {
       <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-32">
         <div className="aparece lg:max-w-[48%]">
           <Titulo>
-            {MOVIMIENTO.titulo[0]}
+            {MOVIMIENTO.titulo[0]}{" "}
             <br />
             <span className="text-red-500">{MOVIMIENTO.titulo[1]}</span>
           </Titulo>
@@ -861,29 +861,161 @@ export function Live() {
 /* ---------------------------------------------------------------- MARCAS */
 export function Marcas() {
   return (
-    <Seccion id="marcas" fondo="elevado">
-      <div className="aparece max-w-3xl">
-        <Antetitulo>{MARCAS.eyebrow}</Antetitulo>
-        <Titulo>{MARCAS.titulo}</Titulo>
-        <p className="mt-6 text-lg text-pretty text-muted">{MARCAS.texto}</p>
+    <section
+      id="marcas"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      {/* p95 0,100 en la columna izquierda: hace falta 82% de velo para que
+          el gris de los párrafos pase de 7:1. Es una foto muy iluminada. */}
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/marcas.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.42)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.93)_0%,rgba(0,0,0,0.82)_36%,rgba(0,0,0,0.30)_62%,rgba(0,0,0,0.06)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
       </div>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {MARCAS.categorias.map((cat) => (
-          <article
-            key={cat.nombre}
-            className="aparece rounded-lg border border-stage-600 bg-stage-800 p-6"
-          >
-            <h3 className="font-display text-lg text-gold-400 uppercase">
-              {cat.nombre}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{cat.texto}</p>
-          </article>
-        ))}
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="aparece lg:max-w-[52%]">
+          <div className="mb-5 flex items-center gap-4">
+            <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+              {MARCAS.eyebrow}
+            </span>
+            <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
+          </div>
+
+          <h2 className="font-display text-4xl leading-[0.92] text-balance text-paper uppercase sm:text-5xl">
+            {MARCAS.titulo[0]}{" "}
+            <br />
+            <span className="text-red-500">{MARCAS.titulo[1]}</span>
+          </h2>
+
+          <p className="mt-7 max-w-xl text-lg text-pretty text-muted">
+            {MARCAS.texto}
+          </p>
+
+          {/* La fórmula: tres piezas que solo funcionan juntas. */}
+          <ul className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
+            {MARCAS.formula.map((pieza, i) => (
+              <li key={pieza} className="flex items-center gap-3">
+                <span className="font-display text-sm tracking-wide text-paper uppercase">
+                  {pieza}
+                </span>
+                {i < MARCAS.formula.length - 1 && (
+                  <span className="text-red-500" aria-hidden>
+                    +
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          <ButtonLink href={MARCAS.cta.href as Route} tamano="lg" className="group mt-9">
+            {MARCAS.cta.texto}
+            <span
+              className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+              aria-hidden
+            >
+              →
+            </span>
+          </ButtonLink>
+        </div>
       </div>
-      <ButtonLink href={MARCAS.cta.href as Route} tamano="lg" className="mt-10">
-        {MARCAS.cta.texto}
-      </ButtonLink>
-    </Seccion>
+
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000">
+        <div className="mx-auto max-w-6xl px-5 py-12">
+          <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {MARCAS.bloques.map((bloque, i) => {
+              const Icono = ICONOS[bloque.icono];
+              return (
+                <li
+                  key={bloque.nombre}
+                  className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {Icono && <Icono className="size-6 text-paper" />}
+                  </div>
+                  <h3 className="font-display mt-3 text-base text-paper uppercase">
+                    {bloque.nombre}
+                  </h3>
+                  <p className="mt-3 border-l-2 border-red-500 pl-3 text-sm text-paper-pure">
+                    {bloque.items.join(" · ")}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {bloque.texto}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+
+          {/* La cadena: una idea que entra por seis puertas distintas. */}
+          <div className="mt-12 flex flex-col gap-8 border-t border-stage-600 pt-8 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+              <p className="font-display text-sm tracking-wide text-paper uppercase sm:text-base">
+                {MARCAS.cadena.titulo}
+              </p>
+              <ol className="flex flex-wrap items-center gap-x-3 gap-y-4">
+                {MARCAS.cadena.puntos.map((punto, i) => {
+                  const Icono = ICONOS[punto.icono];
+                  return (
+                    <li key={punto.nombre} className="flex items-center gap-3">
+                      <span className="flex flex-col items-center gap-1.5">
+                        {Icono && <Icono className="size-5 text-paper" />}
+                        <span className="text-[0.65rem] tracking-[0.15em] text-muted uppercase">
+                          {punto.nombre}
+                        </span>
+                      </span>
+                      {i < MARCAS.cadena.puntos.length - 1 && (
+                        <span className="text-stage-600" aria-hidden>
+                          →
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center xl:shrink-0">
+              <p className="max-w-xs text-sm text-pretty">
+                <span className="font-display text-paper uppercase">
+                  {MARCAS.cadena.remate.antes}
+                </span>{" "}
+                <span className="font-display text-red-500 uppercase">
+                  {MARCAS.cadena.remate.despues}
+                </span>
+              </p>
+              <ButtonLink
+                href={MARCAS.cadena.cta.href as Route}
+                className="group shrink-0"
+              >
+                {MARCAS.cadena.cta.texto}
+                <span
+                  className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+                  aria-hidden
+                >
+                  →
+                </span>
+              </ButtonLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -896,7 +1028,12 @@ export function Expansion() {
           {EXPANSION.titulo.map((linea, i) => (
             <span key={linea}>
               {i === 2 ? <span className="text-red-500">{linea}</span> : linea}
-              {i < 2 && <br />}
+              {i < 2 && (
+                <>
+                  {" "}
+                  <br />
+                </>
+              )}
             </span>
           ))}
         </Titulo>

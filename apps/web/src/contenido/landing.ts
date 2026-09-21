@@ -309,24 +309,56 @@ export const LIVE = {
 
 export const MARCAS = {
   eyebrow: "Para marcas",
-  titulo: "Donde el entretenimiento se convierte en conexión.",
+  titulo: ["No interrumpas el entretenimiento.", "Forma parte de él."],
   texto:
-    "COMICOMANÍA permite que las marcas conecten con audiencias a través del entretenimiento.",
-  categorias: [
-    { nombre: "Patrocinios", texto: "Competencias, categorías, eventos y experiencias patrocinadas." },
-    { nombre: "Branded content", texto: "Contenido desarrollado junto a humoristas y creadores." },
-    { nombre: "Activaciones", texto: "Experiencias digitales y presenciales." },
-    { nombre: "Media", texto: "Publicidad dentro del ecosistema." },
-    { nombre: "Talent", texto: "Colaboraciones entre marcas y creadores." },
-    { nombre: "Promociones", texto: "Premios, productos, concursos y experiencias." },
+    "COMICOMANÍA conecta marcas con audiencias a través del humor, talento, contenido y experiencias que las personas realmente quieren compartir.",
+  formula: ["Tu marca", "Nuestro talento", "Nuestra comunidad"],
+  cta: { texto: "Quiero conectar mi marca", href: "/entrar" },
+  bloques: [
     {
-      nombre: "Data & insights",
+      icono: "Contenido",
+      nombre: "Content & talent",
+      items: ["Branded content", "Humoristas", "Creadores", "Colaboraciones"],
+      texto: "Tu marca integrada naturalmente en contenido que entretiene.",
+    },
+    {
+      icono: "Grupo",
+      nombre: "Experiences",
+      items: ["Patrocinios", "Eventos", "Activaciones", "Competencias"],
+      texto: "Convierte la marca en una experiencia que la audiencia pueda vivir.",
+    },
+    {
+      icono: "Crece",
+      nombre: "Media & amplification",
+      items: ["Plataforma", "Social", "Promociones", "Distribución"],
       texto:
-        "Información agregada sobre comportamiento, participación y tendencias de la comunidad, respetando las políticas de privacidad aplicables.",
+        "Lleva el mensaje más allá del evento y amplifica su alcance dentro del ecosistema.",
+    },
+    {
+      icono: "Tarta",
+      nombre: "Data & insights",
+      items: ["Audiencia", "Participación", "Tendencias", "Resultados"],
+      texto:
+        "Entiende cómo interactúa la comunidad y mide el impacto de cada acción, respetando las políticas de privacidad aplicables.",
     },
   ],
-  cta: { texto: "Quiero conectar mi marca", href: "/entrar" },
-};
+  cadena: {
+    titulo: "Una idea. Múltiples puntos de conexión.",
+    puntos: [
+      { icono: "Pantalla", nombre: "Digital" },
+      { icono: "Contenido", nombre: "Content" },
+      { icono: "Grupo", nombre: "Talent" },
+      { icono: "Calendario", nombre: "Live" },
+      { icono: "Comparte", nombre: "Social" },
+      { icono: "Conecta", nombre: "Community" },
+    ],
+    remate: {
+      antes: "Tu marca no tiene que mirar el movimiento desde afuera.",
+      despues: "Puede ser parte de él.",
+    },
+    cta: { texto: "Hablemos de tu marca", href: "/entrar" },
+  },
+} as const;
 
 export const EXPANSION = {
   titulo: ["Una plataforma.", "Muchas ciudades.", "Un solo movimiento."],

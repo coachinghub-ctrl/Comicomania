@@ -232,7 +232,53 @@ export function IconoUbicacion(props: Props) {
   );
 }
 
+
+/** Content & talent: el play dentro del marco. */
+export function IconoContenido(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
+      <path d="M10 9.5l4.5 2.5L10 14.5z" fill="currentColor" stroke="none" />
+    </Base>
+  );
+}
+
+/** Data & insights: la porción medida. */
+export function IconoTarta(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 3.5v8.5h8.5A8.5 8.5 0 0012 3.5z" />
+      <path d="M20 15.5A8.5 8.5 0 1110.5 3.6" />
+    </Base>
+  );
+}
+
+/** Digital: la pantalla. */
+export function IconoPantalla(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="3.5" y="4.5" width="17" height="11" rx="1.8" />
+      <path d="M2 19.5h20" />
+    </Base>
+  );
+}
+
+/** Live: la fecha en el calendario. */
+export function IconoCalendario(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="5.5" width="18" height="15" rx="2.2" />
+      <path d="M3 10h18M8 3.5v4M16 3.5v4" />
+      <circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none" />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Contenido: IconoContenido,
+  Tarta: IconoTarta,
+  Pantalla: IconoPantalla,
+  Calendario: IconoCalendario,
   Ubicacion: IconoUbicacion,
   Percha: IconoPercha,
   Regalo: IconoRegalo,

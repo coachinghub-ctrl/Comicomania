@@ -962,55 +962,61 @@ export function Marcas() {
             })}
           </ol>
 
-          {/* La cadena: una idea que entra por seis puertas distintas. */}
-          <div className="mt-12 flex flex-col gap-8 border-t border-stage-600 pt-8 xl:flex-row xl:items-center xl:justify-between">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
-              <p className="font-display text-sm tracking-wide text-paper uppercase sm:text-base">
+          {/* La cadena: una idea que entra por seis puertas distintas.
+              Una sola fila, siempre. En pantallas chicas se desliza en
+              horizontal antes que partirse en tres renglones. */}
+          <div className="mt-12 border-t border-stage-600 pt-10">
+            <ol className="-mx-5 flex items-start gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:justify-center sm:gap-5 sm:px-0 lg:gap-8">
+              {MARCAS.cadena.puntos.map((punto, i) => {
+                const Icono = ICONOS[punto.icono];
+                return (
+                  <li
+                    key={punto.nombre}
+                    className="flex shrink-0 items-center gap-3 sm:gap-5 lg:gap-8"
+                  >
+                    <span className="flex w-20 flex-col items-center gap-2.5 sm:w-24">
+                      {Icono && <Icono className="size-9 text-paper sm:size-10" />}
+                      <span className="text-center text-[0.65rem] tracking-[0.18em] text-muted uppercase sm:text-xs">
+                        {punto.nombre}
+                      </span>
+                    </span>
+                    {i < MARCAS.cadena.puntos.length - 1 && (
+                      <span className="mt-4 text-stage-600" aria-hidden>
+                        →
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+
+            <div className="mt-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <p className="font-display text-base tracking-wide text-balance text-paper uppercase sm:text-lg">
                 {MARCAS.cadena.titulo}
               </p>
-              <ol className="flex flex-wrap items-center gap-x-3 gap-y-4">
-                {MARCAS.cadena.puntos.map((punto, i) => {
-                  const Icono = ICONOS[punto.icono];
-                  return (
-                    <li key={punto.nombre} className="flex items-center gap-3">
-                      <span className="flex flex-col items-center gap-1.5">
-                        {Icono && <Icono className="size-5 text-paper" />}
-                        <span className="text-[0.65rem] tracking-[0.15em] text-muted uppercase">
-                          {punto.nombre}
-                        </span>
-                      </span>
-                      {i < MARCAS.cadena.puntos.length - 1 && (
-                        <span className="text-stage-600" aria-hidden>
-                          →
-                        </span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center xl:shrink-0">
-              <p className="max-w-xs text-sm text-pretty">
-                <span className="font-display text-paper uppercase">
-                  {MARCAS.cadena.remate.antes}
-                </span>{" "}
-                <span className="font-display text-red-500 uppercase">
-                  {MARCAS.cadena.remate.despues}
-                </span>
-              </p>
-              <ButtonLink
-                href={MARCAS.cadena.cta.href as Route}
-                className="group shrink-0"
-              >
-                {MARCAS.cadena.cta.texto}
-                <span
-                  className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
-                  aria-hidden
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:shrink-0">
+                <p className="max-w-sm text-sm text-pretty">
+                  <span className="font-display text-paper uppercase">
+                    {MARCAS.cadena.remate.antes}
+                  </span>{" "}
+                  <span className="font-display text-red-500 uppercase">
+                    {MARCAS.cadena.remate.despues}
+                  </span>
+                </p>
+                <ButtonLink
+                  href={MARCAS.cadena.cta.href as Route}
+                  className="group shrink-0"
                 >
-                  →
-                </span>
-              </ButtonLink>
+                  {MARCAS.cadena.cta.texto}
+                  <span
+                    className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import {
   NAVEGACION,
   PERFILES,
   PROPOSITO,
+  SHOP,
   TALENT,
   VERTICALES,
 } from "@/contenido/landing";
@@ -604,6 +605,126 @@ export function Academy() {
               </li>
             ))}
           </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ SHOP */
+export function Shop() {
+  return (
+    <section
+      id="shop"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      {/* Esta foto es la más brillante de todas por la izquierda (p95 0,128,
+          con el espejo de bombillas en 0,256) y además lleva lettering en
+          las camisetas. El 82% de velo lo apaga y deja el crema en 12:1;
+          el neón y la pareja de la derecha se conservan. */}
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/shop.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.42)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.93)_0%,rgba(0,0,0,0.82)_34%,rgba(0,0,0,0.30)_62%,rgba(0,0,0,0.05)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="aparece lg:max-w-[50%]">
+          <div className="mb-5 flex items-center gap-4">
+            <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+              {SHOP.marca}
+            </span>
+            <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
+          </div>
+
+          <h2 className="font-display text-4xl leading-[0.92] text-balance text-paper uppercase sm:text-5xl">
+            {SHOP.titulo[0]}{" "}
+            <br />
+            <span className="text-red-500">{SHOP.titulo[1]}</span>
+          </h2>
+
+          <p className="mt-7 text-lg text-pretty text-paper">{SHOP.entrada}</p>
+          <p className="mt-4 max-w-xl text-pretty text-muted">
+            {SHOP.texto}{" "}
+            <strong className="font-semibold text-paper-pure">{SHOP.remate}</strong>
+          </p>
+
+          <ButtonLink href={SHOP.cta.href as Route} tamano="lg" className="group mt-9">
+            {SHOP.cta.texto}
+            <span
+              className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+              aria-hidden
+            >
+              →
+            </span>
+          </ButtonLink>
+
+          <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+            {SHOP.garantias.map((g) => {
+              const Icono = ICONOS[g.icono];
+              return (
+                <li key={g.texto} className="flex items-center gap-2.5 text-sm text-muted">
+                  {Icono && <Icono className="size-5 shrink-0 text-paper" />}
+                  {g.texto}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-[1fr_auto] lg:items-center">
+          <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-3">
+            {SHOP.familias.map((familia, i) => {
+              const Icono = ICONOS[familia.icono];
+              return (
+                <li
+                  key={familia.nombre}
+                  className="aparece sm:border-l sm:border-stage-600 sm:pl-6 sm:first:border-l-0 sm:first:pl-0"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {Icono && <Icono className="size-6 text-paper" />}
+                    <h3 className="font-display text-base text-paper uppercase">
+                      {familia.nombre}
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-sm text-paper-pure">{familia.texto}</p>
+                  <p className="mt-2 text-sm text-muted">
+                    {familia.items.join(" · ")}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
+
+          <div className="aparece border-t border-stage-600 pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
+            <p className="font-display text-xl text-paper uppercase sm:text-2xl">
+              {SHOP.firma.lemas.map((lema) => (
+                <span key={lema} className="block">
+                  {lema}
+                </span>
+              ))}
+            </p>
+            <p className="font-display mt-3 inline-block border-b-2 border-red-500 pb-1 text-xl text-red-500 uppercase sm:text-2xl">
+              {SHOP.firma.cierre}
+            </p>
+          </div>
         </div>
       </div>
     </section>

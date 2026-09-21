@@ -10,6 +10,7 @@ import {
   Movimiento,
   Perfiles,
   Proposito,
+  Shop,
   Talent,
   Verticales,
 } from "@/componentes/landing/secciones";
@@ -27,6 +28,7 @@ export default function Home() {
         <Talent />
         <Academy />
         <Verticales />
+        <Shop />
         <Marcas />
         <Expansion />
         <Numeros />

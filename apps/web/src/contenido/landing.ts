@@ -221,6 +221,43 @@ export const ACADEMY = {
   recorrido: ["Descubre tu talento", "Desarróllalo", "Conviértelo en una carrera"],
 } as const;
 
+
+export const SHOP = {
+  marca: "COMICOMANÍA Shop",
+  titulo: ["No es merch.", "Es parte del movimiento."],
+  entrada: "El humor también se lleva puesto.",
+  texto:
+    "COMICOMANÍA Shop reúne productos oficiales, colecciones de humoristas y colaboraciones especiales creadas para quienes no solo siguen el movimiento:",
+  remate: "forman parte de él.",
+  cta: { texto: "Explora la tienda", href: "/entrar" },
+  garantias: [
+    { icono: "Envio", texto: "Envíos a todo el mundo" },
+    { icono: "Escudo", texto: "Productos oficiales" },
+    { icono: "Pago", texto: "Pago seguro y confiable" },
+  ],
+  familias: [
+    {
+      icono: "Percha",
+      nombre: "Originals",
+      texto: "La identidad oficial de COMICOMANÍA.",
+      items: ["T-shirts", "Hoodies", "Gorras", "Accesorios"],
+    },
+    {
+      icono: "Grupo",
+      nombre: "Creator collections",
+      texto: "El humor de tus creadores favoritos convertido en productos.",
+      items: ["Colecciones", "Frases", "Personajes", "Colaboraciones"],
+    },
+    {
+      icono: "Regalo",
+      nombre: "Special drops",
+      texto: "Productos que cuentan momentos del movimiento.",
+      items: ["Eventos", "Ciudades", "Competencias", "Ediciones limitadas"],
+    },
+  ],
+  firma: { lemas: ["Ríete.", "Conecta.", "Pertenece."], cierre: "Llévalo contigo." },
+} as const;
+
 export const VERTICALES = [
   {
     id: "live",
@@ -240,24 +277,6 @@ export const VERTICALES = [
     ],
     remate: null,
     cta: { texto: "Descubre los eventos", href: "/entrar" },
-  },
-  {
-    id: "shop",
-    marca: "COMICOMANÍA Shop",
-    titulo: "Lleva el movimiento contigo.",
-    texto: "La tienda oficial del ecosistema.",
-    pasos: [
-      "T-shirts",
-      "Gorras",
-      "Accesorios",
-      "Coleccionables",
-      "Productos de humoristas",
-      "Colaboraciones",
-      "Ediciones especiales",
-      "Merch de eventos",
-    ],
-    remate: null,
-    cta: { texto: "Visita la tienda", href: "/entrar" },
   },
 ] as const;
 

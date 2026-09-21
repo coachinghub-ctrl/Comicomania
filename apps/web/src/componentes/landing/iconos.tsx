@@ -167,7 +167,66 @@ export function IconoIdea(props: Props) {
   );
 }
 
+
+/** Originals: la percha. */
+export function IconoPercha(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 8.5V7a2.2 2.2 0 111.6-2.1" />
+      <path d="M12 8.5l8 5.2c.9.6.5 2-.6 2H4.6c-1.1 0-1.5-1.4-.6-2z" />
+    </Base>
+  );
+}
+
+/** Special drops: el regalo. */
+export function IconoRegalo(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="9.5" width="18" height="11" rx="1.6" />
+      <path d="M2 9.5h20M12 9.5v11" />
+      <path d="M12 9.5S10.6 4 8 4a2.2 2.2 0 000 4.4M12 9.5S13.4 4 16 4a2.2 2.2 0 010 4.4" />
+    </Base>
+  );
+}
+
+/** Envíos: el camión. */
+export function IconoEnvio(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M2.5 6.5h10v9h-10z" />
+      <path d="M12.5 9.5h4l3 3v3h-7z" />
+      <circle cx="6.5" cy="17.5" r="2" />
+      <circle cx="16.5" cy="17.5" r="2" />
+    </Base>
+  );
+}
+
+/** Oficiales: el escudo. */
+export function IconoEscudo(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 2.5l7.5 3v6c0 4.3-3 8.2-7.5 9.5-4.5-1.3-7.5-5.2-7.5-9.5v-6z" />
+      <path d="M9 11.8l2.2 2.2L15.3 10" />
+    </Base>
+  );
+}
+
+/** Pago seguro: la tarjeta. */
+export function IconoPago(props: Props) {
+  return (
+    <Base {...props}>
+      <rect x="2.5" y="5" width="19" height="14" rx="2.2" />
+      <path d="M2.5 9.5h19M6 14.5h3.5" />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Percha: IconoPercha,
+  Regalo: IconoRegalo,
+  Envio: IconoEnvio,
+  Escudo: IconoEscudo,
+  Pago: IconoPago,
   Idea: IconoIdea,
   Video: IconoVideo,
   Grupo: IconoGrupo,

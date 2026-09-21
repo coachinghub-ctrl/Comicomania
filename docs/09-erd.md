@@ -335,3 +335,20 @@ feature_flags(PK id, U(key), enabled, rules jsonb)
 - `domain_events`: partición mensual + archivado a almacenamiento frío a los 12 meses.
 - `user_activity` y `audit_logs`: partición mensual.
 - Landings públicas: ISR con revalidación por webhook al publicar; nada de consultas pesadas en el camino del visitante.
+
+---
+
+## Notas de implementación (aprendidas al ejecutar)
+
+Estas son diferencias entre el diseño y lo que Postgres aceptó de verdad.
+Cada una vino de un error real en el primer `db push`, no de una suposición.
+
+| Diseño original | Qué pasó | Solución |
+|---|---|---|
+| `gen_random_bytes()` de pgcrypto para el código de referido | En Supabase pgcrypto vive en el esquema `extensions`, que **no está en el search_path de las migraciones**. `create extension if not exists` no ayuda: ya existe, solo que en otro esquema | `gen_random_uuid()`, que es del core de Postgres |
+| `digest(texto, 'sha256')` de pgcrypto para la cadena de auditoría | Mismo problema de esquema | `sha256(convert_to(texto,'UTF8'))`, en el core desde Postgres 11 |
+
+La lección para lo que viene: **la validación de sintaxis no ve nada de esto.**
+`pnpm db:validar` confirma que el SQL parsea, pero solo `db push` contra una
+base real prueba que las funciones existen y resuelven. Toda migración nueva
+se ejecuta antes de darla por buena.

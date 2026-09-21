@@ -1,7 +1,6 @@
 -- Fundaciones: extensiones, helpers y geografía.
 -- Ver docs/09-erd.md (convenciones) y docs/01-arquitectura-y-stack.md (multi-país).
 
-create extension if not exists pgcrypto;
 create extension if not exists pg_trgm;
 
 -- ---------------------------------------------------------------------------

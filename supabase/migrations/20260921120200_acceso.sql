@@ -220,14 +220,16 @@ begin
 
   new.prev_hash := v_prev;
   new.hash := encode(
-    digest(
-      coalesce(v_prev, '')
-      || coalesce(new.actor_user_id::text, '')
-      || new.section || new.action
-      || coalesce(new.object_type, '') || coalesce(new.object_id, '')
-      || coalesce(new.previous_value::text, '') || coalesce(new.new_value::text, '')
-      || new.result || new.created_at::text,
-      'sha256'
+    sha256(
+      convert_to(
+        coalesce(v_prev, '')
+        || coalesce(new.actor_user_id::text, '')
+        || new.section || new.action
+        || coalesce(new.object_type, '') || coalesce(new.object_id, '')
+        || coalesce(new.previous_value::text, '') || coalesce(new.new_value::text, '')
+        || new.result || new.created_at::text,
+        'UTF8'
+      )
     ),
     'hex'
   );

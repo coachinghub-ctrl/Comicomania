@@ -26,7 +26,8 @@ create table public.users (
   status            text not null default 'ACTIVE'
                     check (status in ('ACTIVE','SUSPENDED','DELETED')),
   mfa_enabled       boolean not null default false,
-  referral_code     text not null unique default encode(gen_random_bytes(5), 'hex'),
+  referral_code     text not null unique
+                    default substr(replace(gen_random_uuid()::text, '-', ''), 1, 10),
   last_active_at    timestamptz,
   deleted_at        timestamptz,
   created_at        timestamptz not null default now(),

@@ -1141,27 +1141,69 @@ export function Expansion() {
 /* ------------------------------------------------------------ MANIFIESTO */
 export function Manifiesto() {
   return (
-    <Seccion id="manifiesto" fondo="elevado">
-      <div className="aparece mx-auto max-w-3xl text-center">
-        <Titulo className="text-5xl sm:text-6xl">{MANIFIESTO.titulo}</Titulo>
-        <div className="mt-10 space-y-5 text-lg leading-relaxed text-pretty text-muted">
-          {MANIFIESTO.creencias.map((c) => (
-            <p key={c}>{c}</p>
-          ))}
-        </div>
-        <p className="mt-10 text-lg text-pretty text-paper">{MANIFIESTO.cierre}</p>
-        <ul className="font-display mt-12 space-y-2 text-2xl text-gold-400 uppercase sm:text-3xl">
-          {MANIFIESTO.lemas.map((lema) => (
-            <li key={lema}>{lema}</li>
-          ))}
-        </ul>
-        <p className="font-display mt-10 text-3xl text-paper uppercase sm:text-4xl">
-          {MANIFIESTO.firma[0]}
-          <br />
-          <span className="text-red-500">{MANIFIESTO.firma[1]}</span>
-        </p>
+    <section
+      id="manifiesto"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-900"
+    >
+      {/* Aquí el texto va centrado, así que el velo tiene que ser parejo y no
+          lateral. El centro de la foto ya es oscuro (p95 0,033) pero las luces
+          de la esquina superior llegan a 0,371: un velo uniforme del 78% más
+          un oscurecimiento radial del 45% en el medio. En el centro, donde
+          está el texto, eso deja el crema en 16:1; en la zona más brillante,
+          en 6,8:1. Un velo más fuerte hacía desaparecer la foto. */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/hero/manifiesto.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          /* La foto es vertical y esta sección es muy alta: con recorte
+             centrado solo se veía la franja oscura del público. Anclada a
+             la izquierda se conserva al humorista y las luces del teatro. */
+          className="object-cover object-left"
+        />
+        <div aria-hidden className="absolute inset-0 bg-black/78" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_50%,rgba(0,0,0,0.45),rgba(0,0,0,0)_78%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-32 bg-[linear-gradient(to_bottom,#080506,rgba(8,5,6,0))]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_top,#080506,rgba(8,5,6,0))]"
+        />
       </div>
-    </Seccion>
+
+      <div className="mx-auto max-w-6xl px-5 py-24 sm:py-32">
+        <div className="aparece mx-auto max-w-3xl text-center">
+          <Titulo className="text-5xl sm:text-6xl">{MANIFIESTO.titulo}</Titulo>
+          {/* Crema y no gris: sobre esta foto el gris cae a 3,7:1 en la zona
+              de las luces. En crema no baja de 7:1 en ningún punto, y un
+              manifiesto se lee mejor en primer plano. */}
+          <div className="mt-10 space-y-5 text-lg leading-relaxed text-pretty text-paper">
+            {MANIFIESTO.creencias.map((c) => (
+              <p key={c}>{c}</p>
+            ))}
+          </div>
+          <p className="mt-10 text-lg text-pretty text-paper-pure">
+            {MANIFIESTO.cierre}
+          </p>
+          <ul className="font-display mt-12 space-y-2 text-2xl text-gold-400 uppercase sm:text-3xl">
+            {MANIFIESTO.lemas.map((lema) => (
+              <li key={lema}>{lema}</li>
+            ))}
+          </ul>
+          <p className="font-display mt-10 text-3xl text-paper uppercase sm:text-4xl">
+            {MANIFIESTO.firma[0]}
+            <br />
+            <span className="text-red-500">{MANIFIESTO.firma[1]}</span>
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

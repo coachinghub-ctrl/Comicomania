@@ -168,31 +168,60 @@ export const TALENT = {
   ],
 } as const;
 
+
+export const ACADEMY = {
+  marca: "COMICOMANÍA Academy",
+  titulo: ["El talento te abre la puerta.", "La preparación te lleva más lejos."],
+  entrada: "Tener talento es solo el comienzo.",
+  texto:
+    "COMICOMANÍA Academy es el espacio donde humoristas y creadores desarrollan las habilidades para transformar su creatividad en contenido, audiencia, marca y oportunidades.",
+  cta: { texto: "Explora la Academy", href: "/entrar" },
+  pilares: [
+    {
+      icono: "Idea",
+      verbo: "Crea",
+      temas: [
+        "Storytelling",
+        "Escritura humorística",
+        "Creación de personajes",
+        "Improvisación",
+      ],
+    },
+    {
+      icono: "Participa",
+      verbo: "Comunica",
+      temas: [
+        "Stand-up comedy",
+        "Escenario",
+        "Comunicación efectiva",
+        "Contenido para redes",
+      ],
+    },
+    {
+      icono: "Grupo",
+      verbo: "Construye",
+      temas: [
+        "Marca personal",
+        "Construcción de audiencia",
+        "Producción de contenido",
+        "Estrategia digital",
+      ],
+    },
+    {
+      icono: "Crece",
+      verbo: "Monetiza",
+      temas: [
+        "Negocio del entretenimiento",
+        "Oportunidades",
+        "IA aplicada a contenido",
+        "Monetización",
+      ],
+    },
+  ],
+  recorrido: ["Descubre tu talento", "Desarróllalo", "Conviértelo en una carrera"],
+} as const;
+
 export const VERTICALES = [
-  {
-    id: "academy",
-    marca: "COMICOMANÍA Academy",
-    titulo: "Aprende el arte y el negocio del humor.",
-    texto:
-      "Una plataforma educativa para quienes quieran desarrollar profesionalmente su talento.",
-    pasos: [
-      "Stand-up comedy",
-      "Storytelling",
-      "Creación de personajes",
-      "Escritura humorística",
-      "Improvisación",
-      "Contenido para redes",
-      "Comunicación",
-      "Marca personal",
-      "Monetización",
-      "Producción",
-      "Construcción de audiencia",
-      "Negocio del entretenimiento",
-      "IA aplicada a contenido",
-    ],
-    remate: "No solo enseñamos a hacer reír. Ayudamos a transformar talento en una carrera.",
-    cta: { texto: "Explora la Academy", href: "/entrar" },
-  },
   {
     id: "live",
     marca: "COMICOMANÍA Live",

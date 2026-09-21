@@ -156,7 +156,19 @@ export function IconoCohete(props: Props) {
   );
 }
 
+
+/** Crea: la idea. */
+export function IconoIdea(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M12 2.5a6.5 6.5 0 00-3.8 11.8c.6.4 1 1.1 1 1.9v.3h5.6v-.3c0-.8.4-1.5 1-1.9A6.5 6.5 0 0012 2.5z" />
+      <path d="M9.6 19h4.8M10.4 21.5h3.2" />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Idea: IconoIdea,
   Video: IconoVideo,
   Grupo: IconoGrupo,
   Estrella: IconoEstrella,

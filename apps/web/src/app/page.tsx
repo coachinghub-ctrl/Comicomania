@@ -1,5 +1,6 @@
 import { Logo } from "@comicomania/ui";
 import {
+  Academy,
   Cierre,
   Expansion,
   Hero,
@@ -24,6 +25,7 @@ export default function Home() {
         <Proposito />
         <Perfiles />
         <Talent />
+        <Academy />
         <Verticales />
         <Marcas />
         <Expansion />

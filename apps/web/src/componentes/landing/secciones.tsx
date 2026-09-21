@@ -2,6 +2,7 @@ import type { Route } from "next";
 import Image from "next/image";
 import { ButtonLink, Logo } from "@comicomania/ui";
 import {
+  ACADEMY,
   CIERRE,
   EXPANSION,
   HERO,
@@ -479,6 +480,131 @@ export function Talent() {
             );
           })}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------------- ACADEMY */
+export function Academy() {
+  return (
+    <section
+      id="academy"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      {/* Columna izquierda de la foto: p95 0,031. El crema llega a 11,4:1
+          sin velo; con el 45% que lleva queda en 13,7:1 y el aula se ve. */}
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/academy.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.32)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.90)_0%,rgba(0,0,0,0.72)_36%,rgba(0,0,0,0.22)_62%,rgba(0,0,0,0.08)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="aparece lg:max-w-[52%]">
+          <div className="mb-5 flex items-center gap-4">
+            <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+              {ACADEMY.marca}
+            </span>
+            <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
+          </div>
+
+          <h2 className="font-display text-3xl leading-[0.95] text-balance text-paper uppercase sm:text-4xl lg:text-5xl">
+            {ACADEMY.titulo[0]}{" "}
+            <br />
+            <span className="text-red-500">{ACADEMY.titulo[1]}</span>
+          </h2>
+
+          <p className="mt-7 text-lg text-pretty text-paper">{ACADEMY.entrada}</p>
+          <p className="mt-4 max-w-xl text-pretty text-muted">{ACADEMY.texto}</p>
+
+          <ButtonLink
+            href={ACADEMY.cta.href as Route}
+            tamano="lg"
+            className="group mt-9"
+          >
+            {ACADEMY.cta.texto}
+            <span
+              className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+              aria-hidden
+            >
+              →
+            </span>
+          </ButtonLink>
+        </div>
+      </div>
+
+      {/* Los cuatro pilares y el recorrido, sobre fondo sólido: catorce
+          líneas de texto sobre una foto no se leen. */}
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000">
+        <div className="mx-auto max-w-6xl px-5 py-12">
+          <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {ACADEMY.pilares.map((pilar, i) => {
+              const Icono = ICONOS[pilar.icono];
+              return (
+                <li
+                  key={pilar.verbo}
+                  className="aparece lg:border-l lg:border-stage-600 lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-2xl text-red-500 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {Icono && <Icono className="size-6 text-paper" />}
+                    <h3 className="font-display text-lg text-paper uppercase">
+                      {pilar.verbo}
+                    </h3>
+                  </div>
+                  <ul className="mt-4 space-y-2">
+                    {pilar.temas.map((tema) => (
+                      <li
+                        key={tema}
+                        className="flex items-start gap-2.5 text-sm text-muted"
+                      >
+                        <span
+                          className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500"
+                          aria-hidden
+                        />
+                        {tema}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ol>
+
+          <ol className="mt-12 flex flex-col items-center gap-3 border-t border-stage-600 pt-8 sm:flex-row sm:justify-center sm:gap-6">
+            {ACADEMY.recorrido.map((etapa, i) => (
+              <li key={etapa} className="flex items-center gap-3 sm:gap-6">
+                <span
+                  className={`font-display text-sm tracking-wide uppercase sm:text-base ${
+                    i === 1 ? "text-red-500" : "text-paper"
+                  }`}
+                >
+                  {etapa}
+                </span>
+                {i < ACADEMY.recorrido.length - 1 && (
+                  <span className="text-stage-600" aria-hidden>
+                    →
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

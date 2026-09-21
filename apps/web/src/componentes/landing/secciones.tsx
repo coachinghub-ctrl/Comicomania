@@ -14,6 +14,7 @@ import {
   PROPOSITO,
   VERTICALES,
 } from "@/contenido/landing";
+import { ICONOS } from "./iconos";
 import { Antetitulo, Marquesina, Seccion, Titulo } from "./piezas";
 
 /* ------------------------------------------------------------------ HERO */
@@ -114,35 +115,58 @@ export function Hero() {
 /* ------------------------------------------------------------ MOVIMIENTO */
 export function Movimiento() {
   return (
-    <Seccion id="movimiento" fondo="elevado">
-      <div className="aparece">
-        <Titulo className="max-w-3xl">
-          {MOVIMIENTO.titulo[0]}
-          <br />
-          <span className="text-red-500">{MOVIMIENTO.titulo[1]}</span>
-        </Titulo>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {MOVIMIENTO.parrafos.map((p) => (
-            <p key={p} className="text-lg text-pretty text-muted">
-              {p}
-            </p>
-          ))}
-        </div>
-        <p className="font-display mt-10 text-2xl text-balance text-gold-400 uppercase sm:text-3xl">
-          {MOVIMIENTO.remate}
-        </p>
-        <ul className="mt-10 flex flex-wrap gap-2">
-          {MOVIMIENTO.verbos.map((verbo) => (
-            <li
-              key={verbo}
-              className="rounded-full border border-stage-600 bg-stage-800 px-4 py-2 text-sm text-paper-pure"
-            >
-              {verbo}
-            </li>
-          ))}
-        </ul>
+    <section
+      id="movimiento"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-900"
+    >
+      {/* En móvil la foto es una banda y el texto va debajo: encima de las
+          caras no hay contraste posible. En desktop pasa a fondo y el texto
+          ocupa la columna izquierda, que es la zona oscura de la imagen.
+          Medido: con 60% de velo el crema da 9,6:1 y el gris 5,1:1. */}
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/publico.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#080506_3%,rgba(8,5,6,0.30)_70%)] lg:bg-[linear-gradient(to_right,rgba(8,5,6,0.93)_0%,rgba(8,5,6,0.84)_36%,rgba(8,5,6,0.40)_60%,rgba(8,5,6,0.12)_100%)]"
+        />
       </div>
-    </Seccion>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-32">
+        <div className="aparece lg:max-w-[48%]">
+          <Titulo>
+            {MOVIMIENTO.titulo[0]}
+            <br />
+            <span className="text-red-500">{MOVIMIENTO.titulo[1]}</span>
+          </Titulo>
+          <div className="mt-8 space-y-5">
+            {MOVIMIENTO.parrafos.map((p) => (
+              <p key={p} className="text-lg text-pretty text-muted">
+                {p}
+              </p>
+            ))}
+          </div>
+          <p className="font-display mt-8 text-2xl text-balance text-gold-400 uppercase sm:text-3xl">
+            {MOVIMIENTO.remate}
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-2">
+            {MOVIMIENTO.verbos.map((verbo) => (
+              <li
+                key={verbo}
+                className="rounded-full border border-stage-600 bg-stage-800/90 px-4 py-2 text-sm text-paper-pure backdrop-blur-sm"
+              >
+                {verbo}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -152,17 +176,30 @@ export function Journey() {
     <Seccion>
       <Titulo className="aparece">{JOURNEY.titulo}</Titulo>
       <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2 lg:grid-cols-4">
-        {JOURNEY.pasos.map((paso, i) => (
-          <li key={paso.verbo} className="aparece bg-stage-900 p-6">
-            <span className="font-display text-sm text-red-500">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3 className="font-display mt-2 text-xl text-paper uppercase">
-              {paso.verbo}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{paso.texto}</p>
-          </li>
-        ))}
+        {JOURNEY.pasos.map((paso, i) => {
+          const Icono = ICONOS[paso.verbo];
+          return (
+            <li
+              key={paso.verbo}
+              className="aparece group bg-stage-900 p-6 transition-colors duration-200 ease-stage hover:bg-stage-800"
+            >
+              <div className="flex items-center justify-between">
+                {Icono && (
+                  <Icono className="size-8 text-red-500 transition-colors duration-200 ease-stage group-hover:text-gold-400" />
+                )}
+                <span className="font-display text-sm text-muted-dim tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 className="font-display mt-5 text-xl text-paper uppercase">
+                {paso.verbo}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {paso.texto}
+              </p>
+            </li>
+          );
+        })}
       </ol>
     </Seccion>
   );

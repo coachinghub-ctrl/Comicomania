@@ -20,5 +20,7 @@ jobs:
         run: pnpm typecheck
       - name: Migraciones
         run: pnpm db:validar
+      - name: Tests
+        run: pnpm test
       - name: Build
         run: pnpm build

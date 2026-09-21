@@ -274,7 +274,45 @@ export function IconoCalendario(props: Props) {
   );
 }
 
+
+/** Ciudad: donde empieza todo. */
+export function IconoCiudad(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M3 20.5h18" />
+      <path d="M4.5 20.5V9.5l5-3v14" />
+      <path d="M9.5 12.5h6.5a1.5 1.5 0 011.5 1.5v6.5" />
+      <path d="M19.5 20.5v-4.5" />
+      <path d="M6.6 11.5v0M6.6 14.5v0M12.5 15.5v0M12.5 18v0" />
+    </Base>
+  );
+}
+
+/** País: la corona de la marca. */
+export function IconoCorona(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M3 7.5l4 4.5 5-7.5 5 7.5 4-4.5-2 11.5H5z" />
+      <path d="M5 19h14" />
+    </Base>
+  );
+}
+
+/** Región: el mundo con una franja encendida. */
+export function IconoRegion(props: Props) {
+  return (
+    <Base {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M4.2 8.8h15.6M4.2 15.2h15.6" />
+      <path d="M3.5 12h17" strokeWidth={2.4} />
+    </Base>
+  );
+}
+
 export const ICONOS: Record<string, (p: Props) => React.JSX.Element> = {
+  Ciudad: IconoCiudad,
+  Corona: IconoCorona,
+  Region: IconoRegion,
   Contenido: IconoContenido,
   Tarta: IconoTarta,
   Pantalla: IconoPantalla,

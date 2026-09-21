@@ -1,11 +1,12 @@
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { CIFRAS_DECLARADAS } from "@/contenido/landing";
 import { Seccion, Titulo } from "./piezas";
 
 /* El movimiento en números.
-   Las cifras salen de metricas_publicas(), nunca de constantes. Una métrica
-   en cero no se muestra: es preferible decir menos que decir algo falso o
-   deprimente. Cuando existan videos, votos y eventos (Fase E y J) se suman
-   solos, sin tocar este componente. */
+   Dos orígenes distintos y a propósito: las métricas de la plataforma salen
+   de metricas_publicas() y nadie las puede inflar; las cifras declaradas son
+   una afirmación del negocio. Una métrica en cero no se muestra.
+   Cuando existan videos, votos y eventos se suman solas. */
 
 const ETIQUETAS: Record<string, string> = {
   usuarios: "Miembros",
@@ -19,27 +20,41 @@ const ETIQUETAS: Record<string, string> = {
 
 const ORDEN = ["humoristas", "videos", "votos", "usuarios", "eventos", "ciudades", "paises"];
 
+type Tarjeta = { clave: string; etiqueta: string; valor: number; prefijo?: string };
+
 export async function Numeros() {
   const supabase = await crearClienteServidor();
   const { data, error } = await supabase.rpc("metricas_publicas");
 
-  const metricas = (error ? [] : (data ?? []))
+  const dePlataforma: Tarjeta[] = (error ? [] : (data ?? []))
     .filter((m) => Number(m.valor) > 0 && ETIQUETAS[m.clave])
-    .sort((a, b) => ORDEN.indexOf(a.clave) - ORDEN.indexOf(b.clave));
+    .sort((a, b) => ORDEN.indexOf(a.clave) - ORDEN.indexOf(b.clave))
+    .map((m) => ({
+      clave: m.clave,
+      etiqueta: ETIQUETAS[m.clave]!,
+      valor: Number(m.valor),
+    }));
 
-  if (metricas.length === 0) return null;
+  const tarjetas: Tarjeta[] = [...CIFRAS_DECLARADAS, ...dePlataforma];
+  if (tarjetas.length === 0) return null;
 
   return (
     <Seccion id="numeros">
       <Titulo className="aparece">El movimiento en números</Titulo>
-      <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-3 lg:grid-cols-4">
-        {metricas.map((m) => (
-          <div key={m.clave} className="aparece bg-stage-900 px-5 py-8 text-center">
+      {/* Cada tarjeta lleva su propio borde. Con el truco de la rejilla de
+          un píxel, las celdas que sobran dejaban un bloque de color vacío. */}
+      <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {tarjetas.map((t) => (
+          <div
+            key={t.clave}
+            className="aparece rounded-lg border border-stage-600 bg-stage-900 px-5 py-8 text-center"
+          >
             <dt className="text-xs tracking-[0.2em] text-muted-dim uppercase">
-              {ETIQUETAS[m.clave]}
+              {t.etiqueta}
             </dt>
             <dd className="font-display mt-2 text-4xl text-gold-400 tabular-nums sm:text-5xl">
-              {Number(m.valor).toLocaleString("es")}
+              {t.prefijo}
+              {t.valor.toLocaleString("es")}
             </dd>
           </div>
         ))}

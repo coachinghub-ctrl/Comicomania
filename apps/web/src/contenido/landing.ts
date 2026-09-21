@@ -361,10 +361,17 @@ export const MARCAS = {
 } as const;
 
 export const EXPANSION = {
+  eyebrow: "COMICOMANÍA Global",
   titulo: ["Una plataforma.", "Muchas ciudades.", "Un solo movimiento."],
+  entrada: "COMICOMANÍA nace global, pero crece localmente.",
   texto:
-    "COMICOMANÍA crece mediante operadores autorizados que desarrollan comunidades específicas. Todo permanece conectado dentro del ecosistema global.",
-  escalera: ["Ciudad", "País", "Región", "Mundo"],
+    "Conectamos talento, audiencias, operadores, marcas y experiencias en diferentes ciudades, manteniendo todo dentro de un mismo ecosistema.",
+  escalera: [
+    { icono: "Ciudad", nivel: "Ciudad", texto: "Descubrimos talento local." },
+    { icono: "Corona", nivel: "País", texto: "Creamos comunidad." },
+    { icono: "Region", nivel: "Región", texto: "Generamos experiencias." },
+    { icono: "Conecta", nivel: "Mundo", texto: "Conectamos el mundo." },
+  ],
   desarrolla: [
     "Talento local",
     "Eventos",
@@ -375,7 +382,13 @@ export const EXPANSION = {
     "Comunidad",
     "Experiencias",
   ],
-};
+  cta: { texto: "Quiero llevar COMICOMANÍA a mi ciudad", href: "/entrar" },
+  firma: {
+    antes: "El humor nace en cualquier lugar.",
+    despues: "COMICOMANÍA lo conecta con el mundo.",
+  },
+  coda: ["Más personas.", "Más ciudades.", "Más historias."],
+} as const;
 
 export const MANIFIESTO = {
   titulo: "Creemos en el poder de hacer reír.",
@@ -410,3 +423,12 @@ export const NAVEGACION = [
   { texto: "Para marcas", href: "#marcas" },
   { texto: "Nosotros", href: "#manifiesto" },
 ];
+
+/* Cifras declaradas por el negocio, no calculadas por la plataforma.
+   Van aparte de metricas_publicas() a propósito: esas salen de la base y
+   no se pueden inflar; estas son una afirmación de COMICOMANÍA y alguien
+   tiene que responder por ellas. Si dejan de ser ciertas, se corrigen
+   acá o se quitan. */
+export const CIFRAS_DECLARADAS = [
+  { clave: "personas", etiqueta: "Personas impactadas", valor: 10000, prefijo: "+" },
+] as const;

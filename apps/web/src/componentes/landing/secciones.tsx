@@ -447,7 +447,7 @@ export function Talent() {
       {/* Tira del recorrido. En móvil se desliza en horizontal: seis pasos
           apilados serían media pantalla de scroll muerto. */}
       <div className="relative z-10 border-t border-stage-600 bg-stage-1000/95 backdrop-blur-sm">
-        <ol className="mx-auto flex max-w-6xl snap-x snap-mandatory gap-0 overflow-x-auto px-5 py-6 lg:grid lg:grid-cols-6 lg:overflow-visible">
+        <ol className="mx-auto flex max-w-6xl snap-x snap-mandatory gap-0 sin-barra overflow-x-auto px-5 py-6 lg:grid lg:grid-cols-6 lg:overflow-visible">
           {TALENT.pasos.map((paso, i) => {
             const Icono = ICONOS[paso.icono];
             return (
@@ -966,7 +966,7 @@ export function Marcas() {
               Una sola fila, siempre. En pantallas chicas se desliza en
               horizontal antes que partirse en tres renglones. */}
           <div className="mt-12 border-t border-stage-600 pt-10">
-            <ol className="-mx-5 flex items-start gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:justify-center sm:gap-5 sm:px-0 lg:gap-8">
+            <ol className="-mx-5 flex items-start gap-3 sin-barra overflow-x-auto px-5 pb-2 sm:mx-0 sm:justify-center sm:gap-5 sm:px-0 lg:gap-8">
               {MARCAS.cadena.puntos.map((punto, i) => {
                 const Icono = ICONOS[punto.icono];
                 return (
@@ -1028,52 +1028,113 @@ export function Marcas() {
 /* ------------------------------------------------------------- EXPANSIÓN */
 export function Expansion() {
   return (
-    <Seccion id="expansion">
-      <div className="aparece">
-        <Titulo className="max-w-3xl">
-          {EXPANSION.titulo.map((linea, i) => (
-            <span key={linea}>
-              {i === 2 ? <span className="text-red-500">{linea}</span> : linea}
-              {i < 2 && (
-                <>
-                  {" "}
-                  <br />
-                </>
-              )}
-            </span>
-          ))}
-        </Titulo>
-        <p className="mt-6 max-w-2xl text-lg text-pretty text-muted">
-          {EXPANSION.texto}
-        </p>
-
-        <ol className="mt-10 flex flex-wrap items-center gap-3">
-          {EXPANSION.escalera.map((nivel, i) => (
-            <li key={nivel} className="flex items-center gap-3">
-              <span className="font-display rounded-md border border-gold-400/40 bg-stage-800 px-5 py-3 text-lg text-gold-400 uppercase">
-                {nivel}
-              </span>
-              {i < EXPANSION.escalera.length - 1 && (
-                <span className="text-red-500" aria-hidden>
-                  →
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
-
-        <ul className="mt-8 flex flex-wrap gap-2">
-          {EXPANSION.desarrolla.map((item) => (
-            <li
-              key={item}
-              className="rounded-full border border-stage-600 px-4 py-2 text-sm text-muted"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+    <section
+      id="expansion"
+      className="relative isolate scroll-mt-20 overflow-hidden border-t border-stage-600 bg-stage-1000"
+    >
+      {/* El mapa trae tarjetas de ciudades con su propio texto. El 88% de
+          velo a la izquierda las apaga y deja el crema en 14,5:1; el mapa
+          encendido y las tarjetas se conservan de la mitad a la derecha. */}
+      <div className="relative aspect-[16/11] w-full sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <Image
+          src="/hero/global.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center lg:object-right"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(to_top,#000000_3%,rgba(0,0,0,0.45)_72%)] lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.88)_36%,rgba(0,0,0,0.35)_60%,rgba(0,0,0,0.05)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 hidden h-40 bg-[linear-gradient(to_top,#000000,rgba(0,0,0,0))] lg:block"
+        />
       </div>
-    </Seccion>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:py-28">
+        <div className="aparece lg:max-w-[54%]">
+          <div className="mb-5 flex items-center gap-4">
+            <span className="text-xs tracking-[0.3em] text-gold-400 uppercase">
+              {EXPANSION.eyebrow}
+            </span>
+            <span className="h-px flex-1 bg-gold-400/40 sm:max-w-24" aria-hidden />
+          </div>
+
+          <h2 className="font-display text-4xl leading-[0.92] text-balance text-paper uppercase sm:text-5xl">
+            {EXPANSION.titulo[0]}{" "}
+            <br />
+            {EXPANSION.titulo[1]}{" "}
+            <br />
+            <span className="text-red-500">{EXPANSION.titulo[2]}</span>
+          </h2>
+
+          <p className="mt-7 text-lg text-pretty text-paper">{EXPANSION.entrada}</p>
+          <p className="mt-3 max-w-xl text-pretty text-muted">{EXPANSION.texto}</p>
+
+          {/* La escalera territorial. Cada peldaño dice qué pasa en él. */}
+          <ol className="-mx-5 mt-10 flex items-start gap-3 sin-barra overflow-x-auto px-5 pb-2 sm:mx-0 sm:gap-5 sm:px-0">
+            {EXPANSION.escalera.map((peldano, i) => {
+              const Icono = ICONOS[peldano.icono];
+              return (
+                <li key={peldano.nivel} className="flex shrink-0 items-start gap-3 sm:gap-5">
+                  <span className="flex w-28 flex-col items-center gap-3 text-center">
+                    <span className="flex size-16 items-center justify-center rounded-full border border-gold-400/40">
+                      {Icono && <Icono className="size-8 text-gold-400" />}
+                    </span>
+                    <span className="font-display text-sm tracking-wide text-gold-400 uppercase">
+                      {peldano.nivel}
+                    </span>
+                    <span className="text-xs leading-relaxed text-muted">
+                      {peldano.texto}
+                    </span>
+                  </span>
+                  {i < EXPANSION.escalera.length - 1 && (
+                    <span className="mt-7 text-red-500" aria-hidden>
+                      →
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+
+          <ul className="mt-10 flex flex-wrap gap-2">
+            {EXPANSION.desarrolla.map((item) => (
+              <li
+                key={item}
+                className="rounded-full border border-stage-600 bg-stage-800/80 px-4 py-2 text-sm text-muted backdrop-blur-sm"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <ButtonLink href={EXPANSION.cta.href as Route} tamano="lg" className="group mt-9">
+            {EXPANSION.cta.texto}
+            <span
+              className="transition-transform duration-200 ease-stage group-hover:translate-x-1"
+              aria-hidden
+            >
+              →
+            </span>
+          </ButtonLink>
+        </div>
+      </div>
+
+      <div className="relative z-10 border-t border-stage-600 bg-stage-1000">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">
+          <p className="font-display text-lg text-balance uppercase sm:text-xl">
+            <span className="text-paper">{EXPANSION.firma.antes}</span>{" "}
+            <span className="text-red-500">{EXPANSION.firma.despues}</span>
+          </p>
+          <p className="font-display text-sm tracking-wide text-muted uppercase lg:shrink-0">
+            {EXPANSION.coda.join(" ")}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

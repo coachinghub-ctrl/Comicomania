@@ -110,3 +110,14 @@
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* Deslizamiento horizontal sin barra visible. El contenido sigue siendo
+   accesible con teclado, rueda y gesto; solo se oculta el riel, que en
+   una tira de iconos ensucia más de lo que ayuda. */
+@utility sin-barra {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

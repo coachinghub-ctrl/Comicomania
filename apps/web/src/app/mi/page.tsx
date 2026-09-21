@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ButtonLink, Logo } from "@comicomania/ui";
 import { siguientePaso, type EstadoUsuario } from "@comicomania/domain";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { cargarActor } from "@/lib/autorizacion";
 
 export const metadata = { title: "Mi COMICOMANÍA" };
 
@@ -57,6 +58,18 @@ export default async function MiComicomania() {
   const accion = siguientePaso(estado);
   const nombre = id?.display_name ?? credencial.email?.split("@")[0] ?? "";
 
+  /* Quien opera la plataforma también es usuario, y entra por la misma puerta.
+     Sin esto un OWNER aterriza en la vista de espectador sin forma de llegar
+     al panel. Los grants los lee RLS: si no tiene, no se pinta nada. */
+  const actor = await cargarActor();
+  const vigentes = actor.grants.filter(
+    (g) => g.estado === "ACTIVE" && (!g.hasta || g.hasta > new Date()),
+  );
+  const roles = [...new Set(vigentes.map((g) => g.rol))].join(", ");
+  const alcance = vigentes.some((g) => g.tipoAlcance === "GLOBAL")
+    ? "Global"
+    : [...new Set(vigentes.map((g) => g.alcancePath).filter(Boolean))].join(" · ");
+
   return (
     <main className="min-h-dvh">
       <header className="mx-auto flex max-w-4xl items-center justify-between px-5 py-5">
@@ -75,6 +88,23 @@ export default async function MiComicomania() {
         <h1 className="font-display mt-1 mb-8 text-4xl text-paper uppercase">
           Mi COMICOMANÍA
         </h1>
+
+        {vigentes.length > 0 && (
+          <section className="mb-6 flex flex-col gap-4 rounded-lg border border-gold-400/50 bg-stage-800 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs tracking-[0.2em] text-gold-400 uppercase">
+                Tienes acceso al Control Center
+              </p>
+              <p className="mt-1 text-sm text-muted">
+                {roles}
+                {alcance ? ` · ${alcance}` : ""}
+              </p>
+            </div>
+            <ButtonLink href={"/admin" as Route} variante="secundaria">
+              Ir al panel
+            </ButtonLink>
+          </section>
+        )}
 
         {/* Una sola acción, grande. El usuario nunca se queda sin saber qué sigue. */}
         <section className="rounded-lg border border-red-500/40 bg-stage-800 p-6 sm:p-8">

@@ -47,9 +47,13 @@ export default function Home() {
               Design system
             </a>
           </div>
-          <p className="mt-8 border-t border-stage-600 pt-6 text-center text-xs text-muted-dim">
-            COMICOMANÍA™ · Powered by COMICOMANIA DIGITAL ENGINE™
-          </p>
+          {/* Dos líneas y no una: el motor es la marca técnica del producto
+              y Coaching Hub es quién lo construye. Meterlas en el mismo
+              renglón con dos "powered by" se lee mal. */}
+          <div className="mt-8 space-y-1.5 border-t border-stage-600 pt-6 text-center text-xs text-muted-dim">
+            <p>COMICOMANÍA™ · COMICOMANIA DIGITAL ENGINE™</p>
+            <p>Powered by Coaching Hub Business Solutions</p>
+          </div>
         </div>
       </footer>
     </>

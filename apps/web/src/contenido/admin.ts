@@ -26,18 +26,6 @@ export const ROADMAP: Record<string, Pendiente> = {
     cuando: "Ene–Feb 2027",
     que: "Contactos, eventos de dominio y automatizaciones: quién entró, qué hizo y qué le toca después.",
   },
-  jurado: {
-    fase: "G",
-    nombreFase: "Jurado + Votación",
-    cuando: "Ene 2027",
-    que: "Rúbricas, asignación de jurados y el scoring que ellos no pueden editar después de cerrado.",
-  },
-  votacion: {
-    fase: "G",
-    nombreFase: "Jurado + Votación",
-    cuando: "Ene 2027",
-    que: "Votación del público con antifraude, y la invalidación de votos que queda en auditoría.",
-  },
   eventos: {
     fase: "J",
     nombreFase: "Events",

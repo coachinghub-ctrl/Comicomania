@@ -565,6 +565,153 @@ export type Database = {
           },
         ]
       }
+      judge_assignments: {
+        Row: {
+          created_at: string
+          due_at: string | null
+          entry_id: string
+          id: string
+          judge_id: string
+          round_id: string
+          status: Database["public"]["Enums"]["assignment_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          due_at?: string | null
+          entry_id: string
+          id?: string
+          judge_id: string
+          round_id: string
+          status?: Database["public"]["Enums"]["assignment_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          due_at?: string | null
+          entry_id?: string
+          id?: string
+          judge_id?: string
+          round_id?: string
+          status?: Database["public"]["Enums"]["assignment_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "judge_assignments_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "judge_assignments_judge_id_fkey"
+            columns: ["judge_id"]
+            isOneToOne: false
+            referencedRelation: "judges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "judge_assignments_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      judge_scores: {
+        Row: {
+          assignment_id: string
+          comment: string | null
+          created_at: string
+          criteria_scores: Json
+          id: string
+          locked_at: string | null
+          submitted_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          assignment_id: string
+          comment?: string | null
+          created_at?: string
+          criteria_scores?: Json
+          id?: string
+          locked_at?: string | null
+          submitted_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assignment_id?: string
+          comment?: string | null
+          created_at?: string
+          criteria_scores?: Json
+          id?: string
+          locked_at?: string | null
+          submitted_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "judge_scores_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: true
+            referencedRelation: "judge_assignments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      judges: {
+        Row: {
+          bio: string | null
+          country_id: string | null
+          created_at: string
+          display_name: string
+          id: string
+          photo_url: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          bio?: string | null
+          country_id?: string | null
+          created_at?: string
+          display_name: string
+          id?: string
+          photo_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          bio?: string | null
+          country_id?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          photo_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "judges_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "judges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       participants: {
         Row: {
           age_at_reference: number | null
@@ -801,6 +948,60 @@ export type Database = {
         }
         Relationships: []
       }
+      round_results: {
+        Row: {
+          advanced: boolean
+          audience_score: number | null
+          config_snapshot: Json
+          final_score: number
+          id: string
+          jury_score: number | null
+          participant_id: string
+          rank: number | null
+          resolved_at: string
+          round_id: string
+        }
+        Insert: {
+          advanced?: boolean
+          audience_score?: number | null
+          config_snapshot: Json
+          final_score: number
+          id?: string
+          jury_score?: number | null
+          participant_id: string
+          rank?: number | null
+          resolved_at?: string
+          round_id: string
+        }
+        Update: {
+          advanced?: boolean
+          audience_score?: number | null
+          config_snapshot?: Json
+          final_score?: number
+          id?: string
+          jury_score?: number | null
+          participant_id?: string
+          rank?: number | null
+          resolved_at?: string
+          round_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "round_results_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "round_results_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rounds: {
         Row: {
           contest_id: string
@@ -847,6 +1048,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "rounds_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      score_criteria: {
+        Row: {
+          contest_id: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          order: number
+          slug: string
+          weight: number
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          order?: number
+          slug: string
+          weight: number
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          order?: number
+          slug?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "score_criteria_contest_id_fkey"
             columns: ["contest_id"]
             isOneToOne: false
             referencedRelation: "contests"
@@ -1347,6 +1589,131 @@ export type Database = {
           },
         ]
       }
+      vote_signals: {
+        Row: {
+          asn: string | null
+          created_at: string
+          device_fp_hash: string | null
+          geo: string | null
+          id: string
+          ip_hash: string | null
+          is_datacenter: boolean | null
+          referrer: string | null
+          user_agent: string | null
+          vote_id: string
+        }
+        Insert: {
+          asn?: string | null
+          created_at?: string
+          device_fp_hash?: string | null
+          geo?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_datacenter?: boolean | null
+          referrer?: string | null
+          user_agent?: string | null
+          vote_id: string
+        }
+        Update: {
+          asn?: string | null
+          created_at?: string
+          device_fp_hash?: string | null
+          geo?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_datacenter?: boolean | null
+          referrer?: string | null
+          user_agent?: string | null
+          vote_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vote_signals_vote_id_fkey"
+            columns: ["vote_id"]
+            isOneToOne: false
+            referencedRelation: "votes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      votes: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          id: string
+          idempotency_key: string | null
+          invalidated_by: string | null
+          invalidated_reason: string | null
+          participant_id: string
+          round_id: string
+          status: Database["public"]["Enums"]["vote_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          invalidated_by?: string | null
+          invalidated_reason?: string | null
+          participant_id: string
+          round_id: string
+          status?: Database["public"]["Enums"]["vote_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          invalidated_by?: string | null
+          invalidated_reason?: string | null
+          participant_id?: string
+          round_id?: string
+          status?: Database["public"]["Enums"]["vote_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_invalidated_by_fkey"
+            columns: ["invalidated_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "rounds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1381,6 +1748,12 @@ export type Database = {
       uuid_generate_v7: { Args: never; Returns: string }
     }
     Enums: {
+      assignment_status:
+        | "PENDING"
+        | "IN_PROGRESS"
+        | "SUBMITTED"
+        | "EXCUSED"
+        | "CONFLICT"
       category_assignment: "AUTO" | "SELF" | "ADMIN"
       contest_status:
         | "DRAFT"
@@ -1434,6 +1807,7 @@ export type Database = {
         | "PUBLISHED"
         | "UNPUBLISHED"
         | "BLOCKED"
+      vote_status: "VALID" | "SUSPECT" | "INVALIDATED" | "PENDING_REVIEW"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1564,6 +1938,13 @@ export const Constants = {
   },
   public: {
     Enums: {
+      assignment_status: [
+        "PENDING",
+        "IN_PROGRESS",
+        "SUBMITTED",
+        "EXCUSED",
+        "CONFLICT",
+      ],
       category_assignment: ["AUTO", "SELF", "ADMIN"],
       contest_status: [
         "DRAFT",
@@ -1622,6 +2003,7 @@ export const Constants = {
         "UNPUBLISHED",
         "BLOCKED",
       ],
+      vote_status: ["VALID", "SUSPECT", "INVALIDATED", "PENDING_REVIEW"],
     },
   },
 } as const

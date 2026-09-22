@@ -319,6 +319,57 @@ export type Database = {
           },
         ]
       }
+      checkins: {
+        Row: {
+          created_at: string
+          device_id: string | null
+          gate: string | null
+          id: string
+          reason: string | null
+          result: Database["public"]["Enums"]["checkin_result"]
+          scanned_at: string
+          staff_user_id: string | null
+          ticket_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_id?: string | null
+          gate?: string | null
+          id?: string
+          reason?: string | null
+          result: Database["public"]["Enums"]["checkin_result"]
+          scanned_at?: string
+          staff_user_id?: string | null
+          ticket_id: string
+        }
+        Update: {
+          created_at?: string
+          device_id?: string | null
+          gate?: string | null
+          id?: string
+          reason?: string | null
+          result?: Database["public"]["Enums"]["checkin_result"]
+          scanned_at?: string
+          staff_user_id?: string | null
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkins_staff_user_id_fkey"
+            columns: ["staff_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "checkins_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cities: {
         Row: {
           country_id: string
@@ -1009,6 +1060,101 @@ export type Database = {
             columns: ["video_id"]
             isOneToOne: false
             referencedRelation: "videos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          capacity: number | null
+          city_id: string | null
+          contest_id: string | null
+          country_id: string | null
+          created_at: string
+          description: string | null
+          ends_at: string | null
+          id: string
+          name: string
+          online_url: string | null
+          sales_end: string | null
+          sales_start: string | null
+          slug: string
+          starts_at: string
+          status: string
+          timezone: string
+          type: string
+          updated_at: string
+          venue_id: string | null
+        }
+        Insert: {
+          capacity?: number | null
+          city_id?: string | null
+          contest_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          name: string
+          online_url?: string | null
+          sales_end?: string | null
+          sales_start?: string | null
+          slug: string
+          starts_at: string
+          status?: string
+          timezone?: string
+          type?: string
+          updated_at?: string
+          venue_id?: string | null
+        }
+        Update: {
+          capacity?: number | null
+          city_id?: string | null
+          contest_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          name?: string
+          online_url?: string | null
+          sales_end?: string | null
+          sales_start?: string | null
+          slug?: string
+          starts_at?: string
+          status?: string
+          timezone?: string
+          type?: string
+          updated_at?: string
+          venue_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
             referencedColumns: ["id"]
           },
         ]
@@ -2279,6 +2425,139 @@ export type Database = {
         }
         Relationships: []
       }
+      ticket_types: {
+        Row: {
+          benefits: Json
+          created_at: string
+          currency: string
+          event_id: string
+          id: string
+          kind: Database["public"]["Enums"]["ticket_kind"]
+          name: string
+          per_user_limit: number
+          price: number
+          quantity: number
+          sales_end: string | null
+          sales_start: string | null
+          status: string
+        }
+        Insert: {
+          benefits?: Json
+          created_at?: string
+          currency?: string
+          event_id: string
+          id?: string
+          kind?: Database["public"]["Enums"]["ticket_kind"]
+          name: string
+          per_user_limit?: number
+          price: number
+          quantity: number
+          sales_end?: string | null
+          sales_start?: string | null
+          status?: string
+        }
+        Update: {
+          benefits?: Json
+          created_at?: string
+          currency?: string
+          event_id?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["ticket_kind"]
+          name?: string
+          per_user_limit?: number
+          price?: number
+          quantity?: number
+          sales_end?: string | null
+          sales_start?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_types_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tickets: {
+        Row: {
+          code: string
+          created_at: string
+          event_id: string
+          holder_name: string | null
+          id: string
+          issued_at: string
+          order_item_id: string | null
+          qr_secret: string
+          qr_version: number
+          status: Database["public"]["Enums"]["ticket_status"]
+          ticket_type_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          event_id: string
+          holder_name?: string | null
+          id?: string
+          issued_at?: string
+          order_item_id?: string | null
+          qr_secret?: string
+          qr_version?: number
+          status?: Database["public"]["Enums"]["ticket_status"]
+          ticket_type_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          event_id?: string
+          holder_name?: string | null
+          id?: string
+          issued_at?: string
+          order_item_id?: string | null
+          qr_secret?: string
+          qr_version?: number
+          status?: Database["public"]["Enums"]["ticket_status"]
+          ticket_type_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_order_item_id_fkey"
+            columns: ["order_item_id"]
+            isOneToOne: false
+            referencedRelation: "order_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_ticket_type_id_fkey"
+            columns: ["ticket_type_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_level_assignments: {
         Row: {
           granted_at: string
@@ -2519,6 +2798,44 @@ export type Database = {
             columns: ["region_id"]
             isOneToOne: false
             referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      venues: {
+        Row: {
+          address: string | null
+          capacity: number | null
+          city_id: string | null
+          created_at: string
+          id: string
+          map_url: string | null
+          name: string
+        }
+        Insert: {
+          address?: string | null
+          capacity?: number | null
+          city_id?: string | null
+          created_at?: string
+          id?: string
+          map_url?: string | null
+          name: string
+        }
+        Update: {
+          address?: string | null
+          capacity?: number | null
+          city_id?: string | null
+          created_at?: string
+          id?: string
+          map_url?: string | null
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venues_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
             referencedColumns: ["id"]
           },
         ]
@@ -2824,6 +3141,13 @@ export type Database = {
         | "EXCUSED"
         | "CONFLICT"
       category_assignment: "AUTO" | "SELF" | "ADMIN"
+      checkin_result:
+        | "OK"
+        | "DUPLICATE"
+        | "INVALID"
+        | "WRONG_EVENT"
+        | "VOID"
+        | "OVERRIDE"
       consent_channel: "EMAIL" | "SMS" | "WHATSAPP" | "PUSH"
       contest_status:
         | "DRAFT"
@@ -2875,6 +3199,15 @@ export type Database = {
         | "CONTEST"
         | "EVENT"
         | "VENUE"
+      ticket_kind:
+        | "GENERAL"
+        | "VIP"
+        | "PREMIUM"
+        | "EARLY_BIRD"
+        | "VIRTUAL"
+        | "PROMO"
+        | "COMP"
+      ticket_status: "VALID" | "USED" | "VOID" | "TRANSFERRED"
       video_status:
         | "DRAFT"
         | "UPLOADING"
@@ -3030,6 +3363,14 @@ export const Constants = {
         "CONFLICT",
       ],
       category_assignment: ["AUTO", "SELF", "ADMIN"],
+      checkin_result: [
+        "OK",
+        "DUPLICATE",
+        "INVALID",
+        "WRONG_EVENT",
+        "VOID",
+        "OVERRIDE",
+      ],
       consent_channel: ["EMAIL", "SMS", "WHATSAPP", "PUSH"],
       contest_status: [
         "DRAFT",
@@ -3087,6 +3428,16 @@ export const Constants = {
         "EVENT",
         "VENUE",
       ],
+      ticket_kind: [
+        "GENERAL",
+        "VIP",
+        "PREMIUM",
+        "EARLY_BIRD",
+        "VIRTUAL",
+        "PROMO",
+        "COMP",
+      ],
+      ticket_status: ["VALID", "USED", "VOID", "TRANSFERRED"],
       video_status: [
         "DRAFT",
         "UPLOADING",

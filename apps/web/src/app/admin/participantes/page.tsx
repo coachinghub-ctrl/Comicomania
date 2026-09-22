@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { alcanceDelActor, puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { MapaDeParticipantes, type PuntoGeo } from "./mapa";
 
 export const metadata = { title: "Participantes" };
 
@@ -31,6 +32,14 @@ export default async function Participantes() {
   const alcance = await alcanceDelActor("PARTICIPANTS");
   const supabase = await crearClienteServidor();
 
+  /* La geografía llega AGREGADA: conteos por ciudad, nunca filas de personas.
+     Un mapa no necesita saber quién es cada punto. Y la función respeta el
+     territorio de quien pregunta, igual que todo lo demás. */
+  const [{ data: geo }, { data: sinUbicar }] = await Promise.all([
+    supabase.rpc("geografia_de_usuarios"),
+    supabase.rpc("usuarios_sin_ubicar"),
+  ]);
+
   /* Sin filtro de territorio a mano: lo aplica RLS comparando el path del
      concurso contra el alcance del grant. Si esta consulta se escribiera mal,
      la base seguiría sin devolver a nadie de otra ciudad. */
@@ -57,6 +66,18 @@ export default async function Participantes() {
           No se pudo leer el listado: {error.message}
         </p>
       )}
+
+      <section className="mt-8">
+        <h2 className="font-display text-lg text-ink uppercase">
+          De dónde es la gente
+        </h2>
+        <div className="mt-4">
+          <MapaDeParticipantes
+            puntos={(geo ?? []) as PuntoGeo[]}
+            sinUbicar={Number(sinUbicar ?? 0)}
+          />
+        </div>
+      </section>
 
       {!error && (participantes?.length ?? 0) === 0 && (
         <div className="mt-8 rounded-lg border border-line bg-surface-2 p-8">

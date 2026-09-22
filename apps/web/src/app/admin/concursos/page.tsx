@@ -3,6 +3,7 @@ import { puede } from "@comicomania/authz";
 import { cargarActor, puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { NuevaTemporada, NuevoConcurso, type Ciudad, type Opcion } from "./formularios";
+import { EditorDeBases, type ConcursoEditable } from "./editor-bases";
 
 export const metadata = { title: "Concursos" };
 
@@ -29,7 +30,7 @@ export default async function Concursos() {
       supabase
         .from("contests")
         .select(
-          "id, slug, name, status, registration_opens_at, registration_closes_at, age_reference_date, countries(name, path), cities(name, path), seasons(name, year), categories(id), rounds(id), participants(id)",
+          "id, slug, name, status, description, how_to_enter, invitation_image_url, invitation_image_alt, registration_opens_at, registration_closes_at, age_reference_date, countries(name, path), cities(name, path), seasons(name, year), categories(id), rounds(id), participants(id), contest_requirements(id, order, title, detail, fails_when, is_required)",
         )
         .order("created_at", { ascending: false })
         .limit(50),
@@ -158,6 +159,43 @@ export default async function Concursos() {
           </div>
         )}
       </section>
+
+      {/* Bases y arte, uno por concurso.
+          Va debajo de la tabla y no dentro: son dos trabajos distintos —mirar
+          el estado de todos, y sentarse a escribir las bases de uno—. */}
+      {puedeCrear && (concursos?.length ?? 0) > 0 && (
+        <section className="mt-10">
+          <h2 className="font-display text-lg text-ink uppercase">
+            Bases, arte y requisitos
+          </h2>
+          <p className="mt-1 max-w-2xl text-sm text-ink-soft">
+            Un concurso que no explica qué se pide recibe cien videos que hay
+            que rechazar uno por uno, y cada rechazo es alguien enfadado con
+            razón: nadie le dijo que dos minutos eran dos minutos.
+          </p>
+          <div className="mt-4 space-y-4">
+            {concursos!.map((c) => (
+              <EditorDeBases
+                key={c.id}
+                concurso={
+                  {
+                    id: c.id,
+                    slug: c.slug,
+                    name: c.name,
+                    description: c.description,
+                    how_to_enter: c.how_to_enter,
+                    invitation_image_url: c.invitation_image_url,
+                    invitation_image_alt: c.invitation_image_alt,
+                    requisitos: ((c.contest_requirements ?? []) as ConcursoEditable["requisitos"])
+                      .slice()
+                      .sort((a, b) => a.order - b.order),
+                  } satisfies ConcursoEditable
+                }
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

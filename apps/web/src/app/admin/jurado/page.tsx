@@ -26,7 +26,7 @@ export default async function Jurado() {
   const [{ data: jueces }, { data: asignaciones }] = await Promise.all([
     supabase
       .from("judges")
-      .select("id, display_name, bio, status, created_at, countries(name)")
+      .select("id, display_name, bio, status, photo_url, created_at, countries(name)")
       .order("display_name"),
     supabase
       .from("judge_assignments")
@@ -80,15 +80,34 @@ export default async function Jurado() {
             {jueces!.map((j) => {
               const pais = j.countries as { name: string } | null;
               return (
-                <li key={j.id} className="rounded-lg border border-line bg-surface-2 p-4">
-                  <p className="font-display text-sm text-ink uppercase">
-                    {j.display_name}
-                  </p>
-                  <p className="mt-1 text-xs text-ink-faint">
-                    {pais?.name ?? "sin país"} ·{" "}
-                    {j.status === "ACTIVE" ? "activo" : "inactivo"}
-                  </p>
-                  {j.bio && <p className="mt-2 text-sm text-ink-soft">{j.bio}</p>}
+                <li key={j.id} className="flex gap-4 rounded-lg border border-line bg-surface-2 p-4">
+                  <div className="size-14 shrink-0 overflow-hidden rounded-full border border-line bg-surface">
+                    {j.photo_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={j.photo_url}
+                        alt=""
+                        width={56}
+                        height={56}
+                        className="size-full object-cover"
+                      />
+                    ) : (
+                      <span className="font-display flex size-full items-center justify-center text-lg text-ink-faint">
+                        {j.display_name.slice(0, 1)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-display text-sm text-ink uppercase">
+                      {j.display_name}
+                    </p>
+                    <p className="mt-1 text-xs text-ink-faint">
+                      {pais?.name ?? "sin país"} ·{" "}
+                      {j.status === "ACTIVE" ? "activo" : "inactivo"}
+                      {!j.photo_url && " · sin foto"}
+                    </p>
+                    {j.bio && <p className="mt-2 text-sm text-ink-soft">{j.bio}</p>}
+                  </div>
                 </li>
               );
             })}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Button } from "@comicomania/ui";
 import { crearJuez, type Resultado } from "./acciones";
 
@@ -8,6 +8,7 @@ const INICIAL: Resultado = { estado: "inicial" };
 
 export function NuevoJuez() {
   const [estado, enviar, enviando] = useActionState(crearJuez, INICIAL);
+  const [vistaPrevia, setVistaPrevia] = useState<string | null>(null);
 
   return (
     <form action={enviar} className="rounded-lg border border-line p-5">
@@ -38,6 +39,44 @@ export function NuevoJuez() {
             className="mt-1 block w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-ink"
           />
         </label>
+
+        {/* La foto del jurado es pública: quien compite tiene derecho a saber
+            quién lo juzga, y una lista de nombres sin cara no dice nada. */}
+        <div className="sm:col-span-2 flex flex-wrap items-center gap-4">
+          <div className="size-16 shrink-0 overflow-hidden rounded-full border border-line bg-surface-2">
+            {vistaPrevia ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={vistaPrevia}
+                alt="Vista previa de la foto"
+                width={64}
+                height={64}
+                className="size-full object-cover"
+              />
+            ) : (
+              <span className="flex size-full items-center justify-center text-xl text-ink-faint">
+                ?
+              </span>
+            )}
+          </div>
+          <label className="min-w-0 flex-1 text-sm text-ink-soft">
+            Foto
+            <input
+              type="file"
+              name="foto"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(e) => {
+                const archivo = e.target.files?.[0];
+                if (archivo) setVistaPrevia(URL.createObjectURL(archivo));
+              }}
+              className="mt-1 block w-full text-sm text-ink-soft file:mr-3 file:rounded-md file:border-0 file:bg-red-600 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-paper"
+            />
+            <span className="mt-1 block text-xs text-ink-faint">
+              JPG, PNG o WebP, hasta 3 MB. Se muestra en la ficha pública del
+              jurado.
+            </span>
+          </label>
+        </div>
       </div>
 
       <p className="mt-3 text-xs text-ink-faint">

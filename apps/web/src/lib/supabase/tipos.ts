@@ -723,6 +723,47 @@ export type Database = {
           },
         ]
       }
+      contest_requirements: {
+        Row: {
+          contest_id: string
+          created_at: string
+          detail: string | null
+          fails_when: string | null
+          id: string
+          is_required: boolean
+          order: number
+          title: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          detail?: string | null
+          fails_when?: string | null
+          id?: string
+          is_required?: boolean
+          order: number
+          title: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          detail?: string | null
+          fails_when?: string | null
+          id?: string
+          is_required?: boolean
+          order?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_requirements_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contests: {
         Row: {
           age_reference_date: string
@@ -730,7 +771,11 @@ export type Database = {
           country_id: string
           created_at: string
           created_by: string | null
+          description: string | null
+          how_to_enter: string | null
           id: string
+          invitation_image_alt: string | null
+          invitation_image_url: string | null
           landing_config: Json
           name: string
           prize: Json
@@ -749,7 +794,11 @@ export type Database = {
           country_id: string
           created_at?: string
           created_by?: string | null
+          description?: string | null
+          how_to_enter?: string | null
           id?: string
+          invitation_image_alt?: string | null
+          invitation_image_url?: string | null
           landing_config?: Json
           name: string
           prize?: Json
@@ -768,7 +817,11 @@ export type Database = {
           country_id?: string
           created_at?: string
           created_by?: string | null
+          description?: string | null
+          how_to_enter?: string | null
           id?: string
+          invitation_image_alt?: string | null
+          invitation_image_url?: string | null
           landing_config?: Json
           name?: string
           prize?: Json
@@ -4821,6 +4874,18 @@ export type Database = {
         Args: { p_path?: string; p_user_id?: string }
         Returns: Database["public"]["Enums"]["finance_level"]
       }
+      geografia_de_usuarios: {
+        Args: never
+        Returns: {
+          ciudad: string
+          inscritos: number
+          latitud: number
+          longitud: number
+          pais: string
+          path: string
+          personas: number
+        }[]
+      }
       has_permission: {
         Args: {
           p_action: string
@@ -4863,6 +4928,7 @@ export type Database = {
       roles_de_mis_grants: { Args: never; Returns: string[] }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
+      usuarios_sin_ubicar: { Args: never; Returns: number }
       uuid_generate_v7: { Args: never; Returns: string }
     }
     Enums: {

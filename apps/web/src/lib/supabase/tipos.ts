@@ -173,6 +173,86 @@ export type Database = {
           },
         ]
       }
+      attribution_touches: {
+        Row: {
+          city_id: string | null
+          contest_id: string | null
+          country_id: string | null
+          creative: string | null
+          id: string
+          landing: string | null
+          occurred_at: string
+          platform: string | null
+          user_id: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          city_id?: string | null
+          contest_id?: string | null
+          country_id?: string | null
+          creative?: string | null
+          id?: string
+          landing?: string | null
+          occurred_at?: string
+          platform?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          city_id?: string | null
+          contest_id?: string | null
+          country_id?: string | null
+          creative?: string | null
+          id?: string
+          landing?: string | null
+          occurred_at?: string
+          platform?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attribution_touches_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attribution_touches_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attribution_touches_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attribution_touches_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -1521,6 +1601,176 @@ export type Database = {
           },
         ]
       }
+      expenses: {
+        Row: {
+          amount: number
+          amount_base: number | null
+          approved_by: string | null
+          category_id: string
+          city_id: string | null
+          contest_id: string | null
+          cost_center: string
+          country_id: string
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          event_id: string | null
+          fx_rate: number
+          id: string
+          invoice_number: string | null
+          paid_at: string | null
+          payment_method: string | null
+          receipt_url: string | null
+          scope_path: string
+          season_id: string | null
+          tax: number
+          vendor: string | null
+        }
+        Insert: {
+          amount: number
+          amount_base?: number | null
+          approved_by?: string | null
+          category_id: string
+          city_id?: string | null
+          contest_id?: string | null
+          cost_center: string
+          country_id: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          event_id?: string | null
+          fx_rate?: number
+          id?: string
+          invoice_number?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          receipt_url?: string | null
+          scope_path: string
+          season_id?: string | null
+          tax?: number
+          vendor?: string | null
+        }
+        Update: {
+          amount?: number
+          amount_base?: number | null
+          approved_by?: string | null
+          category_id?: string
+          city_id?: string | null
+          contest_id?: string | null
+          cost_center?: string
+          country_id?: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          event_id?: string | null
+          fx_rate?: number
+          id?: string
+          invoice_number?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          receipt_url?: string | null
+          scope_path?: string
+          season_id?: string | null
+          tax?: number
+          vendor?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "financial_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_categories: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["financial_kind"]
+          name: string
+          parent_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          kind: Database["public"]["Enums"]["financial_kind"]
+          name: string
+          parent_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["financial_kind"]
+          name?: string
+          parent_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "financial_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inventory: {
         Row: {
           available: number | null
@@ -1979,6 +2229,104 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "crm_contacts"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      metric_definitions: {
+        Row: {
+          created_at: string
+          definition: string
+          name: string
+          owner_area: string | null
+          slug: string
+          unit: string | null
+        }
+        Insert: {
+          created_at?: string
+          definition: string
+          name: string
+          owner_area?: string | null
+          slug: string
+          unit?: string | null
+        }
+        Update: {
+          created_at?: string
+          definition?: string
+          name?: string
+          owner_area?: string | null
+          slug?: string
+          unit?: string | null
+        }
+        Relationships: []
+      }
+      metrics_daily: {
+        Row: {
+          city_id: string | null
+          computed_at: string
+          contest_id: string | null
+          country_id: string | null
+          date: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          metric: string
+          scope_path: string | null
+          value: number
+        }
+        Insert: {
+          city_id?: string | null
+          computed_at?: string
+          contest_id?: string | null
+          country_id?: string | null
+          date: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          metric: string
+          scope_path?: string | null
+          value: number
+        }
+        Update: {
+          city_id?: string | null
+          computed_at?: string
+          contest_id?: string | null
+          country_id?: string | null
+          date?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          metric?: string
+          scope_path?: string | null
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "metrics_daily_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metrics_daily_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metrics_daily_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metrics_daily_metric_fkey"
+            columns: ["metric"]
+            isOneToOne: false
+            referencedRelation: "metric_definitions"
+            referencedColumns: ["slug"]
           },
         ]
       }
@@ -2498,6 +2846,112 @@ export type Database = {
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      revenue_entries: {
+        Row: {
+          amount: number
+          amount_base: number | null
+          city_id: string | null
+          contest_id: string | null
+          cost_center: string
+          country_id: string
+          created_at: string
+          currency: string
+          event_id: string | null
+          fx_rate: number
+          id: string
+          net: number | null
+          occurred_at: string
+          order_id: string | null
+          scope_path: string
+          season_id: string | null
+          source: Database["public"]["Enums"]["revenue_source"]
+          tax: number
+        }
+        Insert: {
+          amount: number
+          amount_base?: number | null
+          city_id?: string | null
+          contest_id?: string | null
+          cost_center: string
+          country_id: string
+          created_at?: string
+          currency?: string
+          event_id?: string | null
+          fx_rate?: number
+          id?: string
+          net?: number | null
+          occurred_at: string
+          order_id?: string | null
+          scope_path: string
+          season_id?: string | null
+          source: Database["public"]["Enums"]["revenue_source"]
+          tax?: number
+        }
+        Update: {
+          amount?: number
+          amount_base?: number | null
+          city_id?: string | null
+          contest_id?: string | null
+          cost_center?: string
+          country_id?: string
+          created_at?: string
+          currency?: string
+          event_id?: string | null
+          fx_rate?: number
+          id?: string
+          net?: number | null
+          occurred_at?: string
+          order_id?: string | null
+          scope_path?: string
+          season_id?: string | null
+          source?: Database["public"]["Enums"]["revenue_source"]
+          tax?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "revenue_entries_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_entries_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_entries_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_entries_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_entries_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "revenue_entries_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
             referencedColumns: ["id"]
           },
         ]
@@ -4117,6 +4571,7 @@ export type Database = {
         | "CANCELLED"
       crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
+      financial_kind: "REVENUE" | "EXPENSE"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
       inventory_commercial_status:
         | "AVAILABLE"
@@ -4145,6 +4600,17 @@ export type Database = {
         | "SUCCEEDED"
         | "FAILED"
         | "CANCELLED"
+      revenue_source:
+        | "TICKETS"
+        | "STORE"
+        | "ACADEMY"
+        | "MEMBERSHIPS"
+        | "SPONSORS"
+        | "BOOKINGS"
+        | "EXPERIENCES"
+        | "LICENSING"
+        | "TOURS"
+        | "OTHER"
       review_decision: "APPROVED" | "CHANGES_REQUESTED" | "REJECTED"
       rights_status:
         | "PENDING"
@@ -4354,6 +4820,7 @@ export const Constants = {
       ],
       crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT"],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
+      financial_kind: ["REVENUE", "EXPENSE"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],
       inventory_commercial_status: [
         "AVAILABLE",
@@ -4385,6 +4852,18 @@ export const Constants = {
         "SUCCEEDED",
         "FAILED",
         "CANCELLED",
+      ],
+      revenue_source: [
+        "TICKETS",
+        "STORE",
+        "ACADEMY",
+        "MEMBERSHIPS",
+        "SPONSORS",
+        "BOOKINGS",
+        "EXPERIENCES",
+        "LICENSING",
+        "TOURS",
+        "OTHER",
       ],
       review_decision: ["APPROVED", "CHANGES_REQUESTED", "REJECTED"],
       rights_status: [

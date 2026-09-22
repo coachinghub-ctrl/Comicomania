@@ -20,18 +20,6 @@ export type Pendiente = {
 };
 
 export const ROADMAP: Record<string, Pendiente> = {
-  finanzas: {
-    fase: "N",
-    nombreFase: "Finance + Intelligence",
-    cuando: "Jun–Jul 2027",
-    que: "P&L por ciudad y por concurso. Exige segundo factor, siempre.",
-  },
-  analitica: {
-    fase: "N",
-    nombreFase: "Finance + Intelligence",
-    cuando: "Jun–Jul 2027",
-    que: "Tableros de audiencia, geografía y embudo de participación.",
-  },
   legal: {
     fase: "O",
     nombreFase: "Testing + Security",

@@ -3,6 +3,7 @@ import { puede } from "@comicomania/authz";
 import { cargarActor, alcanceDelActor, puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { Decidir } from "./decidir";
+import { Reproductor } from "./reproductor";
 
 export const metadata = { title: "Revisión de video" };
 
@@ -127,20 +128,25 @@ export default async function Review() {
                 </div>
               </div>
 
-              {v.description && (
-                <p className="mt-3 text-sm text-ink-soft">{v.description}</p>
-              )}
+              <div className="mt-4 flex flex-col gap-4 sm:flex-row">
+                {v.master_url ? (
+                  <Reproductor
+                    url={v.master_url}
+                    titulo={v.title}
+                    duracion={v.duration_s}
+                  />
+                ) : (
+                  <p className="w-full max-w-sm rounded-md border border-line bg-surface-2 p-4 text-sm text-ink-soft">
+                    Este video todavía no tiene máster subido.
+                  </p>
+                )}
 
-              {v.master_url && (
-                <a
-                  href={v.master_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 inline-block text-sm text-red-600 underline"
-                >
-                  Abrir el máster
-                </a>
-              )}
+                {v.description && (
+                  <p className="min-w-0 flex-1 text-sm text-ink-soft">
+                    {v.description}
+                  </p>
+                )}
+              </div>
 
               {bloqueado && (
                 <p className="mt-3 rounded-md border border-red-600/40 bg-red-700/5 p-2.5 text-xs text-red-700">

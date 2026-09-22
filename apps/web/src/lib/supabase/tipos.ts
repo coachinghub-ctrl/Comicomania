@@ -4419,11 +4419,13 @@ export type Database = {
           mfa_enabled: boolean
           phone: string | null
           phone_verified_at: string | null
+          profile_complete: boolean | null
           referral_code: string
           region_id: string | null
           status: string
           timezone: string | null
           updated_at: string
+          whatsapp: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -4445,11 +4447,13 @@ export type Database = {
           mfa_enabled?: boolean
           phone?: string | null
           phone_verified_at?: string | null
+          profile_complete?: boolean | null
           referral_code?: string
           region_id?: string | null
           status?: string
           timezone?: string | null
           updated_at?: string
+          whatsapp?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -4471,11 +4475,13 @@ export type Database = {
           mfa_enabled?: boolean
           phone?: string | null
           phone_verified_at?: string | null
+          profile_complete?: boolean | null
           referral_code?: string
           region_id?: string | null
           status?: string
           timezone?: string | null
           updated_at?: string
+          whatsapp?: string | null
         }
         Relationships: [
           {
@@ -4819,6 +4825,15 @@ export type Database = {
           valor: number
         }[]
       }
+      mover_en_embudo: {
+        Args: {
+          p_etapa: string
+          p_pipeline: string
+          p_titulo?: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       path_de_concurso: { Args: { p_contest_id: string }; Returns: string }
       path_de_usuario: { Args: { p_user_id: string }; Returns: string }
       puede_recibir_marketing: {
@@ -4857,7 +4872,7 @@ export type Database = {
         | "JUDGING"
         | "FINISHED"
         | "CANCELLED"
-      crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT"
+      crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT" | "AUDIENCE"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
       financial_kind: "REVENUE" | "EXPENSE"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
@@ -5114,7 +5129,7 @@ export const Constants = {
         "FINISHED",
         "CANCELLED",
       ],
-      crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT"],
+      crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT", "AUDIENCE"],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
       financial_kind: ["REVENUE", "EXPENSE"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],

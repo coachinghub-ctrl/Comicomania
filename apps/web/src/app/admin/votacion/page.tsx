@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import { puede } from "@comicomania/authz";
+import type { NotaDeJuez } from "@comicomania/domain";
 import { cargarActor, puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { Anular, type VotoSospechoso } from "./anular";
+import { Scoreboard, type FilaMarcador } from "./scoreboard";
 
 export const metadata = { title: "Votación" };
 
@@ -19,7 +21,7 @@ export default async function Votacion() {
     .select(
       // `votes` apunta dos veces a `users` —quien vota y quien anula—, así que
       // hay que decir por cuál se embebe o PostgREST no sabe cuál elegir.
-      "id, status, created_at, invalidated_reason, users!votes_user_id_fkey(display_name, email), participants(users(display_name)), rounds(name, contests(name))",
+      "id, status, created_at, invalidated_reason, users!votes_user_id_fkey(display_name, email), participants(id, users(display_name)), rounds(name, contests(name))",
     )
     .order("created_at", { ascending: false })
     .limit(200);
@@ -28,6 +30,61 @@ export default async function Votacion() {
     acc[v.status] = (acc[v.status] ?? 0) + 1;
     return acc;
   }, {});
+
+  /* El marcador. Se arma acá y no en el componente porque hace falta cruzar
+     tres tablas; el componente solo calcula y pinta.
+
+     Los votos que cuentan son los VALID: un voto anulado no suma, pero sigue
+     existiendo en la tabla, que es lo que permite auditarlo. */
+  const { data: inscritos } = await supabase
+    .from("participants")
+    .select("id, users(display_name, email), categories(name)")
+    .limit(200);
+
+  const { data: notas } = await supabase
+    .from("judge_scores")
+    .select(
+      "criteria_scores, judge_assignments(judge_id, entries(participant_id))",
+    )
+    .not("submitted_at", "is", null)
+    .limit(500);
+
+  const votosValidos = new Map<string, number>();
+  for (const v of votos ?? []) {
+    if (v.status !== "VALID") continue;
+    const p = v.participants as { id?: string } | null;
+    const id = (p as { id?: string } | null)?.id;
+    if (id) votosValidos.set(id, (votosValidos.get(id) ?? 0) + 1);
+  }
+
+  const notasPorParticipante = new Map<string, NotaDeJuez[]>();
+  for (const n of notas ?? []) {
+    const asignacion = n.judge_assignments as {
+      judge_id: string;
+      entries: { participant_id: string } | null;
+    } | null;
+    const pid = asignacion?.entries?.participant_id;
+    if (!pid) continue;
+    notasPorParticipante.set(pid, [
+      ...(notasPorParticipante.get(pid) ?? []),
+      {
+        juezId: asignacion!.judge_id,
+        puntajes: (n.criteria_scores ?? {}) as Record<string, number>,
+      },
+    ]);
+  }
+
+  const marcador: FilaMarcador[] = (inscritos ?? []).map((p) => {
+    const persona = p.users as { display_name: string | null; email: string | null } | null;
+    const categoria = p.categories as { name: string } | null;
+    return {
+      participanteId: p.id,
+      nombre: persona?.display_name ?? persona?.email ?? "—",
+      categoria: categoria?.name ?? "Sin categoría",
+      votos: votosValidos.get(p.id) ?? 0,
+      notas: notasPorParticipante.get(p.id) ?? [],
+    };
+  });
 
   const sospechosos: VotoSospechoso[] = (votos ?? [])
     .filter((v) => v.status === "SUSPECT" || v.status === "PENDING_REVIEW")
@@ -97,6 +154,18 @@ export default async function Votacion() {
         <p className="mt-2 text-xs text-ink-faint">
           Sobre los últimos 200 votos de tu territorio.
         </p>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="font-display text-lg text-ink uppercase">Marcador</h2>
+        <p className="mt-1 max-w-2xl text-sm text-ink-soft">
+          Público y jurado, por categoría. Los números salen de la misma
+          función que resolverá la ronda de verdad: si esta pantalla calculara
+          por su cuenta, diría una cosa y el resultado oficial otra.
+        </p>
+        <div className="mt-4">
+          <Scoreboard filas={marcador} />
+        </div>
       </section>
 
       <section className="mt-10">

@@ -23,3 +23,6 @@ export type {
   NotaDeJuez,
   PuntajeDeRonda,
 } from "./puntaje";
+
+export { firmarEntrada, leerQR, verificarEntrada } from "./qr-entrada";
+export type { ContenidoQR } from "./qr-entrada";

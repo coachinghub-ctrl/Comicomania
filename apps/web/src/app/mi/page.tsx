@@ -7,12 +7,22 @@ import { cargarActor } from "@/lib/autorizacion";
 
 export const metadata = { title: "Mi COMICOMANÍA" };
 
-/* Completitud del perfil: los campos que hacen falta para participar.
-   Vive acá y no en la base porque cambia con el producto, no con los datos. */
+/* Los campos que el perfil exige. Son los mismos que decide la columna
+   generada `profile_complete` de la base: acá solo se cuentan para poder
+   mostrar un porcentaje, nunca para decidir si está completo. Si esta lista y
+   la de la base discreparan, mandaría la base. */
+const CAMPOS_DEL_PERFIL = [
+  "first_name",
+  "last_name",
+  "country_id",
+  "city_id",
+  "birth_date",
+  "whatsapp",
+] as const;
+
 function completitud(u: Record<string, unknown>): number {
-  const campos = ["first_name", "last_name", "display_name", "handle", "city_id"];
-  const puestos = campos.filter((c) => Boolean(u[c])).length;
-  return Math.round((puestos / campos.length) * 100);
+  const puestos = CAMPOS_DEL_PERFIL.filter((c) => Boolean(u[c])).length;
+  return Math.round((puestos / CAMPOS_DEL_PERFIL.length) * 100);
 }
 
 export default async function MiComicomania() {
@@ -30,6 +40,14 @@ export default async function MiComicomania() {
     .select("*")
     .eq("id", credencial.id)
     .single();
+
+  /* Sin perfil no se pasa. No es una molestia burocrática: sin ciudad no se
+     sabe qué concursos le tocan, sin fecha de nacimiento no hay categoría, y
+     sin WhatsApp no hay cómo avisarle que pasó de ronda. Quien lo complete a
+     medias vuelve acá solo. */
+  if (id && !id.profile_complete) {
+    redirect("/mi/perfil?primera=1" as Route);
+  }
 
   const { data: tipos } = await supabase
     .from("user_type_assignments")
@@ -84,7 +102,19 @@ export default async function MiComicomania() {
       </header>
 
       <div className="mx-auto max-w-4xl px-5 pb-16">
-        <p className="text-sm text-muted">Hola, {nombre}</p>
+        <div className="flex items-center gap-3">
+          {id?.avatar_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={id.avatar_url}
+              alt=""
+              width={40}
+              height={40}
+              className="size-10 shrink-0 rounded-full border border-stage-600 object-cover"
+            />
+          ) : null}
+          <p className="text-sm text-muted">Hola, {nombre}</p>
+        </div>
         <h1 className="font-display mt-1 mb-8 text-4xl text-paper uppercase">
           Mi COMICOMANÍA
         </h1>
@@ -161,6 +191,12 @@ export default async function MiComicomania() {
               <dd className="font-mono text-gold-400">{id?.referral_code ?? "—"}</dd>
             </div>
           </dl>
+          <a
+            href="/mi/perfil"
+            className="mt-4 inline-block text-sm text-red-300 transition-colors hover:text-red-400"
+          >
+            Editar mi perfil y mi foto
+          </a>
         </section>
       </div>
     </main>

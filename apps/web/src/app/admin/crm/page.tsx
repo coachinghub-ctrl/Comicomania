@@ -97,7 +97,10 @@ export default async function Crm() {
               Un solo motor de pipelines sirve a participantes, sponsors,
               talento y soporte. Cambian las etapas, no el código.
             </p>
-            <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
+            {/* Parrilla que se acomoda sola, no una fila con scroll: con siete
+                etapas, un tablero horizontal obliga a arrastrar para ver el
+                final del embudo, que es justo la parte que importa. */}
+            <div className="mt-4 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr))]">
               {stages.map((s) => {
                 const enEtapa = (oportunidades ?? []).filter(
                   (o) => o.stage_id === s.id,
@@ -105,9 +108,9 @@ export default async function Crm() {
                 return (
                   <div
                     key={s.id}
-                    className="min-w-[180px] flex-1 rounded-lg border border-line bg-surface-2 p-3"
+                    className="min-w-0 rounded-lg border border-line bg-surface-2 p-3"
                   >
-                    <p className="text-xs tracking-wider text-ink-faint uppercase">
+                    <p className="text-xs tracking-wider text-ink-faint uppercase break-words">
                       {s.name}
                     </p>
                     <p className="font-display mt-1 text-2xl text-ink tabular-nums">
@@ -140,11 +143,11 @@ export default async function Crm() {
             Todavía no hay contactos. Cada cuenta nueva crea el suyo sola.
           </p>
         ) : (
-          <div className="mt-4 overflow-x-auto rounded-lg border border-line">
-            <table className="w-full text-left text-sm">
+          <div className="mt-4 rounded-lg border border-line">
+            <table className="w-full table-fixed text-left text-sm">
               <thead className="bg-surface-2 text-xs tracking-wider text-ink-faint uppercase">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-medium">Contacto</th>
+                  <th scope="col" className="w-2/5 px-4 py-3 font-medium">Contacto</th>
                   <th scope="col" className="px-4 py-3 font-medium">Territorio</th>
                   <th scope="col" className="px-4 py-3 font-medium">Origen</th>
                   <th scope="col" className="px-4 py-3 font-medium">Vínculo</th>
@@ -162,7 +165,9 @@ export default async function Crm() {
                     <tr key={c.id} className={i % 2 === 1 ? "bg-surface-2" : undefined}>
                       <td className="px-4 py-3">
                         <span className="block text-ink">{nombre}</span>
-                        <span className="block text-xs text-ink-soft">{c.email}</span>
+                        <span className="block truncate text-xs text-ink-soft" title={c.email ?? undefined}>
+                          {c.email}
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-ink-soft">
                         {ciudad?.name ?? pais?.name ?? "—"}

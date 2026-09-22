@@ -2749,7 +2749,10 @@ export type Database = {
           contest_id: string | null
           created_at: string
           description: string | null
+          display_order: number
           id: string
+          image_alt: string | null
+          image_url: string | null
           name: string
           requires_shipping: boolean
           season_id: string | null
@@ -2763,7 +2766,10 @@ export type Database = {
           contest_id?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
+          image_alt?: string | null
+          image_url?: string | null
           name: string
           requires_shipping?: boolean
           season_id?: string | null
@@ -2777,7 +2783,10 @@ export type Database = {
           contest_id?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
+          image_alt?: string | null
+          image_url?: string | null
           name?: string
           requires_shipping?: boolean
           season_id?: string | null
@@ -4804,6 +4813,10 @@ export type Database = {
     }
     Functions: {
       aplicar_acceso_fundador: { Args: { p_user_id: string }; Returns: string }
+      disponibilidad_publica: {
+        Args: { p_variant_id: string }
+        Returns: string
+      }
       finance_access: {
         Args: { p_path?: string; p_user_id?: string }
         Returns: Database["public"]["Enums"]["finance_level"]
@@ -4842,6 +4855,10 @@ export type Database = {
           p_contact_id: string
         }
         Returns: boolean
+      }
+      registrar_interes_tienda: {
+        Args: { p_email: string; p_producto: string }
+        Returns: undefined
       }
       roles_de_mis_grants: { Args: never; Returns: string[] }
       show_limit: { Args: never; Returns: number }

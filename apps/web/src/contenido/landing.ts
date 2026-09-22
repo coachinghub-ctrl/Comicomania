@@ -229,7 +229,7 @@ export const SHOP = {
   texto:
     "COMICOMANÍA Shop reúne productos oficiales, colecciones de humoristas y colaboraciones especiales creadas para quienes no solo siguen el movimiento:",
   remate: "forman parte de él.",
-  cta: { texto: "Explora la tienda", href: "/entrar" },
+  cta: { texto: "Explora la tienda", href: "/tienda" },
   garantias: [
     { icono: "Envio", texto: "Envíos a todo el mundo" },
     { icono: "Escudo", texto: "Productos oficiales" },
@@ -419,7 +419,7 @@ export const NAVEGACION = [
   { texto: "Talent", href: "#talent" },
   { texto: "Academy", href: "#academy" },
   { texto: "Live", href: "#live" },
-  { texto: "Shop", href: "#shop" },
+  { texto: "Shop", href: "/tienda" },
   { texto: "Para marcas", href: "#marcas" },
   { texto: "Nosotros", href: "#manifiesto" },
 ];

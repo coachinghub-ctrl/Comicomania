@@ -59,7 +59,7 @@ const REGLAS: Regla[] = [
       titulo: "Verifica tu email",
       descripcion:
         "Te mandamos un enlace. Sin verificar no puedes votar ni participar.",
-      href: "/mi/verificar",
+      href: "/entrar?reenviar=1",
       prioridad: 1,
     }),
   },
@@ -86,13 +86,16 @@ const REGLAS: Regla[] = [
       prioridad: 1,
     }),
   },
+  /* Esta regla casi nunca dispara desde la web: inscribirse y mandar el video
+     ocurren en la misma transacción, así que nadie se queda INSCRITO sin video.
+     Sigue aquí porque sí pasa cuando alguien inscribe a mano desde el panel. */
   {
     aplica: (e) => e.participacion === "INSCRITO",
     accion: () => ({
       codigo: "SUBIR_VIDEO",
       titulo: "Sube tu video",
       descripcion: "Dos minutos de rutina. Desde el teléfono sirve.",
-      href: "/mi/videos/subir",
+      href: "/participa",
       prioridad: 1,
     }),
   },
@@ -102,7 +105,7 @@ const REGLAS: Regla[] = [
       codigo: "CORREGIR_VIDEO",
       titulo: "Tu video necesita un ajuste",
       descripcion: "Mira el comentario del equipo y vuelve a enviarlo.",
-      href: "/mi/videos",
+      href: "/mi/participacion",
       prioridad: 1,
     }),
   },
@@ -112,7 +115,7 @@ const REGLAS: Regla[] = [
       codigo: "COMPARTIR_VIDEO",
       titulo: "Comparte tu video",
       descripcion: "Ya está publicado. Los votos los traes tú.",
-      href: "/mi/videos",
+      href: "/mi/participacion",
       prioridad: 2,
     }),
   },
@@ -122,7 +125,7 @@ const REGLAS: Regla[] = [
       codigo: "VOTAR",
       titulo: "Vota",
       descripcion: "La votación está abierta. Un voto por participante.",
-      href: "/concursos",
+      href: "/participa",
       prioridad: 2,
     }),
   },
@@ -142,7 +145,7 @@ const REGLAS: Regla[] = [
       codigo: "COMPRAR_ENTRADA",
       titulo: "Ve a un show en vivo",
       descripcion: "Los que sigues se presentan en tu ciudad.",
-      href: "/eventos",
+      href: "/",
       prioridad: 3,
     }),
   },
@@ -162,7 +165,7 @@ const REGLAS: Regla[] = [
       codigo: "REACTIVAR",
       titulo: "Hay contenido nuevo en tu ciudad",
       descripcion: "Mira lo que te perdiste este mes.",
-      href: "/videos",
+      href: "/humoristas",
       prioridad: 5,
     }),
   },
@@ -173,7 +176,7 @@ const EXPLORAR: Accion = {
   codigo: "EXPLORAR",
   titulo: "Descubre talento nuevo",
   descripcion: "Mira lo último de la comunidad.",
-  href: "/videos",
+  href: "/humoristas",
   prioridad: 6,
 };
 

@@ -7,6 +7,18 @@ import { cargarActor } from "@/lib/autorizacion";
 
 export const metadata = { title: "Mi COMICOMANÍA" };
 
+/* Lo que se enseña en la tarjeta. Dice en qué punto está, no la palabra que
+   usa la base: "SUBMITTED" no le dice nada a nadie. */
+const ETIQUETA_PARTICIPACION: Record<string, string> = {
+  SIN_INSCRIBIR: "Sin concursos todavía",
+  INSCRITO: "Inscrito, falta el video",
+  VIDEO_ENVIADO: "Video enviado",
+  EN_REVISION: "En revisión",
+  CAMBIOS_SOLICITADOS: "Necesita un ajuste",
+  PUBLICADO: "Publicado",
+  ELIMINADO: "Fuera de concurso",
+};
+
 /* Los campos que el perfil exige. Son los mismos que decide la columna
    generada `profile_complete` de la base: acá solo se cuentan para poder
    mostrar un porcentaje, nunca para decidir si está completo. Si esta lista y
@@ -49,28 +61,91 @@ export default async function MiComicomania() {
     redirect("/mi/perfil?primera=1" as Route);
   }
 
-  const { data: tipos } = await supabase
-    .from("user_type_assignments")
-    .select("user_types(slug, name)")
-    .eq("user_id", credencial.id);
+  /* Lo que de verdad está pasando con esta persona.
+
+     Esto estuvo cableado a cero mientras el Contest Engine y el Commerce no
+     existían, y era un problema: "tu siguiente paso" le decía a alguien que
+     se inscribiera en un concurso en el que ya estaba. Un panel que miente
+     sobre lo que ya hiciste es peor que no tener panel. */
+  const [
+    { data: tipos },
+    { data: participacion },
+    { count: entradas },
+    { data: cursos },
+    { data: concurso },
+  ] = await Promise.all([
+    supabase
+      .from("user_type_assignments")
+      .select("user_types(slug, name)")
+      .eq("user_id", credencial.id),
+    supabase
+      .from("participants")
+      .select("id, contest_id, status, videos:videos(status, contest_id)")
+      .eq("user_id", credencial.id)
+      .order("registered_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from("tickets")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", credencial.id),
+    supabase
+      .from("course_enrollments")
+      .select("id, completed_at")
+      .eq("user_id", credencial.id),
+    supabase
+      .from("contests")
+      .select("slug, name")
+      .eq("status", "OPEN")
+      .order("registration_closes_at", { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+  ]);
 
   const slugs = (tipos ?? [])
     .map((t) => (t.user_types as { slug: string } | null)?.slug)
     .filter(Boolean) as string[];
 
+  /* El estado de participación sale del VIDEO, no de la inscripción: estar
+     inscrito no dice nada, lo que importa es dónde está lo que mandaste. */
+  const miVideo = participacion
+    ? ((participacion.videos ?? []) as { status: string; contest_id: string }[]).find(
+        (v) => v.contest_id === participacion.contest_id,
+      )
+    : null;
+
+  const DEL_VIDEO: Record<string, EstadoUsuario["participacion"]> = {
+    SUBMITTED: "VIDEO_ENVIADO",
+    IN_REVIEW: "EN_REVISION",
+    CHANGES_REQUESTED: "CAMBIOS_SOLICITADOS",
+    PUBLISHED: "PUBLICADO",
+    REJECTED: "ELIMINADO",
+    BLOCKED: "ELIMINADO",
+  };
+
+  const cursosActivos = (cursos ?? []).filter((c) => !c.completed_at).length;
+
   const estado: EstadoUsuario = {
     emailVerificado: Boolean(id?.email_verified_at ?? credencial.email_confirmed_at),
     completitudPerfil: id ? completitud(id) : 0,
     esHumorista: slugs.includes("HUMORISTA"),
-    // Estos llegan con el Contest Engine (Fase E) y el Commerce (Fase I).
-    concursoAbierto: null,
-    participacion: null,
+    concursoAbierto: concurso
+      ? { nombre: concurso.name, href: "/participa" }
+      : null,
+    participacion: participacion
+      ? (miVideo ? (DEL_VIDEO[miVideo.status] ?? "INSCRITO") : "INSCRITO")
+      : null,
+    // La votación todavía no tiene pantalla pública: se dirá cuando la tenga.
     votacionAbierta: false,
     haVotado: false,
     talentosQueSigue: 0,
-    entradas: 0,
-    cursosActivos: 0,
-    diasSinActividad: 0,
+    entradas: entradas ?? 0,
+    cursosActivos,
+    diasSinActividad: id?.last_active_at
+      ? Math.floor(
+          (Date.now() - new Date(id.last_active_at).getTime()) / 86_400_000,
+        )
+      : 0,
   };
 
   const accion = siguientePaso(estado);
@@ -152,9 +227,29 @@ export default async function MiComicomania() {
 
         <section className="mt-10 grid gap-4 sm:grid-cols-3">
           {[
-            { etiqueta: "Mi participación", valor: "Sin concursos todavía", href: "/mi/participacion" },
-            { etiqueta: "Mis entradas", valor: String(estado.entradas), href: "/mi/entradas" },
-            { etiqueta: "Mi academia", valor: String(estado.cursosActivos), href: "/mi/academia" },
+            {
+              etiqueta: "Mi participación",
+              valor: estado.participacion
+                ? ETIQUETA_PARTICIPACION[estado.participacion]
+                : "Sin concursos todavía",
+              href: "/mi/participacion",
+            },
+            {
+              etiqueta: "Mis entradas",
+              valor:
+                estado.entradas === 0
+                  ? "Ninguna"
+                  : `${estado.entradas} entrada${estado.entradas === 1 ? "" : "s"}`,
+              href: "/mi/entradas",
+            },
+            {
+              etiqueta: "Mi academia",
+              valor:
+                estado.cursosActivos === 0
+                  ? "Sin cursos"
+                  : `${estado.cursosActivos} en curso`,
+              href: "/mi/academia",
+            },
           ].map((tarjeta) => (
             <a
               key={tarjeta.etiqueta}

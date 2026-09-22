@@ -26,18 +26,6 @@ export const ROADMAP: Record<string, Pendiente> = {
     cuando: "Ene–Feb 2027",
     que: "Contactos, eventos de dominio y automatizaciones: quién entró, qué hizo y qué le toca después.",
   },
-  concursos: {
-    fase: "E",
-    nombreFase: "Contest Engine",
-    cuando: "Nov–Dic 2026",
-    que: "Series, temporadas y el Builder que deja armar un concurso completo sin escribir código.",
-  },
-  participantes: {
-    fase: "E",
-    nombreFase: "Contest Engine",
-    cuando: "Nov–Dic 2026",
-    que: "Inscripciones, categorías por edad y el estado de cada participante en su concurso.",
-  },
   review: {
     fase: "F",
     nombreFase: "Video + YouTube",

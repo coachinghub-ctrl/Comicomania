@@ -247,6 +247,78 @@ export type Database = {
           },
         ]
       }
+      categories: {
+        Row: {
+          assignment: Database["public"]["Enums"]["category_assignment"]
+          contest_id: string
+          created_at: string
+          description: string | null
+          eligibility: Json
+          id: string
+          max_age: number | null
+          merge_into: string | null
+          min_age: number | null
+          min_participants: number
+          name: string
+          order: number
+          prize: Json
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assignment?: Database["public"]["Enums"]["category_assignment"]
+          contest_id: string
+          created_at?: string
+          description?: string | null
+          eligibility?: Json
+          id?: string
+          max_age?: number | null
+          merge_into?: string | null
+          min_age?: number | null
+          min_participants?: number
+          name: string
+          order?: number
+          prize?: Json
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assignment?: Database["public"]["Enums"]["category_assignment"]
+          contest_id?: string
+          created_at?: string
+          description?: string | null
+          eligibility?: Json
+          id?: string
+          max_age?: number | null
+          merge_into?: string | null
+          min_age?: number | null
+          min_participants?: number
+          name?: string
+          order?: number
+          prize?: Json
+          slug?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "categories_merge_into_fkey"
+            columns: ["merge_into"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cities: {
         Row: {
           country_id: string
@@ -307,6 +379,95 @@ export type Database = {
           },
         ]
       }
+      contests: {
+        Row: {
+          age_reference_date: string
+          city_id: string | null
+          country_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          landing_config: Json
+          name: string
+          prize: Json
+          registration_closes_at: string | null
+          registration_opens_at: string | null
+          season_id: string
+          slug: string
+          status: Database["public"]["Enums"]["contest_status"]
+          submission_deadline: string | null
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          age_reference_date: string
+          city_id?: string | null
+          country_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          landing_config?: Json
+          name: string
+          prize?: Json
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          season_id: string
+          slug: string
+          status?: Database["public"]["Enums"]["contest_status"]
+          submission_deadline?: string | null
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          age_reference_date?: string
+          city_id?: string | null
+          country_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          landing_config?: Json
+          name?: string
+          prize?: Json
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          season_id?: string
+          slug?: string
+          status?: Database["public"]["Enums"]["contest_status"]
+          submission_deadline?: string | null
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contests_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contests_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contests_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contests_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       countries: {
         Row: {
           created_at: string
@@ -348,6 +509,70 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      participants: {
+        Row: {
+          age_at_reference: number | null
+          age_verification: string
+          category_id: string | null
+          contest_id: string
+          created_at: string
+          eligibility_snapshot: Json
+          id: string
+          registered_at: string
+          status: Database["public"]["Enums"]["participant_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_at_reference?: number | null
+          age_verification?: string
+          category_id?: string | null
+          contest_id: string
+          created_at?: string
+          eligibility_snapshot?: Json
+          id?: string
+          registered_at?: string
+          status?: Database["public"]["Enums"]["participant_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_at_reference?: number | null
+          age_verification?: string
+          category_id?: string | null
+          contest_id?: string
+          created_at?: string
+          eligibility_snapshot?: Json
+          id?: string
+          registered_at?: string
+          status?: Database["public"]["Enums"]["participant_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "participants_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "participants_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "participants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       permissions: {
         Row: {
@@ -517,6 +742,139 @@ export type Database = {
           is_system?: boolean
           name?: string
           slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rounds: {
+        Row: {
+          contest_id: string
+          created_at: string
+          ends_at: string | null
+          id: string
+          name: string
+          order: number
+          scoring_config: Json
+          starts_at: string | null
+          status: string
+          type: Database["public"]["Enums"]["round_type"]
+          updated_at: string
+          vote_rules: Json
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name: string
+          order: number
+          scoring_config?: Json
+          starts_at?: string | null
+          status?: string
+          type?: Database["public"]["Enums"]["round_type"]
+          updated_at?: string
+          vote_rules?: Json
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name?: string
+          order?: number
+          scoring_config?: Json
+          starts_at?: string | null
+          status?: string
+          type?: Database["public"]["Enums"]["round_type"]
+          updated_at?: string
+          vote_rules?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rounds_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seasons: {
+        Row: {
+          created_at: string
+          ends_at: string | null
+          id: string
+          name: string
+          series_id: string
+          slug: string
+          starts_at: string | null
+          status: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name: string
+          series_id: string
+          slug: string
+          starts_at?: string | null
+          status?: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name?: string
+          series_id?: string
+          slug?: string
+          starts_at?: string | null
+          status?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seasons_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      series: {
+        Row: {
+          brand: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          brand?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          brand?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          status?: string
           updated_at?: string
         }
         Relationships: []
@@ -706,6 +1064,7 @@ export type Database = {
       users: {
         Row: {
           avatar_url: string | null
+          birth_date: string | null
           city_id: string | null
           country_id: string | null
           created_at: string
@@ -731,6 +1090,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          birth_date?: string | null
           city_id?: string | null
           country_id?: string | null
           created_at?: string
@@ -756,6 +1116,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          birth_date?: string | null
           city_id?: string | null
           country_id?: string | null
           created_at?: string
@@ -808,6 +1169,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      aplicar_acceso_fundador: { Args: { p_user_id: string }; Returns: string }
       finance_access: {
         Args: { p_path?: string; p_user_id?: string }
         Returns: Database["public"]["Enums"]["finance_level"]
@@ -828,14 +1190,34 @@ export type Database = {
           valor: number
         }[]
       }
+      path_de_concurso: { Args: { p_contest_id: string }; Returns: string }
       path_de_usuario: { Args: { p_user_id: string }; Returns: string }
+      roles_de_mis_grants: { Args: never; Returns: string[] }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       uuid_generate_v7: { Args: never; Returns: string }
     }
     Enums: {
+      category_assignment: "AUTO" | "SELF" | "ADMIN"
+      contest_status:
+        | "DRAFT"
+        | "SCHEDULED"
+        | "OPEN"
+        | "CLOSED"
+        | "JUDGING"
+        | "FINISHED"
+        | "CANCELLED"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
+      participant_status:
+        | "REGISTERED"
+        | "VERIFIED"
+        | "SUBMITTED"
+        | "ADVANCED"
+        | "ELIMINATED"
+        | "WITHDRAWN"
+        | "DISQUALIFIED"
+      round_type: "SUBMISSION" | "JURY" | "AUDIENCE" | "MIXED" | "LIVE"
       scope_type:
         | "GLOBAL"
         | "COUNTRY"
@@ -974,8 +1356,28 @@ export const Constants = {
   },
   public: {
     Enums: {
+      category_assignment: ["AUTO", "SELF", "ADMIN"],
+      contest_status: [
+        "DRAFT",
+        "SCHEDULED",
+        "OPEN",
+        "CLOSED",
+        "JUDGING",
+        "FINISHED",
+        "CANCELLED",
+      ],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],
+      participant_status: [
+        "REGISTERED",
+        "VERIFIED",
+        "SUBMITTED",
+        "ADVANCED",
+        "ELIMINATED",
+        "WITHDRAWN",
+        "DISQUALIFIED",
+      ],
+      round_type: ["SUBMISSION", "JURY", "AUDIENCE", "MIXED", "LIVE"],
       scope_type: [
         "GLOBAL",
         "COUNTRY",

@@ -175,7 +175,7 @@ export const ACADEMY = {
   entrada: "Tener talento es solo el comienzo.",
   texto:
     "COMICOMANÍA Academy es el espacio donde humoristas y creadores desarrollan las habilidades para transformar su creatividad en contenido, audiencia, marca y oportunidades.",
-  cta: { texto: "Explora la Academy", href: "/entrar" },
+  cta: { texto: "Explora la Academy", href: "/academia" },
   pilares: [
     {
       icono: "Idea",
@@ -417,7 +417,7 @@ export const CIERRE = {
 export const NAVEGACION = [
   { texto: "Descubre", href: "#movimiento" },
   { texto: "Talent", href: "#talent" },
-  { texto: "Academy", href: "#academy" },
+  { texto: "Academy", href: "/academia" },
   { texto: "Live", href: "/eventos/final-miami-2027" },
   { texto: "Shop", href: "/tienda" },
   { texto: "Para marcas", href: "#marcas" },

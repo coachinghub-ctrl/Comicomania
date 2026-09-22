@@ -35,7 +35,18 @@ export const MENU: Grupo[] = [
       { texto: "Eventos", href: "/admin/eventos", seccion: "EVENTS" },
       { texto: "Tienda", href: "/admin/tienda", seccion: "STORE" },
       { texto: "Órdenes", href: "/admin/ordenes", seccion: "ORDERS" },
-      { texto: "Academia", href: "/admin/academia", seccion: "ACADEMY" },
+    ],
+  },
+  /* La Academia va sola y no dentro de Comercio: no es un producto más del
+     catálogo, es una experiencia que se vive dentro de la plataforma. Cuando
+     el e-learning crezca —progreso, foros, certificados, tutorías— todo eso
+     cuelga de acá, no de la tienda. */
+  {
+    titulo: "Academia",
+    entradas: [
+      { texto: "Cursos", href: "/admin/academia", seccion: "ACADEMY" },
+      { texto: "Alumnos", href: "/admin/academia/alumnos", seccion: "ACADEMY" },
+      { texto: "Certificados", href: "/admin/academia/certificados", seccion: "ACADEMY" },
     ],
   },
   {

@@ -999,50 +999,65 @@ export type Database = {
       }
       courses: {
         Row: {
+          cover_alt: string | null
           cover_url: string | null
           created_at: string
           currency: string
           description: string | null
+          display_order: number
           duration_min: number | null
+          highlights: string[]
           id: string
           instructor_id: string | null
           language: string
           level: string
           price: number
+          promise: string | null
           slug: string
           status: string
+          subtitle: string | null
           title: string
           updated_at: string
         }
         Insert: {
+          cover_alt?: string | null
           cover_url?: string | null
           created_at?: string
           currency?: string
           description?: string | null
+          display_order?: number
           duration_min?: number | null
+          highlights?: string[]
           id?: string
           instructor_id?: string | null
           language?: string
           level?: string
           price?: number
+          promise?: string | null
           slug: string
           status?: string
+          subtitle?: string | null
           title: string
           updated_at?: string
         }
         Update: {
+          cover_alt?: string | null
           cover_url?: string | null
           created_at?: string
           currency?: string
           description?: string | null
+          display_order?: number
           duration_min?: number | null
+          highlights?: string[]
           id?: string
           instructor_id?: string | null
           language?: string
           level?: string
           price?: number
+          promise?: string | null
           slug?: string
           status?: string
+          subtitle?: string | null
           title?: string
           updated_at?: string
         }

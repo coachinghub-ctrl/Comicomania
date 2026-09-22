@@ -4,7 +4,7 @@
 type Props = {
   /** "completo" = máscaras + cinta. "mascaras" = solo las máscaras (iconos). */
   variante?: "completo" | "mascaras";
-  /** Ancho en px. Bajo 48 px usá "mini": las dos máscaras se vuelven una mancha. */
+  /** Ancho en px. Bajo 48 px usa "mini": las dos máscaras se vuelven una mancha. */
   ancho?: number;
   mini?: boolean;
   className?: string;

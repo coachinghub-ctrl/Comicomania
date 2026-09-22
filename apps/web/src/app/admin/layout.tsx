@@ -60,10 +60,16 @@ export default async function AdminLayout({
   return (
     <div className="flex min-h-dvh flex-col bg-stage-1000">
       <header className="sticky top-0 z-20 shrink-0 border-b border-stage-600 bg-stage-1000/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
+        {/* Sin centrar: el logo tiene que caer sobre la columna del menú, y un
+            max-w centrado lo dejaba flotando a media distancia. */}
+        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:pr-8">
           <div className="flex items-center gap-4">
+            {/* El logo completo, no solo las máscaras: el panel también es
+                COMICOMANÍA. 88 px es lo que pide la columna del menú sin que la
+                cabecera se coma la pantalla; por debajo de 48 las dos máscaras
+                se vuelven una mancha y habría que ir a la variante mini. */}
             <a href="/admin" aria-label="Panel">
-              <Logo variante="mascaras" ancho={32} prioridad />
+              <Logo ancho={88} prioridad />
             </a>
             {/* ScopeBadge: siempre visible, para que nadie olvide en qué
                 territorio está operando. */}

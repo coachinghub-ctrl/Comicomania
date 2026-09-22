@@ -27,8 +27,8 @@ export default async function PanelAdmin() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-paper uppercase">Resumen</h1>
-      <p className="mt-2 text-sm text-muted">
+      <h1 className="font-display text-3xl text-ink uppercase">Resumen</h1>
+      <p className="mt-2 text-sm text-ink-soft">
         Hola, {actor.nombre}. Esto es lo que alcanzas desde tu acceso.
       </p>
 
@@ -36,12 +36,12 @@ export default async function PanelAdmin() {
         {tarjetas.map((t) => (
           <div
             key={t.etiqueta}
-            className="rounded-lg border border-stage-600 bg-stage-800 px-5 py-6"
+            className="rounded-lg border border-line bg-surface-2 px-5 py-6"
           >
-            <dt className="text-xs tracking-wider text-muted-dim uppercase">
+            <dt className="text-xs tracking-wider text-ink-faint uppercase">
               {t.etiqueta}
             </dt>
-            <dd className="font-display mt-2 text-4xl text-gold-400 tabular-nums">
+            <dd className="font-display mt-2 text-4xl text-red-600 tabular-nums">
               {t.valor.toLocaleString("es")}
             </dd>
           </div>
@@ -49,32 +49,32 @@ export default async function PanelAdmin() {
       </dl>
 
       <section className="mt-10">
-        <h2 className="font-display text-lg text-paper uppercase">Tu acceso</h2>
+        <h2 className="font-display text-lg text-ink uppercase">Tu acceso</h2>
         <ul className="mt-4 space-y-3">
           {grantsVigentes.map((g, i) => (
             <li
               key={`${g.rol}-${g.alcancePath ?? g.alcanceId ?? i}`}
-              className="rounded-lg border border-stage-600 bg-stage-800 p-4"
+              className="rounded-lg border border-line bg-surface-2 p-4"
             >
               <div className="flex flex-wrap items-center gap-3">
-                <span className="font-display text-sm text-paper uppercase">
+                <span className="font-display text-sm text-ink uppercase">
                   {g.rol}
                 </span>
-                <span className="rounded-full border border-gold-400/40 px-2.5 py-0.5 text-xs text-gold-400">
+                <span className="rounded-full border border-red-700/30 px-2.5 py-0.5 text-xs text-red-600">
                   {g.tipoAlcance === "GLOBAL" ? "Global" : (g.alcancePath ?? g.alcanceId)}
                 </span>
-                <span className="text-xs text-muted">
+                <span className="text-xs text-ink-soft">
                   {g.hasta
                     ? `hasta el ${g.hasta.toLocaleDateString("es")}`
                     : "sin fecha de fin"}
                 </span>
               </div>
-              <p className="mt-2 text-xs text-muted">
+              <p className="mt-2 text-xs text-ink-soft">
                 {g.secciones.length} secciones · {g.acciones.length} acciones ·
                 finanzas: {g.nivelFinanciero}
               </p>
               {g.denegados.length > 0 && (
-                <p className="mt-2 text-xs text-red-300">
+                <p className="mt-2 text-xs text-red-700">
                   Denegado siempre: {g.denegados.join(", ")}
                 </p>
               )}
@@ -85,7 +85,7 @@ export default async function PanelAdmin() {
 
       {/* Prueba viva del guard: se pregunta de verdad, no se simula. */}
       <section className="mt-10">
-        <h2 className="font-display text-lg text-paper uppercase">
+        <h2 className="font-display text-lg text-ink uppercase">
           Qué puedes hacer aquí
         </h2>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
@@ -101,11 +101,11 @@ export default async function PanelAdmin() {
             return (
               <li
                 key={`${p.s}.${p.a}`}
-                className="flex items-center justify-between gap-3 rounded-md border border-stage-600 bg-stage-800 px-4 py-2.5 text-sm"
+                className="flex items-center justify-between gap-3 rounded-md border border-line bg-surface-2 px-4 py-2.5 text-sm"
               >
-                <span className="text-paper-pure">{p.t}</span>
+                <span className="text-ink">{p.t}</span>
                 <span
-                  className={d.permitido ? "text-success" : "text-muted-dim"}
+                  className={d.permitido ? "text-success-ink" : "text-ink-faint"}
                   title={d.motivo}
                 >
                   {d.permitido ? "Sí" : d.motivo.replaceAll("_", " ").toLowerCase()}

@@ -36,6 +36,24 @@
   --color-danger:  #FF4B33;
   --color-info:    #00ACD1;
 
+  /* ---------------------------------------------------------------------
+     Superficie clara. El escenario es negro, pero el Control Center es una
+     mesa de trabajo: se lee mejor sobre blanco y se imprime sin gastar tinta.
+
+     Ningún tono de arriba sirve acá. Están calculados contra fondo negro y
+     sobre blanco se caen: --color-muted da 2,15:1 y --color-gold-400, el que
+     pintaba las cifras grandes, da 1,42:1. Los de abajo se midieron contra
+     #FFFFFF y todos los de texto pasan AA.
+     --------------------------------------------------------------------- */
+  --color-surface:     #FFFFFF;
+  --color-surface-2:   #F7F5F3;  /* bandas y filas alternas */
+  --color-ink:         #14100F;  /* 18,91:1 · texto principal */
+  --color-ink-soft:    #5C524D;  /*  7,58:1 · texto secundario */
+  --color-ink-faint:   #6B615C;  /*  6,02:1 · etiquetas pequeñas */
+  --color-line:        #E4DED9;  /* separadores */
+  --color-line-strong: #CFC6BF;  /* bordes que delimitan */
+  --color-success-ink: #15803D;  /*  5,02:1 · el verde de arriba da 2,28:1 */
+
   /* Tipografía */
   --font-display: var(--font-archivo), "Arial Black", system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;

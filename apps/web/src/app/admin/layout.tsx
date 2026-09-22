@@ -54,9 +54,12 @@ export default async function AdminLayout({
     ),
   ];
 
+  /* Negro a la izquierda, blanco a la derecha. El negro es el fondo del
+     armazón: así la columna del menú llega hasta abajo sola, sin calcular
+     alturas contra la cabecera. */
   return (
-    <div className="min-h-dvh bg-stage-900">
-      <header className="sticky top-0 z-20 border-b border-stage-600 bg-stage-1000/95 backdrop-blur-sm">
+    <div className="flex min-h-dvh flex-col bg-stage-1000">
+      <header className="sticky top-0 z-20 shrink-0 border-b border-stage-600 bg-stage-1000/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
           <div className="flex items-center gap-4">
             <a href="/admin" aria-label="Panel">
@@ -82,8 +85,8 @@ export default async function AdminLayout({
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl gap-8 px-5 py-8">
-        <nav aria-label="Secciones" className="hidden w-52 shrink-0 lg:block">
+      <div className="flex flex-1">
+        <nav aria-label="Secciones" className="hidden w-56 shrink-0 px-4 py-7 lg:block">
           {grupos.map((grupo) => (
             <div key={grupo.titulo} className="mb-7">
               <p className="mb-2 text-[0.65rem] tracking-[0.2em] text-muted-dim uppercase">
@@ -105,7 +108,11 @@ export default async function AdminLayout({
           ))}
         </nav>
 
-        <main className="min-w-0 flex-1">{children}</main>
+        {/* text-ink va acá y no en cada elemento: el body hereda blanco para
+            el fondo negro, y sin esto cualquier texto nuevo nacería invisible. */}
+        <main className="min-w-0 flex-1 bg-surface px-5 py-8 text-ink sm:px-8">
+          <div className="mx-auto max-w-5xl">{children}</div>
+        </main>
       </div>
     </div>
   );

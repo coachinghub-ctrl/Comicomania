@@ -27,37 +27,37 @@ export default async function Usuarios() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl text-paper uppercase">Usuarios</h1>
-          <p className="mt-2 text-sm text-muted">
+          <h1 className="font-display text-3xl text-ink uppercase">Usuarios</h1>
+          <p className="mt-2 text-sm text-ink-soft">
             {alcance.global
               ? "Ves todos los territorios."
               : `Ves ${alcance.paths.join(", ") || "ningún territorio"}.`}
           </p>
         </div>
-        <span className="text-sm text-muted-dim">
+        <span className="text-sm text-ink-faint">
           {usuarios?.length ?? 0} {usuarios?.length === 1 ? "persona" : "personas"}
         </span>
       </div>
 
       {error && (
-        <p role="alert" className="mt-6 rounded-md border border-red-500/40 bg-red-700/20 p-3 text-sm text-red-300">
+        <p role="alert" className="mt-6 rounded-md border border-red-600/40 bg-red-700/5 p-3 text-sm text-red-700">
           No se pudo leer el listado: {error.message}
         </p>
       )}
 
       {!error && (usuarios?.length ?? 0) === 0 && (
-        <div className="mt-8 rounded-lg border border-stage-600 bg-stage-800 p-8 text-center">
-          <p className="text-paper-pure">Todavía no hay nadie registrado.</p>
-          <p className="mt-2 text-sm text-muted">
+        <div className="mt-8 rounded-lg border border-line bg-surface-2 p-8 text-center">
+          <p className="text-ink">Todavía no hay nadie registrado.</p>
+          <p className="mt-2 text-sm text-ink-soft">
             Las cuentas aparecen aquí en cuanto alguien crea su COMICOMANIA ID.
           </p>
         </div>
       )}
 
       {(usuarios?.length ?? 0) > 0 && (
-        <div className="mt-8 overflow-x-auto rounded-lg border border-stage-600">
+        <div className="mt-8 overflow-x-auto rounded-lg border border-line">
           <table className="w-full text-left text-sm">
-            <thead className="bg-stage-800 text-xs tracking-wider text-muted-dim uppercase">
+            <thead className="bg-surface-2 text-xs tracking-wider text-ink-faint uppercase">
               <tr>
                 <th scope="col" className="px-4 py-3 font-medium">Persona</th>
                 <th scope="col" className="px-4 py-3 font-medium">Territorio</th>
@@ -72,18 +72,18 @@ export default async function Usuarios() {
                 return (
                   <tr
                     key={u.id}
-                    className={i % 2 === 1 ? "bg-stage-700/40" : undefined}
+                    className={i % 2 === 1 ? "bg-surface-2" : undefined}
                   >
                     <td className="px-4 py-3">
-                      <span className="block text-paper-pure">
+                      <span className="block text-ink">
                         {u.display_name ?? "—"}
                       </span>
-                      <span className="block text-xs text-muted">{u.email}</span>
+                      <span className="block text-xs text-ink-soft">{u.email}</span>
                     </td>
-                    <td className="px-4 py-3 text-muted">
+                    <td className="px-4 py-3 text-ink-soft">
                       {ciudad?.name ?? pais?.name ?? "—"}
                       {ciudad && (
-                        <span className="ml-2 font-mono text-xs text-muted-dim">
+                        <span className="ml-2 font-mono text-xs text-ink-faint">
                           {ciudad.path}
                         </span>
                       )}
@@ -91,13 +91,13 @@ export default async function Usuarios() {
                     <td className="px-4 py-3">
                       <span
                         className={
-                          u.status === "ACTIVE" ? "text-success" : "text-muted-dim"
+                          u.status === "ACTIVE" ? "text-success-ink" : "text-ink-faint"
                         }
                       >
                         {u.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-muted tabular-nums">
+                    <td className="px-4 py-3 text-ink-soft tabular-nums">
                       {new Date(u.created_at).toLocaleDateString("es")}
                     </td>
                   </tr>

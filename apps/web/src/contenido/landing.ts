@@ -265,8 +265,8 @@ export const LIVE = {
   entrada: "El humor se vive mejor cuando lo compartimos.",
   texto:
     "COMICOMANÍA LIVE convierte la comunidad digital en experiencias reales donde humoristas, audiencias, ciudades y marcas se encuentran cara a cara.",
-  ctaPrincipal: { texto: "Descubre los eventos", href: "/entrar" },
-  ctaSecundario: { texto: "Quiero participar", href: "/entrar" },
+  ctaPrincipal: { texto: "Descubre los eventos", href: "/eventos/final-miami-2027" },
+  ctaSecundario: { texto: "Quiero participar", href: "/concursos/demo-miami-2027" },
   /* El aviso del próximo evento. Sin fecha y sin venta: todavía no hay
      entradas, así que el botón apunta a avisar, no a comprar. Cuando el
      Contest Engine y Ticketing existan (Fase E y J), esto sale de la base. */
@@ -418,7 +418,7 @@ export const NAVEGACION = [
   { texto: "Descubre", href: "#movimiento" },
   { texto: "Talent", href: "#talent" },
   { texto: "Academy", href: "#academy" },
-  { texto: "Live", href: "#live" },
+  { texto: "Live", href: "/eventos/final-miami-2027" },
   { texto: "Shop", href: "/tienda" },
   { texto: "Para marcas", href: "#marcas" },
   { texto: "Nosotros", href: "#manifiesto" },

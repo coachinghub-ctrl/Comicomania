@@ -1561,6 +1561,7 @@ export type Database = {
       }
       events: {
         Row: {
+          banner_url: string | null
           capacity: number | null
           city_id: string | null
           contest_id: string | null
@@ -1571,17 +1572,22 @@ export type Database = {
           id: string
           name: string
           online_url: string | null
+          poster_alt: string | null
+          poster_url: string | null
           sales_end: string | null
           sales_start: string | null
           slug: string
           starts_at: string
           status: string
+          subtitle: string | null
+          tagline: string | null
           timezone: string
           type: string
           updated_at: string
           venue_id: string | null
         }
         Insert: {
+          banner_url?: string | null
           capacity?: number | null
           city_id?: string | null
           contest_id?: string | null
@@ -1592,17 +1598,22 @@ export type Database = {
           id?: string
           name: string
           online_url?: string | null
+          poster_alt?: string | null
+          poster_url?: string | null
           sales_end?: string | null
           sales_start?: string | null
           slug: string
           starts_at: string
           status?: string
+          subtitle?: string | null
+          tagline?: string | null
           timezone?: string
           type?: string
           updated_at?: string
           venue_id?: string | null
         }
         Update: {
+          banner_url?: string | null
           capacity?: number | null
           city_id?: string | null
           contest_id?: string | null
@@ -1613,11 +1624,15 @@ export type Database = {
           id?: string
           name?: string
           online_url?: string | null
+          poster_alt?: string | null
+          poster_url?: string | null
           sales_end?: string | null
           sales_start?: string | null
           slug?: string
           starts_at?: string
           status?: string
+          subtitle?: string | null
+          tagline?: string | null
           timezone?: string
           type?: string
           updated_at?: string

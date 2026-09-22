@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { EditorDeArte, type EventoEditable } from "./editor-arte";
 
 export const metadata = { title: "Eventos" };
 
@@ -23,7 +24,7 @@ export default async function Eventos() {
     supabase
       .from("events")
       .select(
-        "id, slug, name, type, starts_at, capacity, status, venues(name, capacity), cities(name), tickets(id, status), ticket_types(id, name, quantity, price, currency)",
+        "id, slug, name, type, starts_at, capacity, status, tagline, subtitle, poster_url, poster_alt, venues(name, capacity), cities(name), tickets(id, status), ticket_types(id, name, quantity, price, currency)",
       )
       .order("starts_at", { ascending: true })
       .limit(50),
@@ -123,7 +124,22 @@ export default async function Eventos() {
               return (
                 <li key={e.id} className="rounded-lg border border-line p-5">
                   <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
+                    <div className="flex gap-4">
+                      {e.poster_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={e.poster_url}
+                          alt=""
+                          width={64}
+                          height={80}
+                          className="h-20 w-16 shrink-0 rounded border border-line object-cover"
+                        />
+                      ) : (
+                        <span className="flex h-20 w-16 shrink-0 items-center justify-center rounded border border-dashed border-line-strong px-1 text-center text-[0.6rem] text-ink-faint">
+                          sin cartel
+                        </span>
+                      )}
+                      <div>
                       <h3 className="font-display text-lg text-ink">{e.name}</h3>
                       <p className="mt-1 text-sm text-ink-soft">
                         {new Date(e.starts_at).toLocaleString("es", {
@@ -134,6 +150,12 @@ export default async function Eventos() {
                       <p className="mt-1 text-xs text-ink-faint">
                         {sede?.name ?? "online"} · {ciudad?.name ?? "—"} · {e.type}
                       </p>
+                      {e.tagline && (
+                        <p className="mt-1 text-xs text-ink-soft italic">
+                          «{e.tagline}»
+                        </p>
+                      )}
+                      </div>
                     </div>
                     <span className={COLOR_ESTADO[e.status] ?? "text-ink-soft"}>
                       {e.status}
@@ -156,6 +178,18 @@ export default async function Eventos() {
                       <span className="text-red-700">Aforo completo</span>
                     )}
                   </div>
+
+                  <EditorDeArte
+                    evento={{
+                      id: e.id,
+                      slug: e.slug,
+                      name: e.name,
+                      tagline: e.tagline,
+                      subtitle: e.subtitle,
+                      poster_url: e.poster_url,
+                      poster_alt: e.poster_alt,
+                    } satisfies EventoEditable}
+                  />
 
                   {tipos.length > 0 && (
                     <ul className="mt-3 flex flex-wrap gap-2">

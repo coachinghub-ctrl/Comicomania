@@ -14,6 +14,27 @@ export const revalidate = 300;
    Una lección marcada como muestra sí se puede ver. Es lo que vende el
    curso. */
 
+/* Cómo se vive el curso, con todas las letras. Quien paga un curso en vivo
+   compra unos días y unas horas concretas; quien paga uno grabado compra no
+   tener que estar en ningún sitio. Confundir los dos es la vía rápida al
+   reembolso. */
+const MODALIDAD: Record<string, { titulo: string; texto: string }> = {
+  RECORDED: {
+    titulo: "Grabado · a tu ritmo",
+    texto: "Se ve cuando puedas, las veces que quieras. No hay horario.",
+  },
+  LIVE: {
+    titulo: "En vivo · en grupo",
+    texto:
+      "Clases en directo con fecha y hora. Se avanza con el grupo, y por eso hay plazas.",
+  },
+  BLENDED: {
+    titulo: "Mixto · grabado y en vivo",
+    texto:
+      "Material grabado para ver a tu ritmo, más encuentros en directo con fecha.",
+  },
+};
+
 const NIVEL: Record<string, string> = {
   BEGINNER: "Desde cero",
   INTERMEDIATE: "Ya te subiste al escenario",
@@ -61,7 +82,7 @@ export default async function Curso({
   const { data: curso } = await supabase
     .from("courses")
     .select(
-      "id, slug, title, subtitle, promise, description, level, price, currency, duration_min, cover_url, cover_alt, highlights, status, course_modules(id, title, order, lessons(id, title, type, duration_s, order, is_preview))",
+      "id, slug, title, subtitle, promise, description, level, modality, starts_on, seats, instructor_name, price, currency, duration_min, cover_url, cover_alt, highlights, status, course_modules(id, title, order, lessons(id, title, type, duration_s, order, is_preview, starts_at))",
     )
     .eq("slug", slug)
     .maybeSingle();
@@ -79,6 +100,7 @@ export default async function Curso({
       duration_s: number | null;
       order: number;
       is_preview: boolean;
+      starts_at: string | null;
     }[];
   }[]).sort((a, b) => a.order - b.order);
 
@@ -149,7 +171,29 @@ export default async function Curso({
               </ul>
             )}
 
-            <div className="mt-8 rounded-lg border border-stage-600 bg-stage-800 p-5">
+            <div className="mt-6 rounded-lg border border-gold-400/30 bg-gold-400/5 p-4">
+              <p className="font-display text-base text-paper uppercase">
+                {MODALIDAD[curso.modality ?? "RECORDED"]?.titulo}
+              </p>
+              <p className="mt-1 text-sm text-muted">
+                {MODALIDAD[curso.modality ?? "RECORDED"]?.texto}
+              </p>
+              {(curso.starts_on || curso.seats) && (
+                <p className="mt-2 text-sm text-gold-400 tabular-nums">
+                  {curso.starts_on &&
+                    `Empieza el ${new Date(`${curso.starts_on}T00:00:00`).toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" })}`}
+                  {curso.starts_on && curso.seats ? " · " : ""}
+                  {curso.seats ? `${curso.seats} plazas` : ""}
+                </p>
+              )}
+              {curso.instructor_name && (
+                <p className="mt-2 text-sm text-muted-dim">
+                  Lo da {curso.instructor_name}.
+                </p>
+              )}
+            </div>
+
+            <div className="mt-6 rounded-lg border border-stage-600 bg-stage-800 p-5">
               <div className="flex flex-wrap items-baseline gap-3">
                 <span className="font-display text-4xl text-paper-pure tabular-nums">
                   ${curso.price}
@@ -209,9 +253,24 @@ export default async function Curso({
                               muestra gratis
                             </span>
                           )}
+                          {/* La fecha de una clase en vivo es pública a
+                              propósito: "martes 7 a las 19:00" es argumento de
+                              venta. El enlace de la sala no sale de aquí. */}
+                          {l.starts_at && (
+                            <span className="block text-xs text-gold-400 tabular-nums">
+                              {new Date(l.starts_at).toLocaleString("es", {
+                                dateStyle: "long",
+                                timeStyle: "short",
+                              })}
+                            </span>
+                          )}
                         </span>
                         <span className="shrink-0 text-xs text-muted-dim tabular-nums">
-                          {TIPO_LECCION[l.type] ?? l.type}
+                          {l.type === "LIVE" ? (
+                            <span className="text-red-300">En vivo</span>
+                          ) : (
+                            (TIPO_LECCION[l.type] ?? l.type)
+                          )}
                           {l.duration_s ? ` · ${Math.round(l.duration_s / 60)} min` : ""}
                         </span>
                       </li>

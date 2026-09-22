@@ -1,20 +1,34 @@
 import { notFound } from "next/navigation";
-import { puedeActor } from "@/lib/autorizacion";
+import { puede } from "@comicomania/authz";
+import { cargarActor, puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { NuevoCurso } from "./formulario";
 
 export const metadata = { title: "Academia" };
+
+/* Cómo se vive el curso, dicho en una línea. Es lo primero que pregunta quien
+   va a pagar, porque decide si el curso le sirve: no es lo mismo conectarse
+   un martes a las siete que verlo cuando se pueda. */
+const MODALIDAD: Record<string, string> = {
+  RECORDED: "Grabado",
+  LIVE: "En vivo",
+  BLENDED: "Mixto",
+};
 
 export default async function Academia() {
   if (!(await puedeActor({ seccion: "ACADEMY", accion: "VIEW" }))) notFound();
 
+  const actor = await cargarActor();
   const supabase = await crearClienteServidor();
+
+  const puedeCrear = puede(actor, { seccion: "ACADEMY", accion: "CREATE" }).permitido;
 
   const [{ data: cursos, error }, { data: inscripciones }, { data: certificados }] =
     await Promise.all([
       supabase
         .from("courses")
         .select(
-          "id, slug, title, level, price, currency, status, duration_min, users(display_name), course_modules(id, lessons(id))",
+          "id, slug, title, level, modality, price, currency, status, duration_min, starts_on, seats, instructor_name, users(display_name), course_modules(id, lessons(id))",
         )
         .order("created_at", { ascending: false })
         .limit(50),
@@ -34,7 +48,7 @@ export default async function Academia() {
 
   return (
     <div>
-      <p className="text-xs tracking-[0.2em] text-ink-faint uppercase">Comercio</p>
+      <p className="text-xs tracking-[0.2em] text-ink-faint uppercase">Academia</p>
       <h1 className="font-display mt-1 text-3xl text-ink uppercase">Academia</h1>
 
       <div className="mt-4 max-w-2xl rounded-md border border-line bg-surface-2 p-4 text-sm">
@@ -77,6 +91,12 @@ export default async function Academia() {
         </dl>
       </section>
 
+      {puedeCrear && (
+        <section className="mt-8">
+          <NuevoCurso />
+        </section>
+      )}
+
       <section className="mt-10">
         <h2 className="font-display text-lg text-ink uppercase">Catálogo</h2>
         {(cursos?.length ?? 0) === 0 ? (
@@ -89,6 +109,7 @@ export default async function Academia() {
               <thead className="bg-surface-2 text-xs tracking-wider text-ink-faint uppercase">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-medium">Curso</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Modalidad</th>
                   <th scope="col" className="px-4 py-3 font-medium">Instructor</th>
                   <th scope="col" className="px-4 py-3 font-medium">Temario</th>
                   <th scope="col" className="px-4 py-3 font-medium">Precio</th>
@@ -106,11 +127,26 @@ export default async function Academia() {
                   return (
                     <tr key={c.id} className={i % 2 === 1 ? "bg-surface-2" : undefined}>
                       <td className="px-4 py-3">
-                        <span className="block text-ink">{c.title}</span>
+                        <a
+                          href={`/admin/academia/${c.slug}`}
+                          className="block text-ink underline decoration-line-strong underline-offset-2 hover:text-red-600"
+                        >
+                          {c.title}
+                        </a>
                         <span className="block text-xs text-ink-faint">{c.level}</span>
                       </td>
                       <td className="px-4 py-3 text-ink-soft">
-                        {instructor?.display_name ?? "—"}
+                        {MODALIDAD[c.modality ?? "RECORDED"] ?? c.modality}
+                        {c.starts_on && (
+                          <span className="block text-xs text-ink-faint tabular-nums">
+                            empieza el{" "}
+                            {new Date(`${c.starts_on}T00:00:00`).toLocaleDateString("es")}
+                            {c.seats ? ` · ${c.seats} cupos` : ""}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-ink-soft">
+                        {c.instructor_name ?? instructor?.display_name ?? "—"}
                       </td>
                       <td className="px-4 py-3 text-ink-soft tabular-nums">
                         {modulos.length} módulos · {lecciones} lecciones

@@ -781,6 +781,7 @@ export type Database = {
           prize: Json
           registration_closes_at: string | null
           registration_opens_at: string | null
+          rules_document_id: string | null
           season_id: string
           slug: string
           status: Database["public"]["Enums"]["contest_status"]
@@ -804,6 +805,7 @@ export type Database = {
           prize?: Json
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          rules_document_id?: string | null
           season_id: string
           slug: string
           status?: Database["public"]["Enums"]["contest_status"]
@@ -827,6 +829,7 @@ export type Database = {
           prize?: Json
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          rules_document_id?: string | null
           season_id?: string
           slug?: string
           status?: Database["public"]["Enums"]["contest_status"]
@@ -854,6 +857,13 @@ export type Database = {
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contests_rules_document_id_fkey"
+            columns: ["rules_document_id"]
+            isOneToOne: false
+            referencedRelation: "legal_documents"
             referencedColumns: ["id"]
           },
           {
@@ -1009,11 +1019,15 @@ export type Database = {
           highlights: string[]
           id: string
           instructor_id: string | null
+          instructor_name: string | null
           language: string
           level: string
+          modality: string
           price: number
           promise: string | null
+          seats: number | null
           slug: string
+          starts_on: string | null
           status: string
           subtitle: string | null
           title: string
@@ -1030,11 +1044,15 @@ export type Database = {
           highlights?: string[]
           id?: string
           instructor_id?: string | null
+          instructor_name?: string | null
           language?: string
           level?: string
+          modality?: string
           price?: number
           promise?: string | null
+          seats?: number | null
           slug: string
+          starts_on?: string | null
           status?: string
           subtitle?: string | null
           title: string
@@ -1051,11 +1069,15 @@ export type Database = {
           highlights?: string[]
           id?: string
           instructor_id?: string | null
+          instructor_name?: string | null
           language?: string
           level?: string
+          modality?: string
           price?: number
           promise?: string | null
+          seats?: number | null
           slug?: string
+          starts_on?: string | null
           status?: string
           subtitle?: string | null
           title?: string
@@ -2389,30 +2411,39 @@ export type Database = {
         Row: {
           asset_ref: Json
           duration_s: number | null
+          ends_at: string | null
           id: string
           is_preview: boolean
+          meeting_url: string | null
           module_id: string
           order: number
+          starts_at: string | null
           title: string
           type: string
         }
         Insert: {
           asset_ref?: Json
           duration_s?: number | null
+          ends_at?: string | null
           id?: string
           is_preview?: boolean
+          meeting_url?: string | null
           module_id: string
           order: number
+          starts_at?: string | null
           title: string
           type?: string
         }
         Update: {
           asset_ref?: Json
           duration_s?: number | null
+          ends_at?: string | null
           id?: string
           is_preview?: boolean
+          meeting_url?: string | null
           module_id?: string
           order?: number
+          starts_at?: string | null
           title?: string
           type?: string
         }
@@ -4045,16 +4076,23 @@ export type Database = {
           booking_contact: string | null
           comedy_styles: string[]
           created_at: string
+          display_order: number
+          handle: string | null
           languages: string[]
           legal_name: string | null
           manager_id: string | null
           markets: string[]
           media_kit_url: string | null
+          photo_alt: string | null
+          photo_url: string | null
           public_visible: boolean
+          reel_title: string | null
+          reel_url: string | null
           representation: string | null
           set_durations: number[]
           stage_name: string
           status: Database["public"]["Enums"]["talent_status"]
+          tagline: string | null
           technical_rider: string | null
           travel_availability: string | null
           updated_at: string
@@ -4065,16 +4103,23 @@ export type Database = {
           booking_contact?: string | null
           comedy_styles?: string[]
           created_at?: string
+          display_order?: number
+          handle?: string | null
           languages?: string[]
           legal_name?: string | null
           manager_id?: string | null
           markets?: string[]
           media_kit_url?: string | null
+          photo_alt?: string | null
+          photo_url?: string | null
           public_visible?: boolean
+          reel_title?: string | null
+          reel_url?: string | null
           representation?: string | null
           set_durations?: number[]
           stage_name: string
           status?: Database["public"]["Enums"]["talent_status"]
+          tagline?: string | null
           technical_rider?: string | null
           travel_availability?: string | null
           updated_at?: string
@@ -4085,16 +4130,23 @@ export type Database = {
           booking_contact?: string | null
           comedy_styles?: string[]
           created_at?: string
+          display_order?: number
+          handle?: string | null
           languages?: string[]
           legal_name?: string | null
           manager_id?: string | null
           markets?: string[]
           media_kit_url?: string | null
+          photo_alt?: string | null
+          photo_url?: string | null
           public_visible?: boolean
+          reel_title?: string | null
+          reel_url?: string | null
           representation?: string | null
           set_durations?: number[]
           stage_name?: string
           status?: Database["public"]["Enums"]["talent_status"]
+          tagline?: string | null
           technical_rider?: string | null
           travel_availability?: string | null
           updated_at?: string
@@ -4970,6 +5022,7 @@ export type Database = {
     }
     Functions: {
       aplicar_acceso_fundador: { Args: { p_user_id: string }; Returns: string }
+      contenido_de_leccion: { Args: { p_leccion: string }; Returns: Json }
       disponibilidad_publica: {
         Args: { p_variant_id: string }
         Returns: string
@@ -5000,6 +5053,19 @@ export type Database = {
         Returns: boolean
       }
       hash_de_texto: { Args: { t: string }; Returns: string }
+      inscribirme_en_concurso: {
+        Args: {
+          p_aceptado: Json
+          p_categoria?: string
+          p_concurso: string
+          p_descripcion?: string
+          p_duracion?: number
+          p_titulo: string
+          p_user_agent?: string
+          p_video_url: string
+        }
+        Returns: Json
+      }
       lugares_del_evento: {
         Args: { p_evento: string }
         Returns: {

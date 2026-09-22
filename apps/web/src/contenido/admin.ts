@@ -49,10 +49,20 @@ export const MENU: Grupo[] = [
       { texto: "Certificados", href: "/admin/academia/certificados", seccion: "ACADEMY" },
     ],
   },
+  /* Talento va solo, por el mismo motivo que la Academia: no es una línea de
+     negocio más, es el repertorio de humoristas —con su video y su biografía—
+     y lo que se enseña al público. Administrar un catálogo de artistas no se
+     parece en nada a administrar patrocinios. */
+  {
+    titulo: "Talento",
+    entradas: [
+      { texto: "Repertorio", href: "/admin/talento", seccion: "TALENT" },
+      { texto: "Contrataciones", href: "/admin/talento/contrataciones", seccion: "BOOKINGS" },
+    ],
+  },
   {
     titulo: "Negocio",
     entradas: [
-      { texto: "Talento", href: "/admin/talento", seccion: "TALENT" },
       { texto: "Sponsors", href: "/admin/sponsors", seccion: "SPONSORS" },
       { texto: "Finanzas", href: "/admin/finanzas", seccion: "FINANCE" },
       { texto: "Analítica", href: "/admin/analitica", seccion: "ANALYTICS" },

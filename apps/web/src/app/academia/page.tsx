@@ -18,6 +18,15 @@ export const revalidate = 300;
    El orden no es casual: de entrada a avanzado. Quien llega sin saber por
    dónde empezar necesita que el primero sea el suyo. */
 
+/* Cómo se vive el curso. Es lo primero que pregunta quien va a pagar: no es
+   lo mismo conectarse un martes a las siete que verlo cuando se pueda, y
+   esconderlo hasta el final produce reembolsos. */
+const MODALIDAD: Record<string, string> = {
+  RECORDED: "Grabado · a tu ritmo",
+  LIVE: "En vivo · en grupo",
+  BLENDED: "Mixto · grabado y en vivo",
+};
+
 const NIVEL: Record<string, string> = {
   BEGINNER: "Desde cero",
   INTERMEDIATE: "Ya te subiste al escenario",
@@ -30,7 +39,7 @@ export default async function Academia() {
   const { data: cursos, error } = await supabase
     .from("courses")
     .select(
-      "id, slug, title, subtitle, promise, description, level, price, currency, duration_min, cover_url, cover_alt, highlights, display_order, course_modules(id, lessons(id))",
+      "id, slug, title, subtitle, promise, description, level, modality, starts_on, seats, price, currency, duration_min, cover_url, cover_alt, highlights, display_order, course_modules(id, lessons(id))",
     )
     .eq("status", "PUBLISHED")
     .order("display_order")
@@ -133,7 +142,20 @@ export default async function Academia() {
                     </ul>
                   )}
 
-                  <p className="mt-4 text-xs text-muted-dim tabular-nums">
+                  <p className="mt-4 text-sm text-paper">
+                    {MODALIDAD[c.modality ?? "RECORDED"] ?? c.modality}
+                  </p>
+                  {c.starts_on && (
+                    <p className="text-xs text-gold-400 tabular-nums">
+                      Empieza el{" "}
+                      {new Date(`${c.starts_on}T00:00:00`).toLocaleDateString("es", {
+                        day: "numeric",
+                        month: "long",
+                      })}
+                      {c.seats ? ` · ${c.seats} plazas` : ""}
+                    </p>
+                  )}
+                  <p className="mt-1 text-xs text-muted-dim tabular-nums">
                     {modulos.length} módulos · {lecciones} lecciones
                     {c.duration_min ? ` · ${Math.round(c.duration_min / 60)} h` : ""}
                   </p>

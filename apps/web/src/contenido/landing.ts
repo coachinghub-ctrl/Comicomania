@@ -156,8 +156,8 @@ export const TALENT = {
   texto:
     "COMICOMANÍA TALENT es el escenario donde nuevos humoristas pueden mostrar lo que hacen, conectar con una audiencia, competir y convertir su talento en oportunidades reales.",
   remate: "De tu ciudad para el mundo.",
-  ctaPrincipal: { texto: "Sube tu video", href: "/entrar" },
-  ctaSecundario: { texto: "Ver talentos", href: "/entrar" },
+  ctaPrincipal: { texto: "Sube tu video", href: "/participa" },
+  ctaSecundario: { texto: "Ver el repertorio", href: "/humoristas" },
   pasos: [
     { icono: "Video", verbo: "Sube tu video", texto: "Muestra tu talento al mundo." },
     { icono: "Grupo", verbo: "Participa", texto: "Sé parte de la competencia." },

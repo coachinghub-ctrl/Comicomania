@@ -510,6 +510,61 @@ export type Database = {
         }
         Relationships: []
       }
+      entries: {
+        Row: {
+          created_at: string
+          id: string
+          participant_id: string
+          round_id: string
+          status: string
+          submitted_at: string | null
+          updated_at: string
+          video_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          participant_id: string
+          round_id: string
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+          video_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          participant_id?: string
+          round_id?: string
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+          video_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entries_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entries_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "rounds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entries_video_id_fkey"
+            columns: ["video_id"]
+            isOneToOne: false
+            referencedRelation: "videos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       participants: {
         Row: {
           age_at_reference: number | null
@@ -1164,6 +1219,134 @@ export type Database = {
           },
         ]
       }
+      video_reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          decision: Database["public"]["Enums"]["review_decision"]
+          id: string
+          reviewer_id: string | null
+          timecodes: Json
+          video_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          decision: Database["public"]["Enums"]["review_decision"]
+          id?: string
+          reviewer_id?: string | null
+          timecodes?: Json
+          video_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          decision?: Database["public"]["Enums"]["review_decision"]
+          id?: string
+          reviewer_id?: string | null
+          timecodes?: Json
+          video_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "video_reviews_video_id_fkey"
+            columns: ["video_id"]
+            isOneToOne: false
+            referencedRelation: "videos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      videos: {
+        Row: {
+          category_id: string | null
+          contest_id: string
+          created_at: string
+          description: string | null
+          duration_s: number | null
+          id: string
+          master_url: string | null
+          published_at: string | null
+          rights_status: Database["public"]["Enums"]["rights_status"]
+          round_id: string | null
+          status: Database["public"]["Enums"]["video_status"]
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category_id?: string | null
+          contest_id: string
+          created_at?: string
+          description?: string | null
+          duration_s?: number | null
+          id?: string
+          master_url?: string | null
+          published_at?: string | null
+          rights_status?: Database["public"]["Enums"]["rights_status"]
+          round_id?: string | null
+          status?: Database["public"]["Enums"]["video_status"]
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category_id?: string | null
+          contest_id?: string
+          created_at?: string
+          description?: string | null
+          duration_s?: number | null
+          id?: string
+          master_url?: string | null
+          published_at?: string | null
+          rights_status?: Database["public"]["Enums"]["rights_status"]
+          round_id?: string | null
+          status?: Database["public"]["Enums"]["video_status"]
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "videos_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "videos_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "videos_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "rounds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "videos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1217,6 +1400,15 @@ export type Database = {
         | "ELIMINATED"
         | "WITHDRAWN"
         | "DISQUALIFIED"
+      review_decision: "APPROVED" | "CHANGES_REQUESTED" | "REJECTED"
+      rights_status:
+        | "PENDING"
+        | "DECLARED"
+        | "REVIEW_REQUIRED"
+        | "CLEARED"
+        | "RESTRICTED"
+        | "EXPIRED"
+        | "BLOCKED"
       round_type: "SUBMISSION" | "JURY" | "AUDIENCE" | "MIXED" | "LIVE"
       scope_type:
         | "GLOBAL"
@@ -1226,6 +1418,22 @@ export type Database = {
         | "CONTEST"
         | "EVENT"
         | "VENUE"
+      video_status:
+        | "DRAFT"
+        | "UPLOADING"
+        | "UPLOADED"
+        | "VALIDATING"
+        | "VALIDATION_FAILED"
+        | "PENDING_RIGHTS"
+        | "SUBMITTED"
+        | "IN_REVIEW"
+        | "CHANGES_REQUESTED"
+        | "REJECTED"
+        | "APPROVED"
+        | "DISTRIBUTING"
+        | "PUBLISHED"
+        | "UNPUBLISHED"
+        | "BLOCKED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1377,6 +1585,16 @@ export const Constants = {
         "WITHDRAWN",
         "DISQUALIFIED",
       ],
+      review_decision: ["APPROVED", "CHANGES_REQUESTED", "REJECTED"],
+      rights_status: [
+        "PENDING",
+        "DECLARED",
+        "REVIEW_REQUIRED",
+        "CLEARED",
+        "RESTRICTED",
+        "EXPIRED",
+        "BLOCKED",
+      ],
       round_type: ["SUBMISSION", "JURY", "AUDIENCE", "MIXED", "LIVE"],
       scope_type: [
         "GLOBAL",
@@ -1386,6 +1604,23 @@ export const Constants = {
         "CONTEST",
         "EVENT",
         "VENUE",
+      ],
+      video_status: [
+        "DRAFT",
+        "UPLOADING",
+        "UPLOADED",
+        "VALIDATING",
+        "VALIDATION_FAILED",
+        "PENDING_RIGHTS",
+        "SUBMITTED",
+        "IN_REVIEW",
+        "CHANGES_REQUESTED",
+        "REJECTED",
+        "APPROVED",
+        "DISTRIBUTING",
+        "PUBLISHED",
+        "UNPUBLISHED",
+        "BLOCKED",
       ],
     },
   },

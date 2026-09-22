@@ -26,12 +26,6 @@ export const ROADMAP: Record<string, Pendiente> = {
     cuando: "Ene–Feb 2027",
     que: "Contactos, eventos de dominio y automatizaciones: quién entró, qué hizo y qué le toca después.",
   },
-  review: {
-    fase: "F",
-    nombreFase: "Video + YouTube",
-    cuando: "Dic 2026–Ene 2027",
-    que: "Cola de revisión: cada video se aprueba o se rechaza con motivo antes de salir al canal.",
-  },
   jurado: {
     fase: "G",
     nombreFase: "Jurado + Votación",

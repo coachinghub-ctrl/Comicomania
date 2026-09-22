@@ -99,6 +99,9 @@ export default async function Concurso({
           <Logo ancho={130} prioridad />
         </a>
         <nav className="flex items-center gap-5 text-sm">
+          <a href="/" className="text-muted transition-colors hover:text-paper-pure">
+            Inicio
+          </a>
           <a href="/tienda" className="text-muted transition-colors hover:text-paper-pure">
             Tienda
           </a>

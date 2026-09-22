@@ -15,12 +15,21 @@ import {
   Talent,
 } from "@/componentes/landing/secciones";
 import { Numeros } from "@/componentes/landing/numeros";
+import { ProximoEvento } from "@/componentes/landing/proximo-evento";
 
-export default function Home() {
+/* El home lee el próximo evento de la base, así que no puede ser una página
+   completamente estática. Se revalida cada cinco minutos: lo bastante fresco
+   para que un evento nuevo aparezca casi al instante, y lo bastante cacheado
+   para que la portada no consulte la base en cada visita. */
+export const revalidate = 300;
+
+export default async function Home() {
   return (
     <>
       <main>
         <Hero />
+        {/* Justo después del Hero: es lo más concreto y lo que caduca. */}
+        <ProximoEvento />
         <Movimiento />
         <Journey />
         <Proposito />

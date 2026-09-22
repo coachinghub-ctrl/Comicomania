@@ -90,6 +90,9 @@ export default async function Evento({
           <Logo ancho={130} prioridad />
         </a>
         <nav className="flex items-center gap-5 text-sm">
+          <a href="/" className="text-muted transition-colors hover:text-paper-pure">
+            Inicio
+          </a>
           <a href="/tienda" className="text-muted transition-colors hover:text-paper-pure">
             Tienda
           </a>
@@ -252,6 +255,28 @@ export default async function Evento({
             </p>
           </section>
         )}
+
+        {/* La salida, al final de la página. Quien llega hasta abajo no
+            debería tener que volver arriba para seguir mirando. */}
+        <nav
+          aria-label="Seguir explorando"
+          className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-stage-600 pt-8 text-sm"
+        >
+          <a href="/" className="text-red-300 transition-colors hover:text-red-400">
+            ← Volver al inicio
+          </a>
+          {concurso && (
+            <a
+              href={`/concursos/${concurso.slug}`}
+              className="text-muted transition-colors hover:text-paper-pure"
+            >
+              El concurso
+            </a>
+          )}
+          <a href="/tienda" className="text-muted transition-colors hover:text-paper-pure">
+            La tienda
+          </a>
+        </nav>
       </div>
     </main>
   );

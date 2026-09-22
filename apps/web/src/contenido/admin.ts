@@ -26,18 +26,6 @@ export const ROADMAP: Record<string, Pendiente> = {
     cuando: "Feb–Mar 2027",
     que: "Funciones, aforo, entradas con QR y check-in en la puerta del teatro.",
   },
-  tienda: {
-    fase: "I",
-    nombreFase: "Commerce",
-    cuando: "Feb 2027",
-    que: "Catálogo, inventario y precios por territorio.",
-  },
-  ordenes: {
-    fase: "I",
-    nombreFase: "Commerce",
-    cuando: "Feb 2027",
-    que: "Órdenes, pagos con Stripe, envíos y reembolsos.",
-  },
   academia: {
     fase: "K",
     nombreFase: "Academy",

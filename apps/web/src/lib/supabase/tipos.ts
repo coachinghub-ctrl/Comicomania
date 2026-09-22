@@ -908,6 +908,56 @@ export type Database = {
           },
         ]
       }
+      entitlements: {
+        Row: {
+          created_at: string
+          ends_at: string | null
+          id: string
+          kind: string
+          ref_id: string | null
+          ref_type: string | null
+          source_id: string | null
+          source_type: string | null
+          starts_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          kind: string
+          ref_id?: string | null
+          ref_type?: string | null
+          source_id?: string | null
+          source_type?: string | null
+          starts_at?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          kind?: string
+          ref_id?: string | null
+          ref_type?: string | null
+          source_id?: string | null
+          source_type?: string | null
+          starts_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entitlements_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       entries: {
         Row: {
           created_at: string
@@ -959,6 +1009,193 @@ export type Database = {
             columns: ["video_id"]
             isOneToOne: false
             referencedRelation: "videos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory: {
+        Row: {
+          available: number | null
+          id: string
+          location_id: string
+          low_stock_threshold: number
+          on_hand: number
+          reserved: number
+          updated_at: string
+          variant_id: string
+        }
+        Insert: {
+          available?: number | null
+          id?: string
+          location_id: string
+          low_stock_threshold?: number
+          on_hand?: number
+          reserved?: number
+          updated_at?: string
+          variant_id: string
+        }
+        Update: {
+          available?: number | null
+          id?: string
+          location_id?: string
+          low_stock_threshold?: number
+          on_hand?: number
+          reserved?: number
+          updated_at?: string
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_adjustments: {
+        Row: {
+          actor_user_id: string | null
+          created_at: string
+          delta: number
+          id: string
+          inventory_id: string
+          reason: string
+        }
+        Insert: {
+          actor_user_id?: string | null
+          created_at?: string
+          delta: number
+          id?: string
+          inventory_id: string
+          reason: string
+        }
+        Update: {
+          actor_user_id?: string | null
+          created_at?: string
+          delta?: number
+          id?: string
+          inventory_id?: string
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_adjustments_actor_user_id_fkey"
+            columns: ["actor_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_adjustments_inventory_id_fkey"
+            columns: ["inventory_id"]
+            isOneToOne: false
+            referencedRelation: "inventory"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_locations: {
+        Row: {
+          city_id: string | null
+          country_id: string | null
+          created_at: string
+          id: string
+          name: string
+          type: string
+        }
+        Insert: {
+          city_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          type?: string
+        }
+        Update: {
+          city_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_locations_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_locations_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_reservations: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          location_id: string
+          qty: number
+          released_at: string | null
+          user_id: string | null
+          variant_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          location_id: string
+          qty: number
+          released_at?: string | null
+          user_id?: string | null
+          variant_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          location_id?: string
+          qty?: number
+          released_at?: string | null
+          user_id?: string | null
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_reservations_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_reservations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_reservations_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
             referencedColumns: ["id"]
           },
         ]
@@ -1154,6 +1391,145 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          discount: number
+          fulfillment_status: string
+          id: string
+          metadata: Json
+          order_id: string
+          qty: number
+          sellable_id: string | null
+          sellable_type: string
+          tax: number
+          total: number
+          unit_price: number
+          variant_id: string | null
+        }
+        Insert: {
+          discount?: number
+          fulfillment_status?: string
+          id?: string
+          metadata?: Json
+          order_id: string
+          qty: number
+          sellable_id?: string | null
+          sellable_type?: string
+          tax?: number
+          total: number
+          unit_price: number
+          variant_id?: string | null
+        }
+        Update: {
+          discount?: number
+          fulfillment_status?: string
+          id?: string
+          metadata?: Json
+          order_id?: string
+          qty?: number
+          sellable_id?: string | null
+          sellable_type?: string
+          tax?: number
+          total?: number
+          unit_price?: number
+          variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          city_id: string | null
+          country_id: string | null
+          created_at: string
+          currency: string
+          discount: number
+          id: string
+          number: string
+          placed_at: string | null
+          shipping: number
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          tax: number
+          total: number
+          updated_at: string
+          user_id: string
+          utm: Json
+        }
+        Insert: {
+          city_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          currency?: string
+          discount?: number
+          id?: string
+          number?: string
+          placed_at?: string | null
+          shipping?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          tax?: number
+          total?: number
+          updated_at?: string
+          user_id: string
+          utm?: Json
+        }
+        Update: {
+          city_id?: string | null
+          country_id?: string | null
+          created_at?: string
+          currency?: string
+          discount?: number
+          id?: string
+          number?: string
+          placed_at?: string | null
+          shipping?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          tax?: number
+          total?: number
+          updated_at?: string
+          user_id?: string
+          utm?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       participants: {
         Row: {
           age_at_reference: number | null
@@ -1218,6 +1594,62 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          fee: number | null
+          id: string
+          method: string | null
+          net: number | null
+          order_id: string
+          paid_at: string | null
+          provider: string
+          provider_payment_id: string
+          status: Database["public"]["Enums"]["payment_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          fee?: number | null
+          id?: string
+          method?: string | null
+          net?: number | null
+          order_id: string
+          paid_at?: string | null
+          provider?: string
+          provider_payment_id: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          fee?: number | null
+          id?: string
+          method?: string | null
+          net?: number | null
+          order_id?: string
+          paid_at?: string | null
+          provider?: string
+          provider_payment_id?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       permissions: {
         Row: {
           action: string
@@ -1241,6 +1673,116 @@ export type Database = {
           section?: string
         }
         Relationships: []
+      }
+      product_variants: {
+        Row: {
+          compare_price: number | null
+          cost: number | null
+          created_at: string
+          currency: string
+          id: string
+          option_values: Json
+          price: number
+          product_id: string
+          sku: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          compare_price?: number | null
+          cost?: number | null
+          created_at?: string
+          currency?: string
+          id?: string
+          option_values?: Json
+          price: number
+          product_id: string
+          sku: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          compare_price?: number | null
+          cost?: number | null
+          created_at?: string
+          currency?: string
+          id?: string
+          option_values?: Json
+          price?: number
+          product_id?: string
+          sku?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          contest_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          requires_shipping: boolean
+          season_id: string | null
+          slug: string
+          status: string
+          type: string
+          updated_at: string
+          weight_g: number | null
+        }
+        Insert: {
+          contest_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          requires_shipping?: boolean
+          season_id?: string | null
+          slug: string
+          status?: string
+          type?: string
+          updated_at?: string
+          weight_g?: number | null
+        }
+        Update: {
+          contest_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          requires_shipping?: boolean
+          season_id?: string | null
+          slug?: string
+          status?: string
+          type?: string
+          updated_at?: string
+          weight_g?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -1279,6 +1821,54 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      refunds: {
+        Row: {
+          actor_user_id: string | null
+          amount: number
+          created_at: string
+          id: string
+          payment_id: string
+          reason: string
+          refunded_at: string | null
+          status: string
+        }
+        Insert: {
+          actor_user_id?: string | null
+          amount: number
+          created_at?: string
+          id?: string
+          payment_id: string
+          reason: string
+          refunded_at?: string | null
+          status?: string
+        }
+        Update: {
+          actor_user_id?: string | null
+          amount?: number
+          created_at?: string
+          id?: string
+          payment_id?: string
+          reason?: string
+          refunded_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "refunds_actor_user_id_fkey"
+            columns: ["actor_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "refunds_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
             referencedColumns: ["id"]
           },
         ]
@@ -1658,6 +2248,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      stripe_events: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          payload: Json
+          processed_at: string | null
+          stripe_event_id: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          payload: Json
+          processed_at?: string | null
+          stripe_event_id: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          stripe_event_id?: string
+          type?: string
+        }
+        Relationships: []
       }
       user_level_assignments: {
         Row: {
@@ -2216,6 +2836,13 @@ export type Database = {
       crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
+      order_status:
+        | "PENDING"
+        | "PAID"
+        | "FULFILLING"
+        | "COMPLETED"
+        | "CANCELLED"
+        | "REFUNDED"
       participant_status:
         | "REGISTERED"
         | "VERIFIED"
@@ -2224,6 +2851,12 @@ export type Database = {
         | "ELIMINATED"
         | "WITHDRAWN"
         | "DISQUALIFIED"
+      payment_status:
+        | "REQUIRES_ACTION"
+        | "PROCESSING"
+        | "SUCCEEDED"
+        | "FAILED"
+        | "CANCELLED"
       review_decision: "APPROVED" | "CHANGES_REQUESTED" | "REJECTED"
       rights_status:
         | "PENDING"
@@ -2410,6 +3043,14 @@ export const Constants = {
       crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT"],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],
+      order_status: [
+        "PENDING",
+        "PAID",
+        "FULFILLING",
+        "COMPLETED",
+        "CANCELLED",
+        "REFUNDED",
+      ],
       participant_status: [
         "REGISTERED",
         "VERIFIED",
@@ -2418,6 +3059,13 @@ export const Constants = {
         "ELIMINATED",
         "WITHDRAWN",
         "DISQUALIFIED",
+      ],
+      payment_status: [
+        "REQUIRES_ACTION",
+        "PROCESSING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLED",
       ],
       review_decision: ["APPROVED", "CHANGES_REQUESTED", "REJECTED"],
       rights_status: [

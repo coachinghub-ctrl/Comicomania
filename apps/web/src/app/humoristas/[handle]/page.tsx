@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Logo } from "@comicomania/ui";
 import { Reel } from "@/componentes/reel";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { Contratar } from "./contratar";
 
 export const revalidate = 300;
 
@@ -235,7 +236,17 @@ export default async function Humorista({
           </aside>
         </div>
 
-        <p className="mt-12 border-t border-stage-600 pt-6 text-sm text-muted-dim">
+        {/* El formulario va DESPUÉS del video y la bio, no antes: primero se
+            mira, luego se pregunta el precio. */}
+        <section className="mt-12 border-t border-stage-600 pt-10">
+          <Contratar
+            talentoId={ficha.user_id}
+            handle={ficha.handle}
+            nombre={ficha.stage_name}
+          />
+        </section>
+
+        <p className="mt-12 text-sm text-muted-dim">
           <a href="/humoristas" className="text-red-300 underline">
             Volver al repertorio
           </a>

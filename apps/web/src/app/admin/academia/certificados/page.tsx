@@ -59,7 +59,7 @@ export default async function Certificados() {
         </p>
         <p className="mt-2 text-xs text-ink-faint">
           Cualquiera puede comprobar uno por su número de serie: por eso la
-          serie es pública.
+          serie es pública y enlaza a la lámina. Desde ahí se guarda en PDF.
         </p>
       </div>
 
@@ -117,6 +117,7 @@ export default async function Certificados() {
                   <th scope="col" className="px-4 py-3 font-medium">Alumno</th>
                   <th scope="col" className="px-4 py-3 font-medium">Curso</th>
                   <th scope="col" className="px-4 py-3 font-medium">Emitido</th>
+                  <th scope="col" className="w-28 px-4 py-3 font-medium">Documento</th>
                 </tr>
               </thead>
               <tbody>
@@ -128,9 +129,14 @@ export default async function Certificados() {
                   return (
                     <tr key={c.id} className={i % 2 === 1 ? "bg-surface-2" : undefined}>
                       <td className="px-4 py-3">
-                        <span className="block truncate font-mono text-xs text-ink">
+                        <a
+                          href={`/certificados/${c.serial}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block truncate font-mono text-xs text-red-600 underline"
+                        >
                           {c.serial}
-                        </span>
+                        </a>
                       </td>
                       <td className="px-4 py-3 text-ink-soft">
                         {inscripcion?.users?.display_name ??
@@ -142,6 +148,16 @@ export default async function Certificados() {
                       </td>
                       <td className="px-4 py-3 text-ink-soft tabular-nums">
                         {new Date(c.issued_at).toLocaleDateString("es")}
+                      </td>
+                      <td className="px-4 py-3">
+                        <a
+                          href={`/certificados/${c.serial}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-sm text-red-600 underline"
+                        >
+                          Ver
+                        </a>
                       </td>
                     </tr>
                   );

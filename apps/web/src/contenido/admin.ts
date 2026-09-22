@@ -58,6 +58,7 @@ export const MENU: Grupo[] = [
     entradas: [
       { texto: "Repertorio", href: "/admin/talento", seccion: "TALENT" },
       { texto: "Contrataciones", href: "/admin/talento/contrataciones", seccion: "BOOKINGS" },
+      { texto: "Presupuestos", href: "/admin/talento/presupuestos", seccion: "BOOKINGS" },
     ],
   },
   {

@@ -26,3 +26,15 @@ export type {
 
 export { firmarEntrada, leerQR, verificarEntrada } from "./qr-entrada";
 export type { ContenidoQR } from "./qr-entrada";
+
+export {
+  calcularPresupuesto,
+  estaVigente,
+  ErrorDePresupuesto,
+} from "./presupuesto";
+export type {
+  Linea,
+  Presupuesto,
+  TipoDeLinea,
+  Totales,
+} from "./presupuesto";

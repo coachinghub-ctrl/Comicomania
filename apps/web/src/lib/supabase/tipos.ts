@@ -327,6 +327,106 @@ export type Database = {
           },
         ]
       }
+      booking_quotes: {
+        Row: {
+          base: number
+          booking_id: string
+          commission: number
+          commission_pct: number
+          created_at: string
+          created_by: string | null
+          currency: string
+          decided_at: string | null
+          discount: number
+          id: string
+          notes: string | null
+          sent_at: string | null
+          status: string
+          subtotal: number
+          talent_id: string
+          talent_net: number
+          tax: number
+          tax_pct: number
+          terms: string | null
+          total: number
+          updated_at: string
+          valid_until: string
+          version: number
+        }
+        Insert: {
+          base?: number
+          booking_id: string
+          commission?: number
+          commission_pct?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          decided_at?: string | null
+          discount?: number
+          id?: string
+          notes?: string | null
+          sent_at?: string | null
+          status?: string
+          subtotal?: number
+          talent_id: string
+          talent_net?: number
+          tax?: number
+          tax_pct?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          valid_until: string
+          version?: number
+        }
+        Update: {
+          base?: number
+          booking_id?: string
+          commission?: number
+          commission_pct?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          decided_at?: string | null
+          discount?: number
+          id?: string
+          notes?: string | null
+          sent_at?: string | null
+          status?: string
+          subtotal?: number
+          talent_id?: string
+          talent_net?: number
+          tax?: number
+          tax_pct?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          valid_until?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_quotes_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "booking_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_quotes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_quotes_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       booking_requests: {
         Row: {
           budget_amount: number | null
@@ -3042,6 +3142,47 @@ export type Database = {
           },
         ]
       }
+      quote_lines: {
+        Row: {
+          amount: number | null
+          concept: string
+          id: string
+          kind: string
+          order: number
+          quantity: number
+          quote_id: string
+          unit_price: number
+        }
+        Insert: {
+          amount?: number | null
+          concept: string
+          id?: string
+          kind?: string
+          order?: number
+          quantity?: number
+          quote_id: string
+          unit_price: number
+        }
+        Update: {
+          amount?: number | null
+          concept?: string
+          id?: string
+          kind?: string
+          order?: number
+          quantity?: number
+          quote_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quote_lines_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "booking_quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       refunds: {
         Row: {
           actor_user_id: string | null
@@ -4169,6 +4310,50 @@ export type Database = {
           },
         ]
       }
+      talent_rates: {
+        Row: {
+          created_at: string
+          currency: string
+          fee: number
+          id: string
+          market: string | null
+          notes: string | null
+          set_minutes: number
+          talent_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          fee: number
+          id?: string
+          market?: string | null
+          notes?: string | null
+          set_minutes: number
+          talent_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          fee?: number
+          id?: string
+          market?: string | null
+          notes?: string | null
+          set_minutes?: number
+          talent_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_rates_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       talent_status_history: {
         Row: {
           changed_by: string | null
@@ -5022,6 +5207,7 @@ export type Database = {
     }
     Functions: {
       aplicar_acceso_fundador: { Args: { p_user_id: string }; Returns: string }
+      certificado_por_serie: { Args: { p_serie: string }; Returns: Json }
       contenido_de_leccion: { Args: { p_leccion: string }; Returns: Json }
       disponibilidad_publica: {
         Args: { p_variant_id: string }
@@ -5099,6 +5285,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      recalcular_presupuesto: { Args: { p_quote: string }; Returns: undefined }
       registrar_interes_tienda: {
         Args: { p_email: string; p_producto: string }
         Returns: undefined

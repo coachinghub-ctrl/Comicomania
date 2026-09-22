@@ -331,23 +331,36 @@ max_frequency = "5s"
 # enroll_enabled = true
 # verify_enabled = true
 
-# Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
-# `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
-# `twitter`, `x`, `slack`, `spotify`, `workos`, `zoom`.
-[auth.external.apple]
-enabled = false
-client_id = ""
-# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
-secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
-# Overrides the default auth callback URL derived from auth.external_url.
-redirect_uri = ""
-# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
-# or any other third-party OIDC providers.
-url = ""
-# If enabled, the nonce check will be skipped. Required for local sign in with Google auth.
-skip_nonce_check = false
-# If enabled, it will allow the user to successfully authenticate when the provider does not return an email address.
-email_optional = false
+# ---------------------------------------------------------------------------
+# Proveedores de OAuth: Google, Apple y Microsoft.
+#
+# NINGUNO SE DECLARA AQUÍ, Y ES A PROPÓSITO.
+#
+# La plantilla traía [auth.external.apple] con enabled = false, y eso era una
+# trampa esperando: el día que se conecte Apple desde el panel de Supabase,
+# cualquier `supabase config push` lo volvería a apagar — sin aviso, y sin que
+# nadie relacionara el fallo de acceso con un push de configuración.
+#
+# Un push solo toca lo que está declarado. Al no declararlos, lo remoto manda,
+# que es donde tienen que vivir: los secretos de cada proveedor no se guardan
+# en git, y activarlos es una decisión que se toma una vez.
+#
+# Dónde se conectan:
+#   Supabase → Authentication → Providers → Google / Apple / Azure
+#
+# La aplicación no necesita saber cuáles están activos: se lo pregunta a
+# Supabase al pintar la pantalla de entrar (ver apps/web/src/app/entrar/
+# activos.ts). En cuanto se conecte uno, su botón aparece solo.
+#
+# Lista completa de proveedores que admite Supabase: `apple`, `azure`,
+# `bitbucket`, `discord`, `facebook`, `github`, `gitlab`, `google`,
+# `keycloak`, `linkedin_oidc`, `notion`, `twitch`, `twitter`, `x`, `slack`,
+# `spotify`, `workos`, `zoom`.
+#
+# NO DECLARADO (lo remoto manda): [auth.external.apple]
+# NO DECLARADO (lo remoto manda): [auth.external.google]
+# NO DECLARADO (lo remoto manda): [auth.external.azure]
+# ---------------------------------------------------------------------------
 
 # Allow Solana wallet holders to sign in to your project via the Sign in with Solana (SIWS, EIP-4361) standard.
 # You can configure "web3" rate limit in the [auth.rate_limit] section and set up [auth.captcha] if self-hosting.

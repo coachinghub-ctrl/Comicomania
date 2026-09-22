@@ -3,6 +3,7 @@ import { type EmailOtpType } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { rutaSegura } from "@/lib/volver";
 
 /* Aterrizaje del enlace mágico. Verifica el token y deja la sesión puesta.
    Un enlace vencido o ya usado no rompe: manda a /entrar con el motivo.
@@ -22,7 +23,9 @@ import { crearClienteServidor } from "@/lib/supabase/server";
    puesta en el panel. */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const volver = searchParams.get("volver") ?? "/mi";
+  // Nunca el valor crudo: ver lib/volver.ts. Esto es un redirect abierto si
+  // se confía en lo que venga en la URL.
+  const volver = rutaSegura(searchParams.get("volver"));
 
   // GoTrue puede rebotar aquí con el fallo ya resuelto.
   if (searchParams.get("error")) {

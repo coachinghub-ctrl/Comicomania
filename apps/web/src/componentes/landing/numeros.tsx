@@ -43,7 +43,9 @@ export async function Numeros() {
       <Titulo className="aparece">El movimiento en números</Titulo>
       {/* Cada tarjeta lleva su propio borde. Con el truco de la rejilla de
           un píxel, las celdas que sobran dejaban un bloque de color vacío. */}
-      <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Las cuatro en una fila: tres arriba y una sola debajo se lee como si
+          la cuarta fuera de otra cosa, y las cuatro son la misma idea. */}
+      <dl className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {tarjetas.map((t) => (
           <div
             key={t.clave}

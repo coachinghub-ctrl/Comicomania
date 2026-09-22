@@ -2,6 +2,7 @@ import type { Route } from "next";
 import { notFound } from "next/navigation";
 import { ButtonLink, Logo } from "@comicomania/ui";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { Reservar } from "./reservar";
 
 /* La página de un evento.
 
@@ -54,7 +55,7 @@ export default async function Evento({
   const { data: evento } = await supabase
     .from("events")
     .select(
-      "id, slug, name, type, description, tagline, subtitle, starts_at, ends_at, timezone, capacity, status, poster_url, poster_alt, online_url, venues(name, address), cities(name), countries(name), ticket_types(id, name, kind, price, currency, quantity, benefits, status), contests(name, slug)",
+      "id, slug, name, type, description, tagline, subtitle, starts_at, ends_at, timezone, capacity, status, is_free, poster_url, poster_alt, online_url, venues(name, address), cities(name), countries(name), ticket_types(id, name, kind, price, currency, quantity, benefits, status), contests(name, slug)",
     )
     .eq("slug", slug)
     .maybeSingle();
@@ -80,6 +81,17 @@ export default async function Evento({
   }[])
     .filter((t) => t.status === "ACTIVE")
     .sort((a, b) => Number(a.price) - Number(b.price));
+
+  /* Cuántos lugares quedan, sin decir quiénes: la página pública necesita
+     "quedan 40", no la lista. Decir quién va sería repartir la base de
+     asistentes a cualquiera que abra la web. */
+  let quedan: number | null = null;
+  if (evento.is_free) {
+    const { data: lugares } = await supabase.rpc("lugares_del_evento", {
+      p_evento: slug,
+    });
+    quedan = lugares?.[0]?.quedan ?? null;
+  }
 
   const cuando = new Date(evento.starts_at);
 
@@ -194,15 +206,26 @@ export default async function Evento({
               )}
             </dl>
 
-            {aLaVenta && entradas.length > 0 && (
+            {aLaVenta && !evento.is_free && entradas.length > 0 && (
               <ButtonLink href={"#entradas" as Route} tamano="lg" className="mt-8">
                 Ver entradas
+              </ButtonLink>
+            )}
+            {evento.is_free && aLaVenta && (
+              <ButtonLink href={"#reservar" as Route} tamano="lg" className="mt-8">
+                Reservar mi lugar
               </ButtonLink>
             )}
           </div>
         </div>
 
-        {entradas.length > 0 && (
+        {evento.is_free && (
+          <section id="reservar" className="mt-16 scroll-mt-8">
+            <Reservar slug={evento.slug} nombre={evento.name} quedan={quedan} />
+          </section>
+        )}
+
+        {!evento.is_free && entradas.length > 0 && (
           <section id="entradas" className="mt-16 scroll-mt-8">
             <h2 className="font-display text-3xl text-paper uppercase">Entradas</h2>
             <p className="mt-2 max-w-xl text-muted">

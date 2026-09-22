@@ -1559,6 +1559,77 @@ export type Database = {
           },
         ]
       }
+      event_registrations: {
+        Row: {
+          attended: boolean
+          contact_id: string | null
+          created_at: string
+          email: string
+          event_id: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          source: string
+          ticket_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          attended?: boolean
+          contact_id?: string | null
+          created_at?: string
+          email: string
+          event_id: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          source?: string
+          ticket_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          attended?: boolean
+          contact_id?: string | null
+          created_at?: string
+          email?: string
+          event_id?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          source?: string
+          ticket_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_registrations_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_registrations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           banner_url: string | null
@@ -1570,6 +1641,7 @@ export type Database = {
           description: string | null
           ends_at: string | null
           id: string
+          is_free: boolean
           name: string
           online_url: string | null
           poster_alt: string | null
@@ -1596,6 +1668,7 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
+          is_free?: boolean
           name: string
           online_url?: string | null
           poster_alt?: string | null
@@ -1622,6 +1695,7 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
+          is_free?: boolean
           name?: string
           online_url?: string | null
           poster_alt?: string | null
@@ -4911,6 +4985,14 @@ export type Database = {
         Returns: boolean
       }
       hash_de_texto: { Args: { t: string }; Returns: string }
+      lugares_del_evento: {
+        Args: { p_evento: string }
+        Returns: {
+          aforo: number
+          quedan: number
+          reservados: number
+        }[]
+      }
       metricas_publicas: {
         Args: never
         Returns: {
@@ -4939,6 +5021,15 @@ export type Database = {
       registrar_interes_tienda: {
         Args: { p_email: string; p_producto: string }
         Returns: undefined
+      }
+      reservar_lugar: {
+        Args: {
+          p_email: string
+          p_evento: string
+          p_nombre?: string
+          p_telefono?: string
+        }
+        Returns: string
       }
       roles_de_mis_grants: { Args: never; Returns: string[] }
       show_limit: { Args: never; Returns: number }

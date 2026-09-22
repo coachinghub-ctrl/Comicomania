@@ -1,13 +1,18 @@
 import { notFound } from "next/navigation";
-import { puedeActor } from "@/lib/autorizacion";
+import { cargarActor, puedeActor } from "@/lib/autorizacion";
+import { puede } from "@comicomania/authz";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { NuevoProducto, PublicarProducto } from "./formulario";
 
 export const metadata = { title: "Tienda" };
 
 export default async function Tienda() {
   if (!(await puedeActor({ seccion: "STORE", accion: "VIEW" }))) notFound();
 
+  const actor = await cargarActor();
   const supabase = await crearClienteServidor();
+  const puedeCrear = puede(actor, { seccion: "PRODUCTS", accion: "CREATE" }).permitido;
+  const puedePublicar = puede(actor, { seccion: "PRODUCTS", accion: "PUBLISH" }).permitido;
 
   const [{ data: productos, error }, { data: inventario }] = await Promise.all([
     supabase
@@ -49,6 +54,17 @@ export default async function Tienda() {
           sin haber vendido nada.
         </p>
       </div>
+
+      {puedeCrear && (
+        <section className="mt-8">
+          <h2 className="font-display text-lg text-ink uppercase">
+            Cargar un producto
+          </h2>
+          <div className="mt-4">
+            <NuevoProducto />
+          </div>
+        </section>
+      )}
 
       {error && (
         <p role="alert" className="mt-6 rounded-md border border-red-600/40 bg-red-700/5 p-3 text-sm text-red-700">
@@ -97,6 +113,7 @@ export default async function Tienda() {
                   <th scope="col" className="px-4 py-3 font-medium">Tipo</th>
                   <th scope="col" className="px-4 py-3 font-medium">Variantes</th>
                   <th scope="col" className="px-4 py-3 font-medium">Estado</th>
+                  {puedePublicar && <th scope="col" className="px-4 py-3" />}
                 </tr>
               </thead>
               <tbody>
@@ -133,6 +150,11 @@ export default async function Tienda() {
                           {p.status}
                         </span>
                       </td>
+                      {puedePublicar && (
+                        <td className="px-4 py-3 text-right">
+                          <PublicarProducto id={p.id} estadoActual={p.status} />
+                        </td>
+                      )}
                     </tr>
                   );
                 })}

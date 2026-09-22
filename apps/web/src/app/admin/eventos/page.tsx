@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { puedeActor } from "@/lib/autorizacion";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { EditorDeArte, type EventoEditable } from "./editor-arte";
+import { NuevoEvento, type Ciudad, type Opcion, type Sede } from "./formulario";
+import { puede } from "@comicomania/authz";
+import { cargarActor } from "@/lib/autorizacion";
 
 export const metadata = { title: "Eventos" };
 
@@ -18,13 +21,23 @@ const COLOR_ESTADO: Record<string, string> = {
 export default async function Eventos() {
   if (!(await puedeActor({ seccion: "EVENTS", accion: "VIEW" }))) notFound();
 
+  const actor = await cargarActor();
   const supabase = await crearClienteServidor();
+  const puedeCrear = puede(actor, { seccion: "EVENTS", accion: "CREATE" }).permitido;
 
-  const [{ data: eventos, error }, { data: duplicados }] = await Promise.all([
+  const [
+    { data: eventos, error },
+    { data: duplicados },
+    { data: paises },
+    { data: ciudades },
+    { data: sedes },
+    { data: concursos },
+    { data: reservas },
+  ] = await Promise.all([
     supabase
       .from("events")
       .select(
-        "id, slug, name, type, starts_at, capacity, status, tagline, subtitle, poster_url, poster_alt, venues(name, capacity), cities(name), tickets(id, status), ticket_types(id, name, quantity, price, currency)",
+        "id, slug, name, type, starts_at, capacity, status, is_free, tagline, subtitle, poster_url, poster_alt, venues(name, capacity), cities(name), tickets(id, status), ticket_types(id, name, quantity, price, currency)",
       )
       .order("starts_at", { ascending: true })
       .limit(50),
@@ -34,7 +47,25 @@ export default async function Eventos() {
       .in("result", ["DUPLICATE", "INVALID", "VOID"])
       .order("scanned_at", { ascending: false })
       .limit(20),
+    supabase.from("countries").select("id, name").eq("is_active", true).order("name"),
+    supabase.from("cities").select("id, name, country_id").eq("is_active", true).order("name"),
+    supabase.from("venues").select("id, name, city_id, capacity").order("name"),
+    supabase.from("contests").select("id, name").order("created_at", { ascending: false }).limit(20),
+    /* La lista de reservas es la razón de hacer un evento gratis: quién va a
+       ir, para poder escribirle antes y después. Entra al CRM sola con el
+       evento como fuente. */
+    supabase
+      .from("event_registrations")
+      .select("id, email, full_name, created_at, attended, user_id, events(name, slug, is_free)")
+      .order("created_at", { ascending: false })
+      .limit(200),
   ]);
+
+  const reservasPorEvento = new Map<string, number>();
+  for (const r of reservas ?? []) {
+    const e = r.events as { slug: string } | null;
+    if (e?.slug) reservasPorEvento.set(e.slug, (reservasPorEvento.get(e.slug) ?? 0) + 1);
+  }
 
   return (
     <div>
@@ -58,6 +89,34 @@ export default async function Eventos() {
           están.
         </p>
       </div>
+
+      {puedeCrear && (
+        <section className="mt-8">
+          <h2 className="font-display text-lg text-ink uppercase">Nuevo evento</h2>
+          <p className="mt-1 max-w-2xl text-sm text-ink-soft">
+            Nace con sus tipos de entrada, o no nace: uno sin entradas no puede
+            vender nada y alguien acabaría anunciándolo igual. Si es gratuito,
+            lleva un solo nivel a cero y lo que importa es la lista.
+          </p>
+          <div className="mt-4">
+            <NuevoEvento
+              paises={(paises ?? []).map((p): Opcion => ({ id: p.id, nombre: p.name }))}
+              ciudades={(ciudades ?? []).map((c): Ciudad => ({
+                id: c.id,
+                nombre: c.name,
+                paisId: c.country_id,
+              }))}
+              sedes={(sedes ?? []).map((v): Sede => ({
+                id: v.id,
+                nombre: v.name,
+                ciudadId: v.city_id,
+                aforo: v.capacity,
+              }))}
+              concursos={(concursos ?? []).map((c): Opcion => ({ id: c.id, nombre: c.name }))}
+            />
+          </div>
+        </section>
+      )}
 
       {error && (
         <p role="alert" className="mt-6 rounded-md border border-red-600/40 bg-red-700/5 p-3 text-sm text-red-700">
@@ -174,6 +233,14 @@ export default async function Eventos() {
                       Ingresaron{" "}
                       <strong className="text-ink tabular-nums">{usadas}</strong>
                     </span>
+                    {e.is_free && (
+                      <span className="text-ink-soft">
+                        Reservaron{" "}
+                        <strong className="text-success-ink tabular-nums">
+                          {reservasPorEvento.get(e.slug) ?? 0}
+                        </strong>
+                      </span>
+                    )}
                     {aforo && emitidas >= aforo && (
                       <span className="text-red-700">Aforo completo</span>
                     )}
@@ -209,6 +276,64 @@ export default async function Eventos() {
           </ul>
         )}
       </section>
+
+      {(reservas?.length ?? 0) > 0 && (
+        <section className="mt-10">
+          <h2 className="font-display text-lg text-ink uppercase">
+            Lista de asistentes
+          </h2>
+          <p className="mt-1 max-w-2xl text-sm text-ink-soft">
+            Quién reservó lugar en los eventos gratuitos. Cada uno entró al CRM
+            con el evento como fuente, así que desde ahí se puede segmentar una
+            campaña sin copiar ni pegar nada.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-line">
+            <table className="w-full table-fixed text-left text-sm">
+              <thead className="bg-surface-2 text-xs tracking-wider text-ink-faint uppercase">
+                <tr>
+                  <th scope="col" className="w-2/5 px-4 py-3 font-medium">Persona</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Evento</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Reservó</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Cuenta</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reservas!.map((r, i) => {
+                  const ev = r.events as { name: string } | null;
+                  return (
+                    <tr key={r.id} className={i % 2 === 1 ? "bg-surface-2" : undefined}>
+                      <td className="px-4 py-3">
+                        <span className="block text-ink">{r.full_name ?? "—"}</span>
+                        <span
+                          className="block truncate text-xs text-ink-soft"
+                          title={r.email}
+                        >
+                          {r.email}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-ink-soft">{ev?.name ?? "—"}</td>
+                      <td className="px-4 py-3 text-ink-soft tabular-nums">
+                        {new Date(r.created_at).toLocaleDateString("es")}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={r.user_id ? "text-success-ink" : "text-ink-faint"}>
+                          {r.user_id ? "Tiene cuenta" : "Solo correo"}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-2 text-xs text-ink-faint">
+            Quien reserve sin cuenta y se registre después con el mismo correo
+            se vincula solo: la reserva no se queda huérfana.
+          </p>
+        </section>
+      )}
     </div>
   );
 }

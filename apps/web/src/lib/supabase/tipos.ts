@@ -510,6 +510,404 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_activities: {
+        Row: {
+          actor_user_id: string | null
+          body: string | null
+          contact_id: string
+          created_at: string
+          direction: string | null
+          id: string
+          occurred_at: string
+          source_event_id: string | null
+          subject: string | null
+          type: string
+        }
+        Insert: {
+          actor_user_id?: string | null
+          body?: string | null
+          contact_id: string
+          created_at?: string
+          direction?: string | null
+          id?: string
+          occurred_at?: string
+          source_event_id?: string | null
+          subject?: string | null
+          type: string
+        }
+        Update: {
+          actor_user_id?: string | null
+          body?: string | null
+          contact_id?: string
+          created_at?: string
+          direction?: string | null
+          id?: string
+          occurred_at?: string
+          source_event_id?: string | null
+          subject?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_activities_actor_user_id_fkey"
+            columns: ["actor_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_activities_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_contact_tags: {
+        Row: {
+          contact_id: string
+          created_at: string
+          tag_id: string
+        }
+        Insert: {
+          contact_id: string
+          created_at?: string
+          tag_id: string
+        }
+        Update: {
+          contact_id?: string
+          created_at?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_contact_tags_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_contact_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "crm_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_contacts: {
+        Row: {
+          city_id: string | null
+          company: string | null
+          country_id: string | null
+          created_at: string
+          email: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          owner_user_id: string | null
+          phone: string | null
+          source: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+          utm: Json
+        }
+        Insert: {
+          city_id?: string | null
+          company?: string | null
+          country_id?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+          utm?: Json
+        }
+        Update: {
+          city_id?: string | null
+          company?: string | null
+          country_id?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+          utm?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_contacts_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_contacts_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_contacts_owner_user_id_fkey"
+            columns: ["owner_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_opportunities: {
+        Row: {
+          amount: number | null
+          city_id: string | null
+          contact_id: string
+          country_id: string | null
+          created_at: string
+          currency: string | null
+          expected_close: string | null
+          id: string
+          lost_reason: string | null
+          owner_user_id: string | null
+          pipeline_id: string
+          stage_id: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number | null
+          city_id?: string | null
+          contact_id: string
+          country_id?: string | null
+          created_at?: string
+          currency?: string | null
+          expected_close?: string | null
+          id?: string
+          lost_reason?: string | null
+          owner_user_id?: string | null
+          pipeline_id: string
+          stage_id: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number | null
+          city_id?: string | null
+          contact_id?: string
+          country_id?: string | null
+          created_at?: string
+          currency?: string | null
+          expected_close?: string | null
+          id?: string
+          lost_reason?: string | null
+          owner_user_id?: string | null
+          pipeline_id?: string
+          stage_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_opportunities_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_opportunities_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_opportunities_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_opportunities_owner_user_id_fkey"
+            columns: ["owner_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_opportunities_pipeline_id_fkey"
+            columns: ["pipeline_id"]
+            isOneToOne: false
+            referencedRelation: "crm_pipelines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_opportunities_stage_id_fkey"
+            columns: ["stage_id"]
+            isOneToOne: false
+            referencedRelation: "crm_stages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_pipelines: {
+        Row: {
+          created_at: string
+          entity_type: Database["public"]["Enums"]["crm_entity"]
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          entity_type: Database["public"]["Enums"]["crm_entity"]
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          entity_type?: Database["public"]["Enums"]["crm_entity"]
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      crm_stages: {
+        Row: {
+          id: string
+          name: string
+          order: number
+          pipeline_id: string
+          probability: number | null
+          sla_hours: number | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          order: number
+          pipeline_id: string
+          probability?: number | null
+          sla_hours?: number | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          order?: number
+          pipeline_id?: string
+          probability?: number | null
+          sla_hours?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_stages_pipeline_id_fkey"
+            columns: ["pipeline_id"]
+            isOneToOne: false
+            referencedRelation: "crm_pipelines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_tags: {
+        Row: {
+          color: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          color?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          color?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      domain_events: {
+        Row: {
+          attempts: number
+          contact_id: string | null
+          dispatched_at: string | null
+          id: string
+          last_error: string | null
+          name: string
+          occurred_at: string
+          payload: Json
+          user_id: string | null
+        }
+        Insert: {
+          attempts?: number
+          contact_id?: string | null
+          dispatched_at?: string | null
+          id?: string
+          last_error?: string | null
+          name: string
+          occurred_at?: string
+          payload?: Json
+          user_id?: string | null
+        }
+        Update: {
+          attempts?: number
+          contact_id?: string | null
+          dispatched_at?: string | null
+          id?: string
+          last_error?: string | null
+          name?: string
+          occurred_at?: string
+          payload?: Json
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "domain_events_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "domain_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       entries: {
         Row: {
           created_at: string
@@ -708,6 +1106,50 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketing_consents: {
+        Row: {
+          channel: Database["public"]["Enums"]["consent_channel"]
+          contact_id: string
+          granted: boolean
+          granted_at: string
+          id: string
+          ip: unknown
+          locale: string | null
+          revoked_at: string | null
+          source: string | null
+        }
+        Insert: {
+          channel: Database["public"]["Enums"]["consent_channel"]
+          contact_id: string
+          granted: boolean
+          granted_at?: string
+          id?: string
+          ip?: unknown
+          locale?: string | null
+          revoked_at?: string | null
+          source?: string | null
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["consent_channel"]
+          contact_id?: string
+          granted?: boolean
+          granted_at?: string
+          id?: string
+          ip?: unknown
+          locale?: string | null
+          revoked_at?: string | null
+          source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_consents_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
             referencedColumns: ["id"]
           },
         ]
@@ -1742,6 +2184,13 @@ export type Database = {
       }
       path_de_concurso: { Args: { p_contest_id: string }; Returns: string }
       path_de_usuario: { Args: { p_user_id: string }; Returns: string }
+      puede_recibir_marketing: {
+        Args: {
+          p_channel: Database["public"]["Enums"]["consent_channel"]
+          p_contact_id: string
+        }
+        Returns: boolean
+      }
       roles_de_mis_grants: { Args: never; Returns: string[] }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
@@ -1755,6 +2204,7 @@ export type Database = {
         | "EXCUSED"
         | "CONFLICT"
       category_assignment: "AUTO" | "SELF" | "ADMIN"
+      consent_channel: "EMAIL" | "SMS" | "WHATSAPP" | "PUSH"
       contest_status:
         | "DRAFT"
         | "SCHEDULED"
@@ -1763,6 +2213,7 @@ export type Database = {
         | "JUDGING"
         | "FINISHED"
         | "CANCELLED"
+      crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
       participant_status:
@@ -1946,6 +2397,7 @@ export const Constants = {
         "CONFLICT",
       ],
       category_assignment: ["AUTO", "SELF", "ADMIN"],
+      consent_channel: ["EMAIL", "SMS", "WHATSAPP", "PUSH"],
       contest_status: [
         "DRAFT",
         "SCHEDULED",
@@ -1955,6 +2407,7 @@ export const Constants = {
         "FINISHED",
         "CANCELLED",
       ],
+      crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT"],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],
       participant_status: [

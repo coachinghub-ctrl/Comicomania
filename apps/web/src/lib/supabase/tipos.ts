@@ -554,6 +554,95 @@ export type Database = {
           },
         ]
       }
+      commercial_inventory: {
+        Row: {
+          contest_id: string | null
+          contract_id: string | null
+          created_at: string
+          currency: string
+          ends_at: string | null
+          exclusivity: boolean
+          id: string
+          price: number
+          scope_id: string | null
+          scope_path: string | null
+          scope_type: Database["public"]["Enums"]["scope_type"] | null
+          season_id: string | null
+          sponsor_id: string | null
+          starts_at: string | null
+          status: Database["public"]["Enums"]["inventory_commercial_status"]
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          contest_id?: string | null
+          contract_id?: string | null
+          created_at?: string
+          currency?: string
+          ends_at?: string | null
+          exclusivity?: boolean
+          id?: string
+          price: number
+          scope_id?: string | null
+          scope_path?: string | null
+          scope_type?: Database["public"]["Enums"]["scope_type"] | null
+          season_id?: string | null
+          sponsor_id?: string | null
+          starts_at?: string | null
+          status?: Database["public"]["Enums"]["inventory_commercial_status"]
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          contest_id?: string | null
+          contract_id?: string | null
+          created_at?: string
+          currency?: string
+          ends_at?: string | null
+          exclusivity?: boolean
+          id?: string
+          price?: number
+          scope_id?: string | null
+          scope_path?: string | null
+          scope_type?: Database["public"]["Enums"]["scope_type"] | null
+          season_id?: string | null
+          sponsor_id?: string | null
+          starts_at?: string | null
+          status?: Database["public"]["Enums"]["inventory_commercial_status"]
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commercial_inventory_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "commercial_inventory_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "sponsor_contracts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "commercial_inventory_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "commercial_inventory_sponsor_id_fkey"
+            columns: ["sponsor_id"]
+            isOneToOne: false
+            referencedRelation: "sponsors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contests: {
         Row: {
           age_reference_date: string
@@ -2751,6 +2840,301 @@ export type Database = {
           },
         ]
       }
+      sponsor_campaigns: {
+        Row: {
+          assets: Json
+          contract_id: string | null
+          created_at: string
+          ends_at: string | null
+          id: string
+          name: string
+          placements: string[]
+          sponsor_id: string
+          starts_at: string | null
+          utm: Json
+        }
+        Insert: {
+          assets?: Json
+          contract_id?: string | null
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name: string
+          placements?: string[]
+          sponsor_id: string
+          starts_at?: string | null
+          utm?: Json
+        }
+        Update: {
+          assets?: Json
+          contract_id?: string | null
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          name?: string
+          placements?: string[]
+          sponsor_id?: string
+          starts_at?: string | null
+          utm?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsor_campaigns_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "sponsor_contracts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsor_campaigns_sponsor_id_fkey"
+            columns: ["sponsor_id"]
+            isOneToOne: false
+            referencedRelation: "sponsors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sponsor_contracts: {
+        Row: {
+          contest_id: string | null
+          created_at: string
+          currency: string
+          document_url: string | null
+          ends_at: string
+          exclusivity: Json
+          id: string
+          season_id: string | null
+          sponsor_id: string
+          starts_at: string
+          status: string
+          updated_at: string
+          value: number
+        }
+        Insert: {
+          contest_id?: string | null
+          created_at?: string
+          currency?: string
+          document_url?: string | null
+          ends_at: string
+          exclusivity?: Json
+          id?: string
+          season_id?: string | null
+          sponsor_id: string
+          starts_at: string
+          status?: string
+          updated_at?: string
+          value: number
+        }
+        Update: {
+          contest_id?: string | null
+          created_at?: string
+          currency?: string
+          document_url?: string | null
+          ends_at?: string
+          exclusivity?: Json
+          id?: string
+          season_id?: string | null
+          sponsor_id?: string
+          starts_at?: string
+          status?: string
+          updated_at?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsor_contracts_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsor_contracts_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsor_contracts_sponsor_id_fkey"
+            columns: ["sponsor_id"]
+            isOneToOne: false
+            referencedRelation: "sponsors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sponsor_deliverables: {
+        Row: {
+          contract_id: string
+          created_at: string
+          delivered_at: string | null
+          description: string
+          due_at: string | null
+          evidence_url: string | null
+          id: string
+          inventory_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          contract_id: string
+          created_at?: string
+          delivered_at?: string | null
+          description: string
+          due_at?: string | null
+          evidence_url?: string | null
+          id?: string
+          inventory_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          contract_id?: string
+          created_at?: string
+          delivered_at?: string | null
+          description?: string
+          due_at?: string | null
+          evidence_url?: string | null
+          id?: string
+          inventory_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsor_deliverables_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "sponsor_contracts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsor_deliverables_inventory_id_fkey"
+            columns: ["inventory_id"]
+            isOneToOne: false
+            referencedRelation: "commercial_inventory"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sponsor_metrics: {
+        Row: {
+          contract_id: string
+          created_at: string
+          id: string
+          is_estimate: boolean
+          method: string | null
+          metric: string
+          period_end: string
+          period_start: string
+          unit: string | null
+          value: number
+        }
+        Insert: {
+          contract_id: string
+          created_at?: string
+          id?: string
+          is_estimate: boolean
+          method?: string | null
+          metric: string
+          period_end: string
+          period_start: string
+          unit?: string | null
+          value: number
+        }
+        Update: {
+          contract_id?: string
+          created_at?: string
+          id?: string
+          is_estimate?: boolean
+          method?: string | null
+          metric?: string
+          period_end?: string
+          period_start?: string
+          unit?: string | null
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsor_metrics_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "sponsor_contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sponsors: {
+        Row: {
+          category: string | null
+          city_id: string | null
+          company: string
+          contact_name: string | null
+          country_id: string | null
+          created_at: string
+          email: string | null
+          id: string
+          logo_url: string | null
+          owner_user_id: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          city_id?: string | null
+          company: string
+          contact_name?: string | null
+          country_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          city_id?: string | null
+          company?: string
+          contact_name?: string | null
+          country_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsors_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsors_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sponsors_owner_user_id_fkey"
+            columns: ["owner_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stripe_events: {
         Row: {
           created_at: string
@@ -3734,6 +4118,12 @@ export type Database = {
       crm_entity: "CONTESTANT" | "SPONSOR" | "TALENT" | "SUPPORT"
       finance_level: "NONE" | "LOCAL" | "CITY" | "COUNTRY" | "GLOBAL"
       grant_status: "ACTIVE" | "SUSPENDED" | "EXPIRED" | "REVOKED"
+      inventory_commercial_status:
+        | "AVAILABLE"
+        | "HELD"
+        | "SOLD"
+        | "DELIVERED"
+        | "RETIRED"
       order_status:
         | "PENDING"
         | "PAID"
@@ -3965,6 +4355,13 @@ export const Constants = {
       crm_entity: ["CONTESTANT", "SPONSOR", "TALENT", "SUPPORT"],
       finance_level: ["NONE", "LOCAL", "CITY", "COUNTRY", "GLOBAL"],
       grant_status: ["ACTIVE", "SUSPENDED", "EXPIRED", "REVOKED"],
+      inventory_commercial_status: [
+        "AVAILABLE",
+        "HELD",
+        "SOLD",
+        "DELIVERED",
+        "RETIRED",
+      ],
       order_status: [
         "PENDING",
         "PAID",

@@ -20,12 +20,6 @@ export type Pendiente = {
 };
 
 export const ROADMAP: Record<string, Pendiente> = {
-  sponsors: {
-    fase: "M",
-    nombreFase: "Sponsors",
-    cuando: "May–Jun 2027",
-    que: "Inventario comercial, contratos y reportes de entrega para las marcas.",
-  },
   finanzas: {
     fase: "N",
     nombreFase: "Finance + Intelligence",

@@ -247,6 +247,98 @@ export type Database = {
           },
         ]
       }
+      booking_requests: {
+        Row: {
+          budget_amount: number | null
+          city_id: string | null
+          client_company: string | null
+          client_user_id: string | null
+          contact_name: string
+          created_at: string
+          currency: string | null
+          email: string
+          event_date: string | null
+          event_type: string | null
+          id: string
+          lost_reason: string | null
+          message: string | null
+          owner_user_id: string | null
+          phone: string | null
+          status: string
+          talent_id: string
+          updated_at: string
+        }
+        Insert: {
+          budget_amount?: number | null
+          city_id?: string | null
+          client_company?: string | null
+          client_user_id?: string | null
+          contact_name: string
+          created_at?: string
+          currency?: string | null
+          email: string
+          event_date?: string | null
+          event_type?: string | null
+          id?: string
+          lost_reason?: string | null
+          message?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          status?: string
+          talent_id: string
+          updated_at?: string
+        }
+        Update: {
+          budget_amount?: number | null
+          city_id?: string | null
+          client_company?: string | null
+          client_user_id?: string | null
+          contact_name?: string
+          created_at?: string
+          currency?: string | null
+          email?: string
+          event_date?: string | null
+          event_type?: string | null
+          id?: string
+          lost_reason?: string | null
+          message?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          status?: string
+          talent_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_requests_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_requests_client_user_id_fkey"
+            columns: ["client_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_requests_owner_user_id_fkey"
+            columns: ["owner_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_requests_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       categories: {
         Row: {
           assignment: Database["public"]["Enums"]["category_assignment"]
@@ -2689,6 +2781,224 @@ export type Database = {
         }
         Relationships: []
       }
+      talent_availability: {
+        Row: {
+          created_at: string
+          ends_at: string
+          id: string
+          starts_at: string
+          talent_id: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          ends_at: string
+          id?: string
+          starts_at: string
+          talent_id: string
+          type?: string
+        }
+        Update: {
+          created_at?: string
+          ends_at?: string
+          id?: string
+          starts_at?: string
+          talent_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_availability_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      talent_contracts: {
+        Row: {
+          booking_id: string
+          commission_pct: number
+          created_at: string
+          currency: string
+          document_url: string | null
+          fee_amount: number
+          id: string
+          signed_at: string | null
+          status: string
+          talent_id: string
+          terms: Json
+          updated_at: string
+        }
+        Insert: {
+          booking_id: string
+          commission_pct?: number
+          created_at?: string
+          currency?: string
+          document_url?: string | null
+          fee_amount: number
+          id?: string
+          signed_at?: string | null
+          status?: string
+          talent_id: string
+          terms?: Json
+          updated_at?: string
+        }
+        Update: {
+          booking_id?: string
+          commission_pct?: number
+          created_at?: string
+          currency?: string
+          document_url?: string | null
+          fee_amount?: number
+          id?: string
+          signed_at?: string | null
+          status?: string
+          talent_id?: string
+          terms?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_contracts_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: true
+            referencedRelation: "booking_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talent_contracts_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      talent_profiles: {
+        Row: {
+          bio: string | null
+          booking_contact: string | null
+          comedy_styles: string[]
+          created_at: string
+          languages: string[]
+          legal_name: string | null
+          manager_id: string | null
+          markets: string[]
+          media_kit_url: string | null
+          public_visible: boolean
+          representation: string | null
+          set_durations: number[]
+          stage_name: string
+          status: Database["public"]["Enums"]["talent_status"]
+          technical_rider: string | null
+          travel_availability: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          booking_contact?: string | null
+          comedy_styles?: string[]
+          created_at?: string
+          languages?: string[]
+          legal_name?: string | null
+          manager_id?: string | null
+          markets?: string[]
+          media_kit_url?: string | null
+          public_visible?: boolean
+          representation?: string | null
+          set_durations?: number[]
+          stage_name: string
+          status?: Database["public"]["Enums"]["talent_status"]
+          technical_rider?: string | null
+          travel_availability?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          booking_contact?: string | null
+          comedy_styles?: string[]
+          created_at?: string
+          languages?: string[]
+          legal_name?: string | null
+          manager_id?: string | null
+          markets?: string[]
+          media_kit_url?: string | null
+          public_visible?: boolean
+          representation?: string | null
+          set_durations?: number[]
+          stage_name?: string
+          status?: Database["public"]["Enums"]["talent_status"]
+          technical_rider?: string | null
+          travel_availability?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_profiles_manager_id_fkey"
+            columns: ["manager_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talent_profiles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      talent_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          from_status: Database["public"]["Enums"]["talent_status"] | null
+          id: string
+          reason: string | null
+          talent_id: string
+          to_status: Database["public"]["Enums"]["talent_status"]
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["talent_status"] | null
+          id?: string
+          reason?: string | null
+          talent_id: string
+          to_status: Database["public"]["Enums"]["talent_status"]
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["talent_status"] | null
+          id?: string
+          reason?: string | null
+          talent_id?: string
+          to_status?: Database["public"]["Enums"]["talent_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talent_status_history_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talent_status_history_talent_id_fkey"
+            columns: ["talent_id"]
+            isOneToOne: false
+            referencedRelation: "talent_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       ticket_types: {
         Row: {
           benefits: Json
@@ -3463,6 +3773,13 @@ export type Database = {
         | "CONTEST"
         | "EVENT"
         | "VENUE"
+      talent_status:
+        | "DRAFT"
+        | "PENDING_REVIEW"
+        | "ACTIVE"
+        | "PAUSED"
+        | "RETIRED"
+        | "BLOCKED"
       ticket_kind:
         | "GENERAL"
         | "VIP"
@@ -3691,6 +4008,14 @@ export const Constants = {
         "CONTEST",
         "EVENT",
         "VENUE",
+      ],
+      talent_status: [
+        "DRAFT",
+        "PENDING_REVIEW",
+        "ACTIVE",
+        "PAUSED",
+        "RETIRED",
+        "BLOCKED",
       ],
       ticket_kind: [
         "GENERAL",

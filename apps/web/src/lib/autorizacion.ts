@@ -23,12 +23,48 @@ const ANONIMO: ActorConIdentidad = {
   esAnonimo: true,
 };
 
+type NivelAAL = {
+  currentLevel: string | null;
+  currentAuthenticationMethods: ({ method: string; timestamp: number } | string)[];
+} | null;
+
+/* Supabase publica los métodos de autenticación en dos formas: objetos con
+   marca de tiempo, o solo los nombres (RFC-8176). Con la segunda sabemos que
+   hubo segundo factor pero no cuándo; ahí se asume "ahora", porque el AAL
+   describe la sesión en curso y negarlo dejaría a la persona fuera de los
+   permisos que acaba de ganar. */
+function momentoDelSegundoFactor(aal: NivelAAL): Date | null {
+  if (aal?.currentLevel !== "aal2") return null;
+
+  for (const metodo of aal.currentAuthenticationMethods ?? []) {
+    if (typeof metodo === "string") {
+      if (metodo === "totp") return new Date();
+      continue;
+    }
+    if (metodo.method === "totp") return new Date(metodo.timestamp * 1000);
+  }
+  return null;
+}
+
 export const cargarActor = cache(async (): Promise<ActorConIdentidad> => {
   const supabase = await crearClienteServidor();
   const {
     data: { user: credencial },
   } = await supabase.auth.getUser();
   if (!credencial) return ANONIMO;
+
+  /* Cuándo ocurrió el segundo factor EN ESTA SESIÓN.
+
+     Antes se usaba `credencial.updated_at` si el usuario tenía algún factor
+     enrolado, y eso no es lo mismo: `updated_at` es cuándo cambió la fila del
+     usuario. Fallaba en las dos direcciones —daba por vigente un factor que
+     nunca se usó en esta sesión, y caducaba uno recién verificado— justo en
+     los diez permisos que más lo necesitan.
+
+     El dato real está en el AAL de la sesión: si llegó a aal2, entre los
+     métodos de autenticación aparece el TOTP con su marca de tiempo. */
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  const mfaEn = momentoDelSegundoFactor(aal);
 
   const [{ data: id }, { data: filas }] = await Promise.all([
     supabase.from("users").select("display_name, email").eq("id", credencial.id).single(),
@@ -60,11 +96,7 @@ export const cargarActor = cache(async (): Promise<ActorConIdentidad> => {
   return {
     usuarioId: credencial.id,
     grants,
-    // El momento del segundo factor lo publica Supabase en el AAL de la sesión.
-    mfaEn:
-      credencial.factors && credencial.factors.length > 0
-        ? new Date(credencial.updated_at ?? Date.now())
-        : null,
+    mfaEn,
     email: id?.email ?? credencial.email ?? "",
     nombre: id?.display_name ?? credencial.email?.split("@")[0] ?? "",
     esAnonimo: false,

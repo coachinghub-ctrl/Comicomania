@@ -1,6 +1,6 @@
 import type { Route } from "next";
 import { redirect } from "next/navigation";
-import { puede } from "@comicomania/authz";
+import { MFA_VIGENCIA_MS, puede } from "@comicomania/authz";
 import { Logo } from "@comicomania/ui";
 import { MENU } from "@/contenido/admin";
 import { cargarActor } from "@/lib/autorizacion";
@@ -45,6 +45,15 @@ export default async function AdminLayout({
     );
   }
 
+  /* Se usa la misma constante que el guard, no un número repetido acá: si la
+     ventana cambia, la cabecera cambia con ella.
+
+     No sirve preguntar por un permiso concreto: a quien no tiene ACCESS_CONTROL
+     el guard le respondería "sección no incluida" y la cabecera cantaría un
+     segundo factor vigente que no existe. */
+  const segundoFactorVigente =
+    actor.mfaEn != null && Date.now() - actor.mfaEn.getTime() <= MFA_VIGENCIA_MS;
+
   // Los territorios que administra, tal como se los dibujamos en la cabecera.
   const territorios = [
     ...new Set(
@@ -82,6 +91,19 @@ export default async function AdminLayout({
           </div>
           <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-muted sm:block">{actor.email}</span>
+            {/* El estado del segundo factor se ve siempre: si está sin
+                verificar, media docena de secciones responden "MFA requerida"
+                y sin este aviso nadie sabría por qué. */}
+            <a
+              href="/admin/seguridad"
+              className={
+                segundoFactorVigente
+                  ? "text-muted transition-colors hover:text-paper-pure"
+                  : "rounded-full border border-gold-400/50 px-3 py-1 text-xs text-gold-400 transition-colors hover:bg-gold-400/10"
+              }
+            >
+              {segundoFactorVigente ? "Seguridad" : "Verifica tu segundo factor"}
+            </a>
             <form action="/auth/salir" method="post">
               <button className="text-muted transition-colors hover:text-paper-pure">
                 Salir

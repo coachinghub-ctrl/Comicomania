@@ -2105,6 +2105,87 @@ export type Database = {
           },
         ]
       }
+      legal_document_versions: {
+        Row: {
+          body_hash: string
+          body_md: string
+          created_at: string
+          created_by: string | null
+          document_id: string
+          effective_from: string | null
+          effective_to: string | null
+          id: string
+          status: Database["public"]["Enums"]["legal_version_status"]
+          version: number
+        }
+        Insert: {
+          body_hash?: string
+          body_md: string
+          created_at?: string
+          created_by?: string | null
+          document_id: string
+          effective_from?: string | null
+          effective_to?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["legal_version_status"]
+          version: number
+        }
+        Update: {
+          body_hash?: string
+          body_md?: string
+          created_at?: string
+          created_by?: string | null
+          document_id?: string
+          effective_from?: string | null
+          effective_to?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["legal_version_status"]
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "legal_document_versions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "legal_document_versions_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "legal_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      legal_documents: {
+        Row: {
+          created_at: string
+          id: string
+          jurisdiction: string
+          name: string
+          slug: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          jurisdiction: string
+          name: string
+          slug: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          jurisdiction?: string
+          name?: string
+          slug?: string
+          type?: string
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           completed_at: string | null
@@ -2846,6 +2927,84 @@ export type Database = {
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      release_acceptances: {
+        Row: {
+          accepted_at: string
+          accepted_checkboxes: Json
+          contest_id: string | null
+          id: string
+          ip: unknown
+          locale: string | null
+          participant_id: string | null
+          user_agent: string | null
+          user_id: string
+          version_id: string
+          video_id: string | null
+        }
+        Insert: {
+          accepted_at?: string
+          accepted_checkboxes?: Json
+          contest_id?: string | null
+          id?: string
+          ip?: unknown
+          locale?: string | null
+          participant_id?: string | null
+          user_agent?: string | null
+          user_id: string
+          version_id: string
+          video_id?: string | null
+        }
+        Update: {
+          accepted_at?: string
+          accepted_checkboxes?: Json
+          contest_id?: string | null
+          id?: string
+          ip?: unknown
+          locale?: string | null
+          participant_id?: string | null
+          user_agent?: string | null
+          user_id?: string
+          version_id?: string
+          video_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "release_acceptances_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "release_acceptances_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "release_acceptances_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "release_acceptances_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "legal_document_versions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "release_acceptances_video_id_fkey"
+            columns: ["video_id"]
+            isOneToOne: false
+            referencedRelation: "videos"
             referencedColumns: ["id"]
           },
         ]
@@ -3970,6 +4129,134 @@ export type Database = {
           },
         ]
       }
+      trust_case_actions: {
+        Row: {
+          action: string
+          actor_user_id: string | null
+          case_id: string
+          created_at: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          action: string
+          actor_user_id?: string | null
+          case_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          action?: string
+          actor_user_id?: string | null
+          case_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trust_case_actions_actor_user_id_fkey"
+            columns: ["actor_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trust_case_actions_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "trust_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trust_cases: {
+        Row: {
+          appeal_of: string | null
+          assignee_user_id: string | null
+          created_at: string
+          description: string
+          id: string
+          object_id: string | null
+          object_type: string | null
+          priority: number
+          reporter_user_id: string | null
+          resolution: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          sla_due_at: string | null
+          status: Database["public"]["Enums"]["trust_case_status"]
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          appeal_of?: string | null
+          assignee_user_id?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          object_id?: string | null
+          object_type?: string | null
+          priority?: number
+          reporter_user_id?: string | null
+          resolution?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          sla_due_at?: string | null
+          status?: Database["public"]["Enums"]["trust_case_status"]
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          appeal_of?: string | null
+          assignee_user_id?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          object_id?: string | null
+          object_type?: string | null
+          priority?: number
+          reporter_user_id?: string | null
+          resolution?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          sla_due_at?: string | null
+          status?: Database["public"]["Enums"]["trust_case_status"]
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trust_cases_appeal_of_fkey"
+            columns: ["appeal_of"]
+            isOneToOne: false
+            referencedRelation: "trust_cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trust_cases_assignee_user_id_fkey"
+            columns: ["assignee_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trust_cases_reporter_user_id_fkey"
+            columns: ["reporter_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trust_cases_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_level_assignments: {
         Row: {
           granted_at: string
@@ -4524,6 +4811,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      hash_de_texto: { Args: { t: string }; Returns: string }
       metricas_publicas: {
         Args: never
         Returns: {
@@ -4579,6 +4867,7 @@ export type Database = {
         | "SOLD"
         | "DELIVERED"
         | "RETIRED"
+      legal_version_status: "DRAFT" | "EFFECTIVE" | "SUPERSEDED"
       order_status:
         | "PENDING"
         | "PAID"
@@ -4645,6 +4934,13 @@ export type Database = {
         | "PROMO"
         | "COMP"
       ticket_status: "VALID" | "USED" | "VOID" | "TRANSFERRED"
+      trust_case_status:
+        | "OPEN"
+        | "UNDER_REVIEW"
+        | "ACTION_REQUIRED"
+        | "RESOLVED"
+        | "REJECTED"
+        | "APPEALED"
       video_status:
         | "DRAFT"
         | "UPLOADING"
@@ -4829,6 +5125,7 @@ export const Constants = {
         "DELIVERED",
         "RETIRED",
       ],
+      legal_version_status: ["DRAFT", "EFFECTIVE", "SUPERSEDED"],
       order_status: [
         "PENDING",
         "PAID",
@@ -4903,6 +5200,14 @@ export const Constants = {
         "COMP",
       ],
       ticket_status: ["VALID", "USED", "VOID", "TRANSFERRED"],
+      trust_case_status: [
+        "OPEN",
+        "UNDER_REVIEW",
+        "ACTION_REQUIRED",
+        "RESOLVED",
+        "REJECTED",
+        "APPEALED",
+      ],
       video_status: [
         "DRAFT",
         "UPLOADING",

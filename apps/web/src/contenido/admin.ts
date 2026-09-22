@@ -6,40 +6,6 @@
 export type Entrada = { texto: string; href: string; seccion: string };
 export type Grupo = { titulo: string; entradas: Entrada[] };
 
-/* Las secciones que todavía no existen NO se esconden del menú: quien tiene el
-   permiso tiene que ver que la sección está prevista y cuándo llega. Un menú
-   que oculta el futuro obliga a preguntar por Whatsapp qué falta.
-
-   Fase y fecha salen de docs/13-mvp-backlog-roadmap.md, tabla de fases A–P.
-   Si el roadmap se mueve, esto se mueve con él. */
-export type Pendiente = {
-  fase: string;
-  nombreFase: string;
-  cuando: string;
-  que: string;
-};
-
-export const ROADMAP: Record<string, Pendiente> = {
-  legal: {
-    fase: "O",
-    nombreFase: "Testing + Security",
-    cuando: "Jul 2027",
-    que: "Bases legales por país, cesión de derechos y consentimiento de menores.",
-  },
-  trust: {
-    fase: "O",
-    nombreFase: "Testing + Security",
-    cuando: "Jul 2027",
-    que: "Reportes de contenido, sanciones y el registro de cada decisión de moderación.",
-  },
-  configuracion: {
-    fase: "—",
-    nombreFase: "Transversal",
-    cuando: "sin fase propia",
-    que: "Ajustes por territorio. Crece con cada engine, así que no tiene una fase propia en el roadmap.",
-  },
-};
-
 export const MENU: Grupo[] = [
   {
     titulo: "Panel",

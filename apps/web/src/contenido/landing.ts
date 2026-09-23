@@ -432,3 +432,168 @@ export const NAVEGACION = [
 export const CIFRAS_DECLARADAS = [
   { clave: "personas", etiqueta: "Personas impactadas", valor: 10000, prefijo: "+" },
 ] as const;
+
+
+/* ---------------------------------------------------------------------------
+   Lo que sigue sale del Business Plan 2027–2031 del propio COMICOMANÍA.
+
+   Es material declarado por el negocio, igual que CIFRAS_DECLARADAS: la
+   plataforma no lo calcula ni lo puede comprobar. Si algo deja de ser cierto,
+   se corrige aquí o se quita.
+
+   NO se trae nada financiero del plan —proyecciones, valuación, ronda semilla,
+   múltiplos de retorno— y no es por gusto: ese documento es para
+   inversionistas y él mismo dice que no es una oferta pública de valores.
+   Publicar en una web abierta el precio de una participación es otra cosa
+   distinta de hacer marketing, y tiene consecuencias legales.
+   --------------------------------------------------------------------------- */
+
+export const TESIS = {
+  eyebrow: "Por qué existimos",
+  titulo: ["El humor es el único gran arte", "que todavía no tiene su premio."],
+  comparacion: [
+    { arte: "El cine", premio: "los Oscars" },
+    { arte: "La música", premio: "los Grammys" },
+    { arte: "La televisión", premio: "los Emmys" },
+    { arte: "El teatro", premio: "los Tonys" },
+    { arte: "El humor", premio: null },
+  ],
+  entrada:
+    "El humor no tiene premio, ni líder, ni industria. Y sin embargo lo consume todo el mundo, todos los días, en todas las edades y en todos los países.",
+  texto:
+    "Las computadoras y los teléfonos tuvieron que crear su necesidad. El humor no: siempre ha existido. Lo único que nunca ha tenido es quien lo organice.",
+  remate: "Eso es lo que estamos construyendo.",
+  cifras: [
+    { valor: "600M+", texto: "personas hablan español en el mundo", fuente: "Instituto Cervantes, 2025" },
+    { valor: "68M", texto: "hispanos en Estados Unidos, cerca del 20% de la población", fuente: "U.S. Census, 2024" },
+  ],
+} as const;
+
+export const FUNDADOR = {
+  eyebrow: "Quién está detrás",
+  titulo: ["Ya lo hizo dos veces.", "Sin internet."],
+  nombre: "Fernando Arau",
+  cargo: "Creador y fundador de COMICOMANÍA",
+  credencial: "Emmy honorario 2006 · Academia de Artes y Ciencias de la Televisión",
+  entrada:
+    "La mejor señal de lo que alguien va a hacer es lo que ya hizo. Fernando Arau ha convertido dos veces un talento disperso en un movimiento con público, artistas y marcas.",
+  hitos: [
+    {
+      anio: "1985",
+      nombre: "Rockotitlán",
+      falta: "El rock en español no tenía dónde tocar.",
+      hizo: "Abre con su hermano Sergio el primer foro de la Ciudad de México dedicado solo a ese rock.",
+      resultado: "Por ese escenario pasaron Caifanes, Café Tacvba, Maldita Vecindad, Maná y Fobia.",
+    },
+    {
+      anio: "1996",
+      nombre: "RIATATÁN",
+      falta: "Los humoristas amateurs no tenían escaparate.",
+      hizo: "Crea el primer concurso de humoristas amateurs de México.",
+      resultado: "Más de 500 inscritos y una gran final que llenó la Arena México con 27.000 personas.",
+    },
+    {
+      anio: "2027",
+      nombre: "COMICOMANÍA",
+      falta: "El humor en español no tiene industria, premio ni líder.",
+      hizo: "Un concurso global en línea, una agencia, una escuela y el Premio Humor.",
+      resultado: "Ahora con internet, redes, inteligencia artificial y 600 millones de hispanohablantes.",
+    },
+  ],
+  trayectoria: [
+    "Mimo. Gana para México, con Toño Esparza, el Primer Encuentro Internacional de Pantomima del Festival Cervantino.",
+    "Primer mimo de la televisión mexicana, en Noche a Noche de Verónica Castro (1980).",
+    "“Chicho” en Cachún Cachún Ra Ra!, además de escritor y director (1981–1987).",
+    "Conductor de Despierta América en Univision durante doce años seguidos (1997–2009).",
+  ],
+  cita: "Lo que le pido no es que crea en un sueño. Es que vea un patrón.",
+} as const;
+
+export const LIMPIO = {
+  eyebrow: "La decisión que nos distingue",
+  titulo: ["No es lo mismo ser gracioso", "que hacerse el chistosito."],
+  definicion:
+    "Humor limpio es el humor ingenioso y divertido para todo público, que no recurre a palabras vulgares ni al doble sentido sexual ofensivo.",
+  entrada:
+    "No es una limitación: es una ventaja, y le sirve a todo el mundo por motivos distintos.",
+  ventajas: [
+    {
+      para: "Para la familia",
+      texto: "Se puede ver junta. Eso multiplica el público de cada episodio en vez de dividirlo por habitación.",
+    },
+    {
+      para: "Para el humorista",
+      texto: "Un humorista limpio trabaja en televisión, en eventos de empresa, en escuelas y en iglesias. Tiene más mercado, no menos.",
+    },
+    {
+      para: "Para las marcas",
+      texto: "Pueden patrocinar sin riesgo de aparecer al lado de algo ofensivo. Es el contenido que buscan los anunciantes familiares.",
+    },
+    {
+      para: "Para las plataformas",
+      texto: "El contenido apto para todo público se vende a más canales, más horarios y más países.",
+    },
+  ],
+  ciencia: {
+    titulo: "Y no es solo una idea bonita",
+    estudios: [
+      {
+        hallazgo: "Reír en grupo aumenta la tolerancia al dolor, por la liberación de endorfinas.",
+        fuente: "Dunbar y colegas · Universidad de Oxford · Proceedings of the Royal Society B (2012)",
+      },
+      {
+        hallazgo: "La risa compartida libera opioides naturales en el cerebro, los asociados al placer y al vínculo entre personas.",
+        fuente: "Manninen y colegas · Universidad de Turku · Journal of Neuroscience (2017)",
+      },
+    ],
+  },
+} as const;
+
+export const PREMIO = {
+  eyebrow: "COMICOMANÍA Premio Humor",
+  titulo: ["La estatuilla", "que le faltaba al humor."],
+  entrada:
+    "Cada gran arte del entretenimiento tuvo un momento que lo convirtió en industria: el primer Oscar, el primer Grammy, el primer Emmy, el primer Tony. El humor todavía no ha tenido el suyo.",
+  texto:
+    "El Premio Humor es la estatuilla y la gala anual que reconocen a los mejores humoristas profesionales del mundo hispano. La primera, simbólica, será para Mario Moreno “Cantinflas”.",
+  remate: "La industria del humor va a existir. La pregunta es quién la construye.",
+} as const;
+
+/* Los cinco negocios, con sus nombres reales. La web los llamaba Talent,
+   Academy, Shop y Live —etiquetas genéricas— y el negocio tiene marcas
+   propias. Un nombre propio se recuerda; una etiqueta, no. */
+export const ECOSISTEMA = {
+  eyebrow: "El ecosistema",
+  titulo: ["Un concurso", "que alimenta cuatro negocios."],
+  entrada:
+    "El concurso es el arrancador. Cada temporada produce audiencia, contenido y talento nuevo que alimenta todo lo demás.",
+  piezas: [
+    {
+      nombre: "Concurso COMICOMANÍA",
+      texto: "El primer concurso en línea en español de humoristas amateurs. Abierto a todos los estilos: stand-up, mimos, magos, ventrílocuos, imitadores, músicos cómicos y humoristas digitales.",
+      href: "/participa",
+    },
+    {
+      nombre: "ProCómiCo",
+      texto: "La agencia. Representa a los mejores talentos del concurso y a profesionales que buscan una agencia seria. El ganador no se queda solo cuando se apagan las cámaras.",
+      href: "/humoristas",
+    },
+    {
+      nombre: "Instituto Gracia",
+      texto: "La escuela en línea: actuación exprés, dramaturgia, creatividad y comedia con certificación. Los ganadores entran con beca de tres meses.",
+      href: "/academia",
+    },
+    {
+      nombre: "Premio Humor",
+      texto: "La estatuilla y la gala anual del humor hispano. El premio que esta industria nunca tuvo.",
+      href: "#premio",
+    },
+    {
+      nombre: "Humormanía",
+      texto: "La versión en inglés del concurso y del premio, con el mismo formato y el mismo oficio detrás.",
+      href: null,
+    },
+  ],
+  ventaja:
+    "La ventaja que no tienen los Oscars: la Academia de Cine no produce las películas ni representa a los actores. Aquí el talento se descubre, se forma, se representa, se lleva de gira y se premia.",
+} as const;

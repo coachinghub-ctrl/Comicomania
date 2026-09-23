@@ -4,7 +4,10 @@ import { ButtonLink, Logo } from "@comicomania/ui";
 import {
   ACADEMY,
   CIERRE,
+  ECOSISTEMA,
   EXPANSION,
+  FUNDADOR,
+  LIMPIO,
   HERO,
   JOURNEY,
   LIVE,
@@ -13,9 +16,11 @@ import {
   MOVIMIENTO,
   NAVEGACION,
   PERFILES,
+  PREMIO,
   PROPOSITO,
   SHOP,
   TALENT,
+  TESIS,
 } from "@/contenido/landing";
 import { ICONOS } from "./iconos";
 import { Antetitulo, Marquesina, Seccion, Titulo } from "./piezas";
@@ -1261,5 +1266,252 @@ export function Cierre() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Lo que aporta el Business Plan.
+
+   El resto de la landing habla de un movimiento; esto dice qué es, quién lo
+   hace y por qué no existía. Una web que solo afirma valores pide que le
+   crean. Una que cuenta lo que su fundador ya hizo, no.
+   --------------------------------------------------------------------------- */
+
+export function Tesis() {
+  return (
+    <Seccion id="tesis" fondo="elevado">
+      <div className="aparece max-w-3xl">
+        <Antetitulo>{TESIS.eyebrow}</Antetitulo>
+        <Titulo>
+          {TESIS.titulo[0]}{" "}
+          <span className="block text-red-500">{TESIS.titulo[1]}</span>
+        </Titulo>
+      </div>
+
+      {/* La comparación es el argumento entero. Cuatro artes con su premio, y
+          el quinto con un hueco donde debería estar el suyo. */}
+      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-5">
+        {TESIS.comparacion.map((c) => (
+          <li
+            key={c.arte}
+            className={
+              c.premio
+                ? "bg-stage-900 px-5 py-7 text-center"
+                : "bg-red-950/40 px-5 py-7 text-center"
+            }
+          >
+            <p className="font-display text-lg text-paper uppercase">{c.arte}</p>
+            <p
+              className={
+                c.premio
+                  ? "mt-2 text-sm text-muted"
+                  : "mt-2 text-sm font-semibold text-red-300"
+              }
+            >
+              {c.premio ?? "nada"}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <div className="aparece mt-12 grid gap-10 lg:grid-cols-[1fr_20rem]">
+        <div>
+          <p className="text-lg text-pretty text-muted">{TESIS.entrada}</p>
+          <p className="mt-5 text-lg text-pretty text-muted">{TESIS.texto}</p>
+          <p className="font-display mt-6 text-xl text-gold-400 uppercase">
+            {TESIS.remate}
+          </p>
+        </div>
+
+        <dl className="space-y-6">
+          {TESIS.cifras.map((c) => (
+            <div key={c.valor}>
+              <dt className="font-display text-3xl text-paper-pure tabular-nums">
+                {c.valor}
+              </dt>
+              <dd className="mt-1 text-sm text-muted">{c.texto}</dd>
+              <dd className="mt-1 text-xs text-muted-dim">{c.fuente}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </Seccion>
+  );
+}
+
+export function Fundador() {
+  return (
+    <Seccion id="fundador">
+      <div className="aparece max-w-3xl">
+        <Antetitulo>{FUNDADOR.eyebrow}</Antetitulo>
+        <Titulo>
+          {FUNDADOR.titulo[0]}{" "}
+          <span className="block text-red-500">{FUNDADOR.titulo[1]}</span>
+        </Titulo>
+        <p className="mt-6 text-lg text-pretty text-muted">{FUNDADOR.entrada}</p>
+      </div>
+
+      {/* Los tres actos, en orden. El tercero es este sitio. */}
+      <ol className="aparece mt-12 grid gap-5 lg:grid-cols-3">
+        {FUNDADOR.hitos.map((h, i) => (
+          <li
+            key={h.anio}
+            className={
+              i === FUNDADOR.hitos.length - 1
+                ? "rounded-lg border border-red-500/50 bg-stage-900 p-6"
+                : "rounded-lg border border-stage-600 bg-stage-900 p-6"
+            }
+          >
+            <p className="font-display text-3xl text-red-500 tabular-nums">
+              {h.anio}
+            </p>
+            <p className="font-display mt-1 text-xl text-paper uppercase">
+              {h.nombre}
+            </p>
+            <p className="mt-4 text-sm text-muted-dim">{h.falta}</p>
+            <p className="mt-2 text-sm text-muted">{h.hizo}</p>
+            <p className="mt-4 border-t border-stage-600 pt-4 text-sm text-paper-pure">
+              {h.resultado}
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="aparece mt-12 grid gap-10 rounded-lg border border-stage-600 bg-stage-900 p-8 lg:grid-cols-[1fr_1fr]">
+        <div>
+          <p className="font-display text-2xl text-paper uppercase">
+            {FUNDADOR.nombre}
+          </p>
+          <p className="mt-1 text-sm text-muted">{FUNDADOR.cargo}</p>
+          <p className="mt-1 text-sm text-gold-400">{FUNDADOR.credencial}</p>
+          <blockquote className="mt-6 border-l-2 border-red-600 pl-4 text-lg text-pretty text-paper">
+            “{FUNDADOR.cita}”
+          </blockquote>
+        </div>
+        <ul className="space-y-3">
+          {FUNDADOR.trayectoria.map((t) => (
+            <li key={t} className="text-sm text-muted">
+              · {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Seccion>
+  );
+}
+
+export function Limpio() {
+  return (
+    <Seccion id="limpio" fondo="elevado">
+      <div className="aparece max-w-3xl">
+        <Antetitulo>{LIMPIO.eyebrow}</Antetitulo>
+        <Titulo>
+          {LIMPIO.titulo[0]}{" "}
+          <span className="block text-red-500">{LIMPIO.titulo[1]}</span>
+        </Titulo>
+        <p className="mt-6 text-lg text-pretty text-paper">{LIMPIO.definicion}</p>
+        <p className="mt-4 text-muted">{LIMPIO.entrada}</p>
+      </div>
+
+      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2">
+        {LIMPIO.ventajas.map((v) => (
+          <li key={v.para} className="bg-stage-1000 p-6">
+            <p className="font-display text-base text-gold-400 uppercase">
+              {v.para}
+            </p>
+            <p className="mt-2 text-muted">{v.texto}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div className="aparece mt-12">
+        <p className="font-display text-lg text-paper uppercase">
+          {LIMPIO.ciencia.titulo}
+        </p>
+        <ul className="mt-4 space-y-4">
+          {LIMPIO.ciencia.estudios.map((e) => (
+            <li
+              key={e.fuente}
+              className="rounded-md border border-stage-600 bg-stage-1000 p-5"
+            >
+              <p className="text-muted">{e.hallazgo}</p>
+              <p className="mt-2 text-xs text-muted-dim">{e.fuente}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Seccion>
+  );
+}
+
+export function Premio() {
+  return (
+    <Seccion id="premio">
+      <div className="aparece max-w-3xl">
+        <Antetitulo>{PREMIO.eyebrow}</Antetitulo>
+        <Titulo>
+          {PREMIO.titulo[0]}{" "}
+          <span className="block text-gold-400">{PREMIO.titulo[1]}</span>
+        </Titulo>
+        <p className="mt-6 text-lg text-pretty text-muted">{PREMIO.entrada}</p>
+        <p className="mt-5 text-lg text-pretty text-muted">{PREMIO.texto}</p>
+        <p className="font-display mt-8 text-2xl text-balance text-paper uppercase">
+          {PREMIO.remate}
+        </p>
+      </div>
+    </Seccion>
+  );
+}
+
+export function Ecosistema() {
+  return (
+    <Seccion id="ecosistema" fondo="elevado">
+      <div className="aparece max-w-3xl">
+        <Antetitulo>{ECOSISTEMA.eyebrow}</Antetitulo>
+        <Titulo>
+          {ECOSISTEMA.titulo[0]}{" "}
+          <span className="block text-red-500">{ECOSISTEMA.titulo[1]}</span>
+        </Titulo>
+        <p className="mt-6 text-lg text-pretty text-muted">{ECOSISTEMA.entrada}</p>
+      </div>
+
+      <ul className="aparece mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {ECOSISTEMA.piezas.map((p) => {
+          const dentro = (
+            <>
+              <p className="font-display text-xl text-paper uppercase">
+                {p.nombre}
+              </p>
+              <p className="mt-3 text-sm text-muted">{p.texto}</p>
+              {p.href && (
+                <p className="mt-4 text-sm text-red-300">Ver más →</p>
+              )}
+            </>
+          );
+
+          return (
+            <li key={p.nombre}>
+              {p.href ? (
+                <a
+                  href={p.href}
+                  className="block h-full rounded-lg border border-stage-600 bg-stage-1000 p-6 transition-colors hover:border-red-500/50"
+                >
+                  {dentro}
+                </a>
+              ) : (
+                <div className="h-full rounded-lg border border-stage-600 bg-stage-1000 p-6">
+                  {dentro}
+                  <p className="mt-4 text-sm text-muted-dim">Próximamente</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p className="aparece mt-10 max-w-3xl border-l-2 border-gold-400 pl-5 text-pretty text-muted">
+        {ECOSISTEMA.ventaja}
+      </p>
+    </Seccion>
   );
 }

@@ -2,17 +2,22 @@ import { Logo } from "@comicomania/ui";
 import {
   Academy,
   Cierre,
+  Ecosistema,
   Expansion,
+  Fundador,
   Hero,
   Journey,
+  Limpio,
   Live,
   Manifiesto,
   Marcas,
   Movimiento,
   Perfiles,
+  Premio,
   Proposito,
   Shop,
   Talent,
+  Tesis,
 } from "@/componentes/landing/secciones";
 import { Numeros } from "@/componentes/landing/numeros";
 import { ProximoEvento } from "@/componentes/landing/proximo-evento";
@@ -30,12 +35,32 @@ export default async function Home() {
         <Hero />
         {/* Justo después del Hero: es lo más concreto y lo que caduca. */}
         <ProximoEvento />
+
+        {/* El argumento antes que el ambiente. Quien llega no sabe todavía
+            por qué debería importarle otro sitio de humor, y la respuesta —
+            que este arte no tiene premio ni industria— es lo único que hace
+            que el resto de la página signifique algo. */}
+        <Tesis />
+
+        {/* Y justo después, quién lo dice. Una web que solo afirma valores
+            pide que le crean; una que cuenta lo que su fundador ya hizo dos
+            veces, no. */}
+        <Fundador />
+
         <Movimiento />
         <Journey />
         <Proposito />
+
+        {/* La decisión editorial, con sus razones comerciales. Va aquí y no
+            escondida en el manifiesto: es lo que más entusiasma cuando se
+            cuenta el proyecto en persona. */}
+        <Limpio />
+
         <Perfiles />
+        <Ecosistema />
         <Talent />
         <Academy />
+        <Premio />
         <Live />
         <Shop />
         <Marcas />

@@ -6,7 +6,7 @@ import { Inscripcion, type Categoria } from "./formulario";
 export const metadata = {
   title: "Sube tu video · COMICOMANÍA",
   description:
-    "Cómo funciona el concurso, qué se pide del video y cómo inscribirte. Dos minutos, material propio, y una cola de revisión que mira cada envío.",
+    "Cómo funciona el concurso de COMICOMANÍA, qué se pide del video y cómo inscribirte. Dos minutos, humor limpio, y diez jueces famosos del mundo hispano.",
 };
 
 /* Sube tu video: la mecánica entera antes del formulario.
@@ -23,16 +23,22 @@ export const metadata = {
    inscripción no. El consentimiento tiene que quedar a nombre de alguien y la
    edad tiene que salir de un perfil, no de una casilla. */
 
+/* La mecánica real, la del formato, no una genérica.
+
+   Lo que había aquí me lo inventé antes de leer el plan de negocio. Esto sale
+   de ahí: tres temporadas de trece semanas, competencias de lunes a viernes,
+   diez jueces famosos, y la segunda oportunidad del Ave Fénix. Es mejor que
+   lo que escribí yo, y además es lo que va a pasar de verdad. */
 const PASOS = [
   {
     titulo: "Te inscribes",
     texto:
-      "Con tu cuenta y tu perfil completo. La fecha de nacimiento decide tu categoría, y se congela con la fecha de referencia del concurso: cumplir años compitiendo no te cambia de grupo.",
+      "Con tu cuenta y tu perfil completo. La fecha de nacimiento decide tu categoría y se congela con la fecha de referencia del concurso: cumplir años compitiendo no te cambia de grupo.",
   },
   {
-    titulo: "Subes tu video donde quieras",
+    titulo: "Mandas tu video",
     texto:
-      "YouTube, Vimeo, Drive. Aquí pegas el enlace. Lo único que pedimos es que se pueda abrir sin solicitar permiso: si el revisor tiene que pedirte acceso, tu video espera.",
+      "De dos a tres minutos, y más largos conforme avanzas de etapa. Lo subes donde quieras —YouTube, Vimeo, Drive— y aquí pegas el enlace.",
   },
   {
     titulo: "Alguien lo mira",
@@ -40,21 +46,36 @@ const PASOS = [
       "Cada envío pasa por revisión humana: duración, autoría y derechos. No es un filtro automático, y por eso tarda. Si algo falla te decimos exactamente qué, y puedes corregirlo.",
   },
   {
-    titulo: "Entra a votación",
+    titulo: "Compites toda la semana",
     texto:
-      "El público vota una vez por participante, y el jurado puntúa con criterios que están escritos de antemano. Las dos cosas se ven en el marcador.",
+      "De lunes a viernes en YouTube, Instagram, Facebook, TikTok y Telegram. Los fines de semana, resumen en vivo con Fernando Arau y los jueces.",
   },
   {
-    titulo: "Avanzas de ronda",
+    titulo: "Te ven diez jueces famosos",
     texto:
-      "Cada ronda corta. Quien pasa, sube. Las fechas de cada ronda están abajo y no se mueven a mitad de camino.",
+      "Cada uno trae su propia audiencia de su país. Y vota el público: un voto por persona, con el peso del jurado controlado frente al voto popular.",
   },
   {
-    titulo: "La final",
+    titulo: "Y si caes, el Ave Fénix",
     texto:
-      "En escenario, con público. De ahí salen premios, contactos y, si te interesa, una ficha en el repertorio de la casa.",
+      "Cada temporada da diez ganadores y seis más por la vía “Ave Fénix: Mi Segunda Oportunidad”. Quedarse fuera en una ronda no es el final del camino.",
   },
 ];
+
+/* Lo que se lleva quien gana. Estaba en el plan y no en la web, y es
+   exactamente la razón por la que alguien se molesta en grabar y mandar. */
+const PREMIOS = [
+  "Premio en efectivo y productos de los patrocinadores.",
+  "Beca de tres meses en el Instituto Gracia, la escuela de la casa.",
+  "Mentoría personal de Fernando Arau.",
+  "Posibilidad de que te represente ProCómiCo, la agencia.",
+  "Visibilidad ante diez jueces famosos y una audiencia internacional.",
+];
+
+/* La regla editorial del concurso, dicha antes de que alguien grabe dos
+   minutos que no van a poder entrar. */
+const LIMPIO =
+  "Humor limpio: ingenioso y divertido para todo público, sin palabras vulgares ni doble sentido sexual ofensivo. No es una limitación — es lo que permite que tu material se vea en televisión, en eventos de empresa y en cualquier casa del mundo hispano.";
 
 export default async function Participa() {
   const supabase = await crearClienteServidor();
@@ -193,6 +214,11 @@ export default async function Participa() {
           <span className="block text-red-500">Así funciona.</span>
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-muted">
+          El primer concurso en línea en español de humoristas amateurs.
+          Abierto a todos los estilos: stand-up, mimos, magos, ventrílocuos,
+          imitadores, músicos cómicos y humoristas digitales.
+        </p>
+        <p className="mt-4 max-w-2xl text-muted">
           Dos minutos, material tuyo, y alguien de verdad mirándolo del otro
           lado. Lee esto antes de enviar: casi todo lo que se rechaza se
           rechaza por algo que estaba escrito aquí.
@@ -270,6 +296,29 @@ export default async function Participa() {
                 </li>
               ))}
             </ol>
+          </section>
+
+          {/* Qué se gana. Va antes de los requisitos a propósito: primero el
+              motivo para molestarse, luego las condiciones. */}
+          <section className="mx-auto max-w-5xl px-5 pb-12">
+            <h2 className="font-display text-2xl text-paper uppercase">
+              Qué te llevas si ganas
+            </h2>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {PREMIOS.map((p) => (
+                <li
+                  key={p}
+                  className="rounded-lg border border-stage-600 bg-stage-900 px-5 py-4 text-muted"
+                >
+                  {p}
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-8 rounded-lg border border-gold-400/40 bg-gold-400/5 p-5 text-muted">
+              <strong className="text-paper">La única regla de fondo.</strong>{" "}
+              {LIMPIO}
+            </p>
           </section>
 
           {/* Requisitos, con el motivo exacto de rechazo. */}

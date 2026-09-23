@@ -21,6 +21,7 @@ import {
 } from "@/componentes/landing/secciones";
 import { Numeros } from "@/componentes/landing/numeros";
 import { ProximoEvento } from "@/componentes/landing/proximo-evento";
+import { Repertorio } from "@/componentes/landing/repertorio";
 
 /* El home lee el próximo evento de la base, así que no puede ser una página
    completamente estática. Se revalida cada cinco minutos: lo bastante fresco
@@ -59,6 +60,12 @@ export default async function Home() {
         <Perfiles />
         <Ecosistema />
         <Talent />
+
+        {/* La prueba, justo después de la promesa. Todo lo anterior afirma que
+            aquí se descubre talento; esto enseña personas con nombre y cara.
+            Sale de la base, así que crece solo. */}
+        <Repertorio />
+
         <Academy />
         <Premio />
         <Live />

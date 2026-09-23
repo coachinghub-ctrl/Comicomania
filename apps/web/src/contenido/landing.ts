@@ -417,6 +417,7 @@ export const CIERRE = {
 export const NAVEGACION = [
   { texto: "Descubre", href: "#movimiento" },
   { texto: "Talent", href: "#talent" },
+  { texto: "Repertorio", href: "/humoristas" },
   { texto: "Academy", href: "/academia" },
   { texto: "Live", href: "/eventos/final-miami-2027" },
   { texto: "Shop", href: "/tienda" },

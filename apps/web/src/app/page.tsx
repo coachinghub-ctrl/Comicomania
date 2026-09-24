@@ -58,7 +58,6 @@ export default async function Home() {
         <Limpio />
 
         <Perfiles />
-        <Ecosistema />
         <Talent />
 
         {/* La prueba, justo después de la promesa. Todo lo anterior afirma que
@@ -67,6 +66,14 @@ export default async function Home() {
         <Repertorio />
 
         <Academy />
+
+        {/* El mapa completo, después de haber recorrido tres de sus piezas.
+            Va aquí y no antes por dos motivos: resume lo que se acaba de ver y
+            presenta las dos que faltan, y reparte la tercera banda blanca —
+            con tesis y limpio arriba, ponerla también arriba dejaba dos
+            blancos casi seguidos, que es cebra y no ritmo. */}
+        <Ecosistema />
+
         <Premio />
         <Live />
         <Shop />

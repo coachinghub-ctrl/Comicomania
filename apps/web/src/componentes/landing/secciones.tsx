@@ -1279,33 +1279,41 @@ export function Cierre() {
 
 export function Tesis() {
   return (
-    <Seccion id="tesis" fondo="elevado">
+    <Seccion id="tesis" fondo="claro">
       <div className="aparece max-w-3xl">
-        <Antetitulo>{TESIS.eyebrow}</Antetitulo>
-        <Titulo>
+        <Antetitulo claro>{TESIS.eyebrow}</Antetitulo>
+        <Titulo claro>
           {TESIS.titulo[0]}{" "}
-          <span className="block text-red-500">{TESIS.titulo[1]}</span>
+          <span className="block text-red-600">{TESIS.titulo[1]}</span>
         </Titulo>
       </div>
 
       {/* La comparación es el argumento entero. Cuatro artes con su premio, y
           el quinto con un hueco donde debería estar el suyo. */}
-      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-5">
+      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-line-strong bg-line-strong sm:grid-cols-5">
         {TESIS.comparacion.map((c) => (
           <li
             key={c.arte}
             className={
               c.premio
-                ? "bg-stage-900 px-5 py-7 text-center"
-                : "bg-red-950/40 px-5 py-7 text-center"
+                ? "bg-surface px-5 py-7 text-center"
+                : "bg-red-600 px-5 py-7 text-center"
             }
           >
-            <p className="font-display text-lg text-paper uppercase">{c.arte}</p>
             <p
               className={
                 c.premio
-                  ? "mt-2 text-sm text-muted"
-                  : "mt-2 text-sm font-semibold text-red-300"
+                  ? "font-display text-lg text-ink uppercase"
+                  : "font-display text-lg text-paper-pure uppercase"
+              }
+            >
+              {c.arte}
+            </p>
+            <p
+              className={
+                c.premio
+                  ? "mt-2 text-sm text-ink-soft"
+                  : "mt-2 text-sm font-semibold text-paper-pure"
               }
             >
               {c.premio ?? "nada"}
@@ -1316,9 +1324,9 @@ export function Tesis() {
 
       <div className="aparece mt-12 grid gap-10 lg:grid-cols-[1fr_20rem]">
         <div>
-          <p className="text-lg text-pretty text-muted">{TESIS.entrada}</p>
-          <p className="mt-5 text-lg text-pretty text-muted">{TESIS.texto}</p>
-          <p className="font-display mt-6 text-xl text-gold-400 uppercase">
+          <p className="text-lg text-pretty text-ink-soft">{TESIS.entrada}</p>
+          <p className="mt-5 text-lg text-pretty text-ink-soft">{TESIS.texto}</p>
+          <p className="font-display mt-6 text-xl text-red-600 uppercase">
             {TESIS.remate}
           </p>
         </div>
@@ -1326,11 +1334,11 @@ export function Tesis() {
         <dl className="space-y-6">
           {TESIS.cifras.map((c) => (
             <div key={c.valor}>
-              <dt className="font-display text-3xl text-paper-pure tabular-nums">
+              <dt className="font-display text-3xl text-ink tabular-nums">
                 {c.valor}
               </dt>
-              <dd className="mt-1 text-sm text-muted">{c.texto}</dd>
-              <dd className="mt-1 text-xs text-muted-dim">{c.fuente}</dd>
+              <dd className="mt-1 text-sm text-ink-soft">{c.texto}</dd>
+              <dd className="mt-1 text-xs text-ink-faint">{c.fuente}</dd>
             </div>
           ))}
         </dl>
@@ -1402,40 +1410,40 @@ export function Fundador() {
 
 export function Limpio() {
   return (
-    <Seccion id="limpio" fondo="elevado">
+    <Seccion id="limpio" fondo="claro">
       <div className="aparece max-w-3xl">
-        <Antetitulo>{LIMPIO.eyebrow}</Antetitulo>
-        <Titulo>
+        <Antetitulo claro>{LIMPIO.eyebrow}</Antetitulo>
+        <Titulo claro>
           {LIMPIO.titulo[0]}{" "}
-          <span className="block text-red-500">{LIMPIO.titulo[1]}</span>
+          <span className="block text-red-600">{LIMPIO.titulo[1]}</span>
         </Titulo>
-        <p className="mt-6 text-lg text-pretty text-paper">{LIMPIO.definicion}</p>
-        <p className="mt-4 text-muted">{LIMPIO.entrada}</p>
+        <p className="mt-6 text-lg text-pretty text-ink">{LIMPIO.definicion}</p>
+        <p className="mt-4 text-ink-soft">{LIMPIO.entrada}</p>
       </div>
 
-      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2">
+      <ul className="aparece mt-12 grid gap-px overflow-hidden rounded-lg border border-line-strong bg-line-strong sm:grid-cols-2">
         {LIMPIO.ventajas.map((v) => (
-          <li key={v.para} className="bg-stage-1000 p-6">
-            <p className="font-display text-base text-gold-400 uppercase">
+          <li key={v.para} className="bg-surface-2 p-6">
+            <p className="font-display text-base text-gold-ink uppercase">
               {v.para}
             </p>
-            <p className="mt-2 text-muted">{v.texto}</p>
+            <p className="mt-2 text-ink-soft">{v.texto}</p>
           </li>
         ))}
       </ul>
 
       <div className="aparece mt-12">
-        <p className="font-display text-lg text-paper uppercase">
+        <p className="font-display text-lg text-ink uppercase">
           {LIMPIO.ciencia.titulo}
         </p>
         <ul className="mt-4 space-y-4">
           {LIMPIO.ciencia.estudios.map((e) => (
             <li
               key={e.fuente}
-              className="rounded-md border border-stage-600 bg-stage-1000 p-5"
+              className="rounded-md border border-line bg-surface-2 p-5"
             >
-              <p className="text-muted">{e.hallazgo}</p>
-              <p className="mt-2 text-xs text-muted-dim">{e.fuente}</p>
+              <p className="text-ink-soft">{e.hallazgo}</p>
+              <p className="mt-2 text-xs text-ink-faint">{e.fuente}</p>
             </li>
           ))}
         </ul>
@@ -1465,26 +1473,33 @@ export function Premio() {
 
 export function Ecosistema() {
   return (
-    <Seccion id="ecosistema" fondo="elevado">
+    /* El id es "negocios" y no "ecosistema" porque Perfiles ya usaba ese:
+       "Un ecosistema para todos" habla de para QUIÉN es esto, y esta sección
+       de QUÉ hay dentro. Dos id iguales en la misma página rompen los enlaces
+       de ancla —el navegador se queda con el primero— y eso no se ve hasta
+       que alguien pulsa el menú y aterriza donde no era. */
+    <Seccion id="negocios" fondo="claro">
       <div className="aparece max-w-3xl">
-        <Antetitulo>{ECOSISTEMA.eyebrow}</Antetitulo>
-        <Titulo>
+        <Antetitulo claro>{ECOSISTEMA.eyebrow}</Antetitulo>
+        <Titulo claro>
           {ECOSISTEMA.titulo[0]}{" "}
-          <span className="block text-red-500">{ECOSISTEMA.titulo[1]}</span>
+          <span className="block text-red-600">{ECOSISTEMA.titulo[1]}</span>
         </Titulo>
-        <p className="mt-6 text-lg text-pretty text-muted">{ECOSISTEMA.entrada}</p>
+        <p className="mt-6 text-lg text-pretty text-ink-soft">
+          {ECOSISTEMA.entrada}
+        </p>
       </div>
 
       <ul className="aparece mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {ECOSISTEMA.piezas.map((p) => {
           const dentro = (
             <>
-              <p className="font-display text-xl text-paper uppercase">
+              <p className="font-display text-xl text-ink uppercase">
                 {p.nombre}
               </p>
-              <p className="mt-3 text-sm text-muted">{p.texto}</p>
+              <p className="mt-3 text-sm text-ink-soft">{p.texto}</p>
               {p.href && (
-                <p className="mt-4 text-sm text-red-300">Ver más →</p>
+                <p className="mt-4 text-sm font-medium text-red-600">Ver más →</p>
               )}
             </>
           );
@@ -1494,14 +1509,14 @@ export function Ecosistema() {
               {p.href ? (
                 <a
                   href={p.href}
-                  className="block h-full rounded-lg border border-stage-600 bg-stage-1000 p-6 transition-colors hover:border-red-500/50"
+                  className="block h-full rounded-lg border border-line-strong bg-surface-2 p-6 transition-colors hover:border-red-600"
                 >
                   {dentro}
                 </a>
               ) : (
-                <div className="h-full rounded-lg border border-stage-600 bg-stage-1000 p-6">
+                <div className="h-full rounded-lg border border-line bg-surface-2 p-6">
                   {dentro}
-                  <p className="mt-4 text-sm text-muted-dim">Próximamente</p>
+                  <p className="mt-4 text-sm text-ink-faint">Próximamente</p>
                 </div>
               )}
             </li>
@@ -1509,7 +1524,7 @@ export function Ecosistema() {
         })}
       </ul>
 
-      <p className="aparece mt-10 max-w-3xl border-l-2 border-gold-400 pl-5 text-pretty text-muted">
+      <p className="aparece mt-10 max-w-3xl border-l-2 border-gold-ink pl-5 text-pretty text-ink-soft">
         {ECOSISTEMA.ventaja}
       </p>
     </Seccion>

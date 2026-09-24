@@ -1,5 +1,27 @@
 import type { ReactNode } from "react";
 
+/* Los tres fondos de la página.
+
+   "claro" no es un tema alternativo: es el mismo sitio cambiando de registro.
+   El negro es el escenario, y una página entera de escenario cansa — a la
+   tercera sección el ojo deja de distinguir dónde termina una y empieza otra.
+   Una banda blanca corta esa inercia y hace que lo que hay dentro se lea como
+   un documento y no como un cartel.
+
+   Por eso no se alternan todas. Dos o tres bandas claras en toda la página
+   dan ritmo; alternar una sí y una no da cebra, que es otra forma de que todo
+   se vea igual.
+
+   Ojo con el borde: border-stage-600 es un granate oscuro y sobre blanco se
+   ve como una raya sucia. Cada fondo trae el suyo. */
+const FONDOS = {
+  base: "border-stage-600 bg-stage-1000",
+  elevado: "border-stage-600 bg-stage-900",
+  claro: "border-line-strong bg-surface text-ink",
+} as const;
+
+export type Fondo = keyof typeof FONDOS;
+
 export function Seccion({
   id,
   children,
@@ -9,23 +31,36 @@ export function Seccion({
   id?: string;
   children: ReactNode;
   className?: string;
-  fondo?: "base" | "elevado";
+  fondo?: Fondo;
 }) {
   return (
     <section
       id={id}
-      className={`scroll-mt-20 border-t border-stage-600 ${
-        fondo === "elevado" ? "bg-stage-900" : "bg-stage-1000"
-      } ${className}`}
+      className={`scroll-mt-20 border-t ${FONDOS[fondo]} ${className}`}
     >
       <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">{children}</div>
     </section>
   );
 }
 
-export function Antetitulo({ children }: { children: ReactNode }) {
+/* El antetítulo, en dorado.
+
+   Sobre claro NO puede ser gold-400: da 1,42:1 y es texto pequeño con mucho
+   espaciado, que ya de por sí se lee peor. gold-ink es el mismo ámbar bajado
+   hasta 6,16:1. Ver packages/ui/src/tokens.css. */
+export function Antetitulo({
+  children,
+  claro = false,
+}: {
+  children: ReactNode;
+  claro?: boolean;
+}) {
   return (
-    <p className="mb-4 text-xs tracking-[0.3em] text-gold-400 uppercase">
+    <p
+      className={`mb-4 text-xs tracking-[0.3em] uppercase ${
+        claro ? "text-gold-ink" : "text-gold-400"
+      }`}
+    >
       {children}
     </p>
   );
@@ -34,13 +69,17 @@ export function Antetitulo({ children }: { children: ReactNode }) {
 export function Titulo({
   children,
   className = "",
+  claro = false,
 }: {
   children: ReactNode;
   className?: string;
+  claro?: boolean;
 }) {
   return (
     <h2
-      className={`font-display text-4xl leading-[0.95] text-balance text-paper uppercase sm:text-5xl ${className}`}
+      className={`font-display text-4xl leading-[0.95] text-balance uppercase sm:text-5xl ${
+        claro ? "text-ink" : "text-paper"
+      } ${className}`}
     >
       {children}
     </h2>

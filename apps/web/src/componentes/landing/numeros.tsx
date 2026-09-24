@@ -39,8 +39,10 @@ export async function Numeros() {
   if (tarjetas.length === 0) return null;
 
   return (
-    <Seccion id="numeros">
-      <Titulo className="aparece">El movimiento en números</Titulo>
+    <Seccion id="numeros" fondo="claro">
+      <Titulo claro className="aparece">
+        El movimiento en números
+      </Titulo>
       {/* Cada tarjeta lleva su propio borde. Con el truco de la rejilla de
           un píxel, las celdas que sobran dejaban un bloque de color vacío. */}
       {/* Las cuatro en una fila: tres arriba y una sola debajo se lee como si
@@ -49,12 +51,12 @@ export async function Numeros() {
         {tarjetas.map((t) => (
           <div
             key={t.clave}
-            className="aparece rounded-lg border border-stage-600 bg-stage-900 px-5 py-8 text-center"
+            className="aparece rounded-lg border border-line-strong bg-surface-2 px-5 py-8 text-center"
           >
-            <dt className="text-xs tracking-[0.2em] text-muted-dim uppercase">
+            <dt className="text-xs tracking-[0.2em] text-ink-faint uppercase">
               {t.etiqueta}
             </dt>
-            <dd className="font-display mt-2 text-4xl text-gold-400 tabular-nums sm:text-5xl">
+            <dd className="font-display mt-2 text-4xl text-red-600 tabular-nums sm:text-5xl">
               {t.prefijo}
               {t.valor.toLocaleString("es")}
             </dd>

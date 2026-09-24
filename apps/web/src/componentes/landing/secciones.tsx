@@ -185,28 +185,30 @@ export function Movimiento() {
 /* --------------------------------------------------------------- JOURNEY */
 export function Journey() {
   return (
-    <Seccion>
-      <Titulo className="aparece">{JOURNEY.titulo}</Titulo>
-      <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-stage-600 bg-stage-600 sm:grid-cols-2 lg:grid-cols-4">
+    <Seccion fondo="claro">
+      <Titulo claro className="aparece">
+        {JOURNEY.titulo}
+      </Titulo>
+      <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-line-strong bg-line-strong sm:grid-cols-2 lg:grid-cols-4">
         {JOURNEY.pasos.map((paso, i) => {
           const Icono = ICONOS[paso.verbo];
           return (
             <li
               key={paso.verbo}
-              className="aparece group bg-stage-900 p-6 transition-colors duration-200 ease-stage hover:bg-stage-800"
+              className="aparece group bg-surface p-6 transition-colors duration-200 ease-stage hover:bg-surface-2"
             >
               <div className="flex items-center justify-between">
                 {Icono && (
-                  <Icono className="size-8 text-red-500 transition-colors duration-200 ease-stage group-hover:text-gold-400" />
+                  <Icono className="size-8 text-red-600 transition-colors duration-200 ease-stage group-hover:text-gold-ink" />
                 )}
-                <span className="font-display text-sm text-muted-dim tabular-nums">
+                <span className="font-display text-sm text-ink-faint tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
-              <h3 className="font-display mt-5 text-xl text-paper uppercase">
+              <h3 className="font-display mt-5 text-xl text-ink uppercase">
                 {paso.verbo}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
                 {paso.texto}
               </p>
             </li>
@@ -331,26 +333,28 @@ export function Proposito() {
 /* -------------------------------------------------------------- PERFILES */
 export function Perfiles() {
   return (
-    <Seccion id="ecosistema">
-      <Titulo className="aparece">Un ecosistema para todos</Titulo>
+    <Seccion id="ecosistema" fondo="claro">
+      <Titulo claro className="aparece">
+        Un ecosistema para todos
+      </Titulo>
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {PERFILES.map((perfil) => (
           <article
             key={perfil.id}
             className={`aparece flex flex-col rounded-lg border p-6 ${
               perfil.destacado
-                ? "border-red-500/50 bg-stage-800"
-                : "border-stage-600 bg-stage-900"
+                ? "border-red-600 bg-surface-2"
+                : "border-line-strong bg-surface"
             }`}
           >
-            <h3 className="font-display text-xl text-paper uppercase">
+            <h3 className="font-display text-xl text-ink uppercase">
               {perfil.titulo}
             </h3>
-            <p className="mt-2 text-sm text-gold-400">{perfil.promesa}</p>
-            <ul className="mt-5 flex-1 space-y-2 text-sm text-muted">
+            <p className="mt-2 text-sm text-gold-ink">{perfil.promesa}</p>
+            <ul className="mt-5 flex-1 space-y-2 text-sm text-ink-soft">
               {perfil.items.map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="text-red-500" aria-hidden>
+                  <span className="text-red-600" aria-hidden>
                     →
                   </span>
                   {item}
@@ -358,11 +362,11 @@ export function Perfiles() {
               ))}
             </ul>
             {perfil.remate && (
-              <p className="mt-4 text-sm text-paper">{perfil.remate}</p>
+              <p className="mt-4 text-sm text-ink">{perfil.remate}</p>
             )}
             <ButtonLink
               href={perfil.cta.href as Route}
-              variante={perfil.destacado ? "primaria" : "secundaria"}
+              variante={perfil.destacado ? "primaria" : "secundaria-clara"}
               className="mt-6"
             >
               {perfil.cta.texto}
@@ -1349,14 +1353,16 @@ export function Tesis() {
 
 export function Fundador() {
   return (
-    <Seccion id="fundador">
+    <Seccion id="fundador" fondo="claro">
       <div className="aparece max-w-3xl">
-        <Antetitulo>{FUNDADOR.eyebrow}</Antetitulo>
-        <Titulo>
+        <Antetitulo claro>{FUNDADOR.eyebrow}</Antetitulo>
+        <Titulo claro>
           {FUNDADOR.titulo[0]}{" "}
-          <span className="block text-red-500">{FUNDADOR.titulo[1]}</span>
+          <span className="block text-red-600">{FUNDADOR.titulo[1]}</span>
         </Titulo>
-        <p className="mt-6 text-lg text-pretty text-muted">{FUNDADOR.entrada}</p>
+        <p className="mt-6 text-lg text-pretty text-ink-soft">
+          {FUNDADOR.entrada}
+        </p>
       </div>
 
       {/* Los tres actos, en orden. El tercero es este sitio. */}
@@ -1366,39 +1372,39 @@ export function Fundador() {
             key={h.anio}
             className={
               i === FUNDADOR.hitos.length - 1
-                ? "rounded-lg border border-red-500/50 bg-stage-900 p-6"
-                : "rounded-lg border border-stage-600 bg-stage-900 p-6"
+                ? "rounded-lg border border-red-600 bg-surface-2 p-6"
+                : "rounded-lg border border-line-strong bg-surface p-6"
             }
           >
-            <p className="font-display text-3xl text-red-500 tabular-nums">
+            <p className="font-display text-3xl text-red-600 tabular-nums">
               {h.anio}
             </p>
-            <p className="font-display mt-1 text-xl text-paper uppercase">
+            <p className="font-display mt-1 text-xl text-ink uppercase">
               {h.nombre}
             </p>
-            <p className="mt-4 text-sm text-muted-dim">{h.falta}</p>
-            <p className="mt-2 text-sm text-muted">{h.hizo}</p>
-            <p className="mt-4 border-t border-stage-600 pt-4 text-sm text-paper-pure">
+            <p className="mt-4 text-sm text-ink-faint">{h.falta}</p>
+            <p className="mt-2 text-sm text-ink-soft">{h.hizo}</p>
+            <p className="mt-4 border-t border-line pt-4 text-sm text-ink">
               {h.resultado}
             </p>
           </li>
         ))}
       </ol>
 
-      <div className="aparece mt-12 grid gap-10 rounded-lg border border-stage-600 bg-stage-900 p-8 lg:grid-cols-[1fr_1fr]">
+      <div className="aparece mt-12 grid gap-10 rounded-lg border border-line-strong bg-surface-2 p-8 lg:grid-cols-[1fr_1fr]">
         <div>
-          <p className="font-display text-2xl text-paper uppercase">
+          <p className="font-display text-2xl text-ink uppercase">
             {FUNDADOR.nombre}
           </p>
-          <p className="mt-1 text-sm text-muted">{FUNDADOR.cargo}</p>
-          <p className="mt-1 text-sm text-gold-400">{FUNDADOR.credencial}</p>
-          <blockquote className="mt-6 border-l-2 border-red-600 pl-4 text-lg text-pretty text-paper">
+          <p className="mt-1 text-sm text-ink-soft">{FUNDADOR.cargo}</p>
+          <p className="mt-1 text-sm text-gold-ink">{FUNDADOR.credencial}</p>
+          <blockquote className="mt-6 border-l-2 border-red-600 pl-4 text-lg text-pretty text-ink">
             “{FUNDADOR.cita}”
           </blockquote>
         </div>
         <ul className="space-y-3">
           {FUNDADOR.trayectoria.map((t) => (
-            <li key={t} className="text-sm text-muted">
+            <li key={t} className="text-sm text-ink-soft">
               · {t}
             </li>
           ))}
@@ -1407,7 +1413,6 @@ export function Fundador() {
     </Seccion>
   );
 }
-
 export function Limpio() {
   return (
     <Seccion id="limpio" fondo="claro">
@@ -1454,16 +1459,16 @@ export function Limpio() {
 
 export function Premio() {
   return (
-    <Seccion id="premio">
+    <Seccion id="premio" fondo="claro">
       <div className="aparece max-w-3xl">
-        <Antetitulo>{PREMIO.eyebrow}</Antetitulo>
-        <Titulo>
+        <Antetitulo claro>{PREMIO.eyebrow}</Antetitulo>
+        <Titulo claro>
           {PREMIO.titulo[0]}{" "}
-          <span className="block text-gold-400">{PREMIO.titulo[1]}</span>
+          <span className="block text-gold-ink">{PREMIO.titulo[1]}</span>
         </Titulo>
-        <p className="mt-6 text-lg text-pretty text-muted">{PREMIO.entrada}</p>
-        <p className="mt-5 text-lg text-pretty text-muted">{PREMIO.texto}</p>
-        <p className="font-display mt-8 text-2xl text-balance text-paper uppercase">
+        <p className="mt-6 text-lg text-pretty text-ink-soft">{PREMIO.entrada}</p>
+        <p className="mt-5 text-lg text-pretty text-ink-soft">{PREMIO.texto}</p>
+        <p className="font-display mt-8 text-2xl text-balance text-ink uppercase">
           {PREMIO.remate}
         </p>
       </div>

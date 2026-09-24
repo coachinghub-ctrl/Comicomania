@@ -36,22 +36,22 @@ export async function Repertorio() {
   if (lista.length === 0) return null;
 
   return (
-    <Seccion id="repertorio">
+    <Seccion id="repertorio" fondo="claro">
       <div className="aparece flex flex-wrap items-end justify-between gap-6">
         <div className="max-w-2xl">
-          <Antetitulo>El repertorio</Antetitulo>
-          <Titulo>
+          <Antetitulo claro>El repertorio</Antetitulo>
+          <Titulo claro>
             No te lo contamos.{" "}
-            <span className="block text-red-500">Te lo presentamos.</span>
+            <span className="block text-red-600">Te lo presentamos.</span>
           </Titulo>
-          <p className="mt-6 text-lg text-pretty text-muted">
+          <p className="mt-6 text-lg text-pretty text-ink-soft">
             A un humorista no lo contratas por su currículum. Lo contratas
             porque lo viste dos minutos y te reíste. Estos son algunos de los
             nuestros, cada uno con su video y su historia.
           </p>
         </div>
 
-        <ButtonLink href={"/humoristas" as Route} variante="secundaria">
+        <ButtonLink href={"/humoristas" as Route} variante="secundaria-clara">
           Ver el repertorio completo
         </ButtonLink>
       </div>
@@ -63,7 +63,7 @@ export async function Repertorio() {
             <li key={h.user_id}>
               <a
                 href={`/humoristas/${h.handle}`}
-                className="group block overflow-hidden rounded-lg border border-stage-600 bg-stage-900 transition-colors hover:border-red-500/50"
+                className="group block overflow-hidden rounded-lg border border-line-strong bg-surface transition-colors hover:border-red-600"
               >
                 {h.photo_url && (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -77,14 +77,14 @@ export async function Repertorio() {
                   />
                 )}
                 <div className="p-5">
-                  <p className="font-display text-xl text-paper uppercase">
+                  <p className="font-display text-xl text-ink uppercase">
                     {h.stage_name}
                   </p>
                   {h.tagline && (
-                    <p className="mt-1 text-sm text-red-300">{h.tagline}</p>
+                    <p className="mt-1 text-sm text-red-600">{h.tagline}</p>
                   )}
                   {estilos.length > 0 && (
-                    <p className="mt-3 text-xs text-muted-dim">
+                    <p className="mt-3 text-xs text-ink-faint">
                       {estilos.join(" · ")}
                     </p>
                   )}
@@ -98,17 +98,17 @@ export async function Repertorio() {
       {/* Quien llega aquí buscando contratar y quien llega queriendo entrar al
           repertorio son dos personas distintas, y las dos tienen que encontrar
           su puerta sin volver arriba. */}
-      <div className="aparece mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-stage-600 pt-8">
-        <p className="text-muted">
+      <div className="aparece mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line pt-8">
+        <p className="text-ink-soft">
           ¿Buscas a alguien para tu evento?{" "}
-          <a href="/humoristas" className="text-red-300 underline">
+          <a href="/humoristas" className="font-medium text-red-600 underline">
             Pide un presupuesto sin crear cuenta
           </a>
           .
         </p>
-        <p className="text-muted">
+        <p className="text-ink-soft">
           ¿Quieres estar aquí?{" "}
-          <a href="/participa" className="text-red-300 underline">
+          <a href="/participa" className="font-medium text-red-600 underline">
             Sube tu video
           </a>
           .

@@ -1,6 +1,11 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
-type Variante = "primaria" | "secundaria" | "fantasma" | "premio";
+type Variante =
+  | "primaria"
+  | "secundaria"
+  | "secundaria-clara"
+  | "fantasma"
+  | "premio";
 type Tamano = "sm" | "md" | "lg";
 
 const base =
@@ -14,6 +19,12 @@ const variantes: Record<Variante, string> = {
   primaria: "bg-red-600 text-paper hover:bg-red-500 border border-red-500/40",
   secundaria:
     "bg-stage-700 text-paper-pure hover:bg-stage-600 border border-stage-600",
+  /* La secundaria de las bandas blancas. La de arriba es un botón oscuro
+     relleno: sobre blanco se lee perfectamente, pero pesa más que la primaria
+     roja y le roba la jerarquía. Esta es de contorno, que es lo que una
+     secundaria tiene que ser. Tinta sobre blanco: 18,91:1. */
+  "secundaria-clara":
+    "bg-transparent text-ink hover:bg-surface-2 border border-line-strong",
   fantasma: "text-paper-pure hover:bg-stage-800 border border-transparent",
   // Oro + texto negro = 14,3:1, la combinación más legible de la paleta.
   premio: "bg-gold-400 text-stage-900 hover:bg-gold-500 border border-gold-700/30",

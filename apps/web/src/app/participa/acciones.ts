@@ -59,7 +59,7 @@ export async function inscribirme(
   if (!video) {
     return {
       estado: "error",
-      mensaje: "Falta el enlace al video. Puede ser de YouTube, Vimeo o Drive.",
+      mensaje: "Falta el enlace al video. Tiene que estar en YouTube.",
     };
   }
   if (duracion === null) {

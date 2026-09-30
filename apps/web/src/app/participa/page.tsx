@@ -38,7 +38,7 @@ const PASOS = [
   {
     titulo: "Mandas tu video",
     texto:
-      "De dos a tres minutos, y más largos conforme avanzas de etapa. Lo subes donde quieras —YouTube, Vimeo, Drive— y aquí pegas el enlace.",
+      "De dos a tres minutos, y más largos conforme avanzas de etapa. Lo subes a YouTube —puede ser no listado— y aquí pegas el enlace. No alojamos el archivo: así el concurso no te cobra a ti el costo de almacenarlo.",
   },
   {
     titulo: "Alguien lo mira",

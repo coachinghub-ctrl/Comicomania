@@ -193,13 +193,13 @@ export function EditorDeFicha({
             name="reel"
             value={reel}
             onChange={(e) => setReel(e.target.value)}
-            placeholder="https://youtu.be/… · https://vimeo.com/… · o un .mp4"
+            placeholder="https://youtu.be/… o un .mp4 alojado fuera"
             className={entrada}
           />
           <span className="mt-1 block text-xs text-ink-faint">
             Es una dirección, no un archivo: un reel son decenas de megas y
             necesita transcodificación, y eso todavía no lo hacemos aquí.
-            YouTube, Vimeo o un mp4 alojado fuera.
+            YouTube, o un mp4 alojado fuera.
           </span>
         </label>
 

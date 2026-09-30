@@ -1,9 +1,12 @@
-/* El video de un humorista, venga de donde venga.
+/* El video de un humorista.
 
-   Un reel de comedia vive casi siempre en YouTube o en Vimeo, porque ahí ya
-   está transcodificado, servido y con su miniatura. A veces es un mp4 suelto.
-   Esta pieza decide cuál de las dos cosas es y lo enseña como toca, en vez de
-   obligar a que todo el mundo suba el archivo a un sitio concreto.
+   YouTube o un mp4 alojado fuera. Vimeo estaba y se quitó: el canal de la
+   casa es uno solo, y sostener varias plataformas de origen cuesta trabajo de
+   operación y de auditoría sin dar nada a cambio.
+
+   Un reel en YouTube llega ya transcodificado, servido y con su miniatura, y
+   no le cuesta nada a COMICOMANÍA. Un mp4 suelto sigue valiendo para el
+   material propio que ya vive en el almacenamiento de la casa.
 
    No se fía de la URL para decidir: la parsea. Una cadena que empiece por
    "javascript:" o por "data:" no es un video, y un href así dentro de un
@@ -15,12 +18,6 @@ function idDeYouTube(u: URL): string | null {
   if (u.pathname === "/watch") return u.searchParams.get("v");
   const m = u.pathname.match(/^\/(embed|shorts|live)\/([\w-]+)/);
   return m ? m[2]! : null;
-}
-
-function idDeVimeo(u: URL): string | null {
-  if (!/(^|\.)vimeo\.com$/.test(u.hostname)) return null;
-  const m = u.pathname.match(/\/(\d+)/);
-  return m ? m[1]! : null;
 }
 
 export function Reel({
@@ -41,12 +38,11 @@ export function Reel({
   if (destino.protocol !== "https:" && destino.protocol !== "http:") return null;
 
   const youtube = idDeYouTube(destino);
-  const vimeo = youtube ? null : idDeVimeo(destino);
 
-  if (youtube || vimeo) {
-    const src = youtube
-      ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtube)}`
-      : `https://player.vimeo.com/video/${encodeURIComponent(vimeo!)}`;
+  if (youtube) {
+    // nocookie: no planta la cookie de seguimiento de YouTube hasta que
+    // alguien le da al play.
+    const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtube)}`;
 
     return (
       <div className="aspect-video w-full overflow-hidden rounded-lg border border-stage-600 bg-black">

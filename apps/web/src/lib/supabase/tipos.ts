@@ -5207,12 +5207,14 @@ export type Database = {
     }
     Functions: {
       aplicar_acceso_fundador: { Args: { p_user_id: string }; Returns: string }
+      avatar_desde_metadatos: { Args: { p_meta: Json }; Returns: string }
       certificado_por_serie: { Args: { p_serie: string }; Returns: Json }
       contenido_de_leccion: { Args: { p_leccion: string }; Returns: Json }
       disponibilidad_publica: {
         Args: { p_variant_id: string }
         Returns: string
       }
+      es_enlace_de_youtube: { Args: { p_url: string }; Returns: boolean }
       finance_access: {
         Args: { p_path?: string; p_user_id?: string }
         Returns: Database["public"]["Enums"]["finance_level"]
@@ -5276,6 +5278,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      nombre_desde_metadatos: { Args: { p_meta: Json }; Returns: string }
       path_de_concurso: { Args: { p_contest_id: string }; Returns: string }
       path_de_usuario: { Args: { p_user_id: string }; Returns: string }
       puede_recibir_marketing: {

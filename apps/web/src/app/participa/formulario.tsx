@@ -125,13 +125,14 @@ export function Inscripcion({
             name="video"
             required
             inputMode="url"
-            placeholder="https://youtu.be/… · https://vimeo.com/… · enlace de Drive"
+            placeholder="https://youtu.be/…"
             className={entrada}
           />
           <span className="mt-1 block text-xs text-muted-dim">
-            Súbelo donde quieras y pega el enlace. Que se pueda abrir sin pedir
-            permiso: si el revisor tiene que solicitarte acceso, tu video se
-            queda esperando.
+            Tiene que estar en YouTube. Puede ser <strong>no listado</strong>
+            —no hace falta que sea público—, pero que se abra sin pedir permiso:
+            si el revisor tiene que solicitarte acceso, tu video se queda
+            esperando.
           </span>
         </label>
 

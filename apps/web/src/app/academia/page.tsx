@@ -2,7 +2,7 @@ import { Logo } from "@comicomania/ui";
 import { crearClienteServidor } from "@/lib/supabase/server";
 
 export const metadata = {
-  title: "Academia · COMICOMANÍA",
+  title: "Instituto Gracia · COMICOMANÍA",
   description:
     "Cursos de stand up, escritura de comedia y marca personal. De la primera idea al escenario, y del escenario al mundo digital.",
 };
@@ -66,7 +66,7 @@ export default async function Academia() {
 
       <section className="mx-auto max-w-6xl px-5 pt-8 pb-10">
         <p className="text-xs tracking-[0.3em] text-gold-400 uppercase">
-          COMICOMANÍA Academy
+          Instituto Gracia
         </p>
         <h1 className="font-display mt-3 text-5xl text-paper uppercase sm:text-6xl">
           El humor{" "}

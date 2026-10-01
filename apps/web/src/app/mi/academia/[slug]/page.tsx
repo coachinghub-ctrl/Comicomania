@@ -161,7 +161,7 @@ export default async function AulaDelCurso({
 
       <div className="mx-auto max-w-6xl px-5 pb-16">
         <p className="text-xs tracking-[0.2em] text-gold-400 uppercase">
-          COMICOMANÍA Academy
+          Instituto Gracia
         </p>
         <h1 className="font-display mt-2 text-3xl text-paper uppercase sm:text-4xl">
           {curso.title}

@@ -65,7 +65,7 @@ export async function generateMetadata({
   if (!data) return { title: "Curso · COMICOMANÍA" };
 
   return {
-    title: `${data.title} · COMICOMANÍA Academy`,
+    title: `${data.title} · Instituto Gracia`,
     description: data.promise ?? data.description ?? undefined,
     openGraph: data.cover_url ? { images: [data.cover_url] } : undefined,
   };

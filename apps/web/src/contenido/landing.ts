@@ -170,12 +170,12 @@ export const TALENT = {
 
 
 export const ACADEMY = {
-  marca: "COMICOMANÍA Academy",
+  marca: "Instituto Gracia",
   titulo: ["El talento te abre la puerta.", "La preparación te lleva más lejos."],
   entrada: "Tener talento es solo el comienzo.",
   texto:
-    "COMICOMANÍA Academy es el espacio donde humoristas y creadores desarrollan las habilidades para transformar su creatividad en contenido, audiencia, marca y oportunidades.",
-  cta: { texto: "Explora la Academy", href: "/academia" },
+    "El Instituto Gracia es la escuela de la casa: donde humoristas y creadores desarrollan las habilidades para transformar su creatividad en contenido, audiencia, marca y oportunidades.",
+  cta: { texto: "Conoce el Instituto Gracia", href: "/academia" },
   pilares: [
     {
       icono: "Idea",
@@ -265,8 +265,8 @@ export const LIVE = {
   entrada: "El humor se vive mejor cuando lo compartimos.",
   texto:
     "COMICOMANÍA LIVE convierte la comunidad digital en experiencias reales donde humoristas, audiencias, ciudades y marcas se encuentran cara a cara.",
-  ctaPrincipal: { texto: "Descubre los eventos", href: "/eventos/final-miami-2027" },
-  ctaSecundario: { texto: "Quiero participar", href: "/concursos/demo-miami-2027" },
+  ctaPrincipal: { texto: "Descubre los eventos", href: "/eventos/final-miami-2026" },
+  ctaSecundario: { texto: "Quiero participar", href: "/concursos/demo-miami-2026" },
   /* El aviso del próximo evento. Sin fecha y sin venta: todavía no hay
      entradas, así que el botón apunta a avisar, no a comprar. Cuando el
      Contest Engine y Ticketing existan (Fase E y J), esto sale de la base. */
@@ -418,8 +418,8 @@ export const NAVEGACION = [
   { texto: "Descubre", href: "#movimiento" },
   { texto: "Talent", href: "#talent" },
   { texto: "Repertorio", href: "/humoristas" },
-  { texto: "Academy", href: "/academia" },
-  { texto: "Live", href: "/eventos/final-miami-2027" },
+  { texto: "Instituto Gracia", href: "/academia" },
+  { texto: "Live", href: "/eventos/final-miami-2026" },
   { texto: "Shop", href: "/tienda" },
   { texto: "Para marcas", href: "#marcas" },
   { texto: "Nosotros", href: "#manifiesto" },
@@ -561,7 +561,7 @@ export const PREMIO = {
 } as const;
 
 /* Los cinco negocios, con sus nombres reales. La web los llamaba Talent,
-   Academy, Shop y Live —etiquetas genéricas— y el negocio tiene marcas
+   Academy, Shop y Live —etiquetas genéricas— y el negocio tiene marcas propias
    propias. Un nombre propio se recuerda; una etiqueta, no. */
 export const ECOSISTEMA = {
   eyebrow: "El ecosistema",

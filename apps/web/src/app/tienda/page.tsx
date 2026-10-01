@@ -1,4 +1,5 @@
 import { Logo } from "@comicomania/ui";
+import { COBRO_ACTIVO } from "@/lib/cobro";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { Avisarme } from "./avisarme";
 
@@ -21,7 +22,11 @@ export const metadata = {
 
 const DISPONIBILIDAD: Record<string, { texto: string; clase: string } | null> = {
   DISPONIBLE: null,
-  ULTIMAS: { texto: "Últimas unidades", clase: "text-gold-400" },
+  /* La urgencia solo es honesta si se puede comprar. Sin pasarela, decir
+     "últimas unidades" es apremiar por algo que no está a la venta. */
+  ULTIMAS: COBRO_ACTIVO
+    ? { texto: "Últimas unidades", clase: "text-gold-400" }
+    : { texto: "Disponible", clase: "text-muted-dim" },
   AGOTADO: { texto: "Agotado", clase: "text-muted-dim" },
 };
 

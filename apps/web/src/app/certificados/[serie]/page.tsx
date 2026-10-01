@@ -41,7 +41,7 @@ export async function generateMetadata({
   const { serie } = await params;
   return {
     title: `Certificado ${serie.toUpperCase()} · COMICOMANÍA`,
-    description: "Verificación de un certificado de COMICOMANÍA Academy.",
+    description: "Verificación de un certificado del Instituto Gracia.",
   };
 }
 
@@ -86,7 +86,7 @@ export default async function CertificadoPublico({
         {/* La lámina. Se imprime tal cual, sin cabecera ni pie. */}
         <article className="rounded-lg border-2 border-gold-400/50 bg-stage-900 p-8 text-center sm:p-14 print:border-black print:bg-white">
           <p className="text-xs tracking-[0.3em] text-gold-400 uppercase print:text-black">
-            COMICOMANÍA Academy
+            Instituto Gracia
           </p>
 
           <p className="mt-10 text-sm text-muted print:text-black">

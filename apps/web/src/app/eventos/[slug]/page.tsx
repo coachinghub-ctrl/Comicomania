@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import { notFound } from "next/navigation";
 import { ButtonLink, Logo } from "@comicomania/ui";
+import { COBRO_ACTIVO } from "@/lib/cobro";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { Reservar } from "./reservar";
 
@@ -14,7 +15,11 @@ import { Reservar } from "./reservar";
 const ESTADO: Record<string, { texto: string; clase: string } | null> = {
   DRAFT: null,
   ANNOUNCED: { texto: "Anunciado", clase: "text-gold-400" },
-  ON_SALE: { texto: "Entradas a la venta", clase: "text-success" },
+  /* Mientras no haya pasarela, un evento "a la venta" no vende: la
+     insignia lo dice como es. Ver lib/cobro.ts. */
+  ON_SALE: COBRO_ACTIVO
+    ? { texto: "Entradas a la venta", clase: "text-success" }
+    : { texto: "Próximamente a la venta", clase: "text-gold-400" },
   SOLD_OUT: { texto: "Agotado", clase: "text-red-300" },
   LIVE: { texto: "En vivo", clase: "text-red-400" },
   FINISHED: { texto: "Terminado", clase: "text-muted-dim" },
